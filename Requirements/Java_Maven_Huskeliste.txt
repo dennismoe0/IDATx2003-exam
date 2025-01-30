@@ -32,6 +32,8 @@ Huskeliste for Java og Maven-prosjekt
 
 -> Trenger ikke teste GUI (ifølge lærer Torsdag 30.1.2025)
 
+-> 
+
 
 -> Implement database (DAO), SQL
 -> Build a jar file than can be run so there's no need to commands for the user.
