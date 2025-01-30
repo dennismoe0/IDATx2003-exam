@@ -1,0 +1,38 @@
+
+Huskeliste for Java og Maven-prosjekt
+
+1. Java-versjon:
+   - Bruk Java 21 (siste LTS-versjon).
+
+2. Plugins:
+   - org.apache.maven.plugins:maven-compiler-plugin:3.13.0
+   - org.apache.maven.plugins:maven-surefire-plugin:3.5.2
+   - org.openjfx:javafx-maven-plugin:0.0.8
+   - org.apache.maven.plugins:maven-javadoc-plugin:3.11.2
+
+3. Dependencies:
+   - org.openjfx:javafx-controls:23.0.1
+   - org.junit.jupiter:junit-jupiter:5.11.4
+
+4. Krav til bygging:
+   - Prosjektet skal kunne bygges med Maven uten feil.
+   - Bruk følgende kommandoer:
+     - Rydding og bygging:
+       mvn clean package
+     - Kjøre applikasjon (JavaFX):
+       mvn javafx:run
+
+5. Andre retningslinjer:
+   - Unngå bruk av versjoner som RELEASE eller LATEST. Bruk eksakte versjoner.
+   - Opprett korrekt Maven-katalogstruktur med en gyldig pom.xml.
+
+6. 
+
+-> Skal ikke bruke FXML
+
+-> Trenger ikke teste GUI (ifølge lærer Torsdag 30.1.2025)
+
+
+-> Implement database (DAO), SQL
+-> Build a jar file than can be run so there's no need to commands for the user.
+-> Start writing the report quire early, not the two days before the due date.
