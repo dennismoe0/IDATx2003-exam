@@ -1,0 +1,42 @@
+Ladder games:
+
+Randomized boards/ladders
+
+"four types"-
+
+-> Standard Classic
+  -> Classic Ladder Game experience.
+
+-> Randomized Classic
+  -> Ladders etc are randomized so the same board isnt played each time.
+
+-> Standard Arcade
+  -> Implement cards, board functions (rotate 90 degrees i.e.), event spaces
+    -> Event spaces:
+       -> Flip board, rotate board, , everyone falls down one line?, 
+          everyone goes up one line (cant win with this)
+
+-> Randomized Arcade:
+  -> Random map with all functions of Standard Arcade.
+   -> Move ladders (randomly or maybe 1 manually?)
+
+Cards:
+-> Pick up cards with abilities (balatro Joker i.e.)
+   -> Reroll, curse someone (max roll of 3 ie.), roll twice, roll twice pick highest,
+      skip a turn / chosen player skips, 
+
+
+Ladder rotate/move:
+ -> Entry point & exit point. Texture between
+
+ Jokers:
+ -> balatro inspired.
+ -> Would need a bigger board/endless/death mode.
+     -> Death mode: You die after not moving enough/getting enough of something (single player mode).
+          -> Different stages: Lvl 1 = get to space 20, lvl 2 = 50, lvl 3 = 100 etc.
+
+- Need a nice function for calculating huge moves at a time. I.e. 54 moves.
+  -> If we use a row and tile system (i.e. row 3 tile 4) it needs to be able to find the correct row and tile.
+  -> In standard this is easy because each dice throw is a max of 6, but in arcade it could be different. 
+
+Database: Only needed for high scores and potentially player ID's connected to these high scores.

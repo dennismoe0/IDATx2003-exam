@@ -1,0 +1,47 @@
+I think the map is the "most difficult" but all in all the entire project seems very easy.
+
+Snakes and ladders are literally just methods for changing position from ENTRY POINT to EXIT POINT
+-> Literally setPlayerPosition() and set it to the Snake/Ladder Object exit parameter.
+
+The difficult parts is probably going to be the FrontEnd. Making the ladders show up and look nice etc.
+-> First make a super simple board with different colors.
+
+  -> Make Entry tiles for ladders DARK GREEN, Exit LIGHT GREEN, Snakes DARK Red etc.
+  -> Tile 100 should be gold or yellow?
+
+-> Player position should show a player's playing piece (maybe let players choose color?)
+  -> Implement a PlayerPiece object that is assigned to the same position as the Player's backend position.
+  -> Visually shown, 5 positions on each tile (possibility for 5 players on the same tile, exclude a corner position if a player is already there)
+
+
+Implement a board class that is modular and uses JavaFx to assign color to each tile. Override this color if it's a special tile?
+-> use chatgpt for assets (allowed, it's not code, we just have to specify we did so)
+-> If the board class is modular/resizable from the start it's way easier to implement different board sizes etc.
+-> Needs to also have a system that can integrate with ladders etc.
+  -> Since ladders/snakes are just setPosition methods the "hard" part is syncing everything.
+    -> Ladders need to be rendered from ENTRY to EXIT, this needs to be assigned to the backend of the BOARD so we can integrate this with
+       possible later functionality such as moving/deleting/creating ladders/snakes.
+       -> Probably easier to move these with the arrow keys(idk how javafx/mouse pointer works together, but the arrow keys are easy coordinates to iterate)
+      
+
+
+Since Snakes & Ladders use a zigzag pattern from row to row we need to implement a method that handles the position for players, tileNumbers etc?
+-> I.e. if it's on an EVEN numbered row its now going the other way (on the actual board) than it did on row 1.
+  
+    21 22 23 24 25 26 27 28 29 30  ->
+    20 19 18 17 16 15 14 13 12 11  <-
+    1  2  3  4  5  6  7  8  9  10  ->
+
+    On row 1 the tileNumber/position would naturally increment, but on row 2 it would visually now be mirrored compared to the backend.
+    idk yet how this works out, but we might have to change some stuff based on row number
+
+    => I.e. row 2 column 2 would be = 20 (since 0 is the first index number)
+       => While in the backend it would be 11. They're mirrored/flipped for each EVEN numbered row.
+
+  -> Might not be necessary to implement anything for this on the BACKEND (but might be a mindfuck at times idk yet)
+
+
+Arcade mode:
+
+"Portal to bonus board"
+-> Side board teleport where you get three dice rolls and get cards you can use on the normal board. After three rolls you go back to the normal one and turn ends.
