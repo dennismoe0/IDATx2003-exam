@@ -168,4 +168,8 @@ public class BoardModel {
       };
     }
   }
+
+  public int getMaxTile() {
+    return rows * cols;
+  }
 }

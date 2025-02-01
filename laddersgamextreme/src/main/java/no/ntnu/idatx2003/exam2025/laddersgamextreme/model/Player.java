@@ -15,6 +15,7 @@ public class Player {
 
   private final int playerId;
   private String playerName;
+  private final PlayerStats playerStats; // Persistent stats for players
 
   /**
    * Constructs a new Player with the specified name.
@@ -24,6 +25,7 @@ public class Player {
   public Player(String playerName) {
     this.playerId = playerIdCounter++;
     this.playerName = playerName;
+    this.playerStats = new PlayerStats();
   }
 
   public int getPlayerId() {
@@ -36,5 +38,9 @@ public class Player {
 
   public void setPlayerName(String playerName) {
     this.playerName = playerName;
+  }
+
+  public PlayerStats getStats() {
+    return playerStats;
   }
 }
