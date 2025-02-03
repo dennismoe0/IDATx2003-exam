@@ -2,31 +2,53 @@ package no.ntnu.idatx2003.exam2025.laddersgamextreme.view;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane; // Gridlike pattern of a boardgame
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color; // Color for tiles etc
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle; // width * height size, rectangle is apparently what you use not Square.
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import no.ntnu.idatx2003.exam2025.laddersgamextreme.model.BoardModel;
 import no.ntnu.idatx2003.exam2025.laddersgamextreme.model.GameSession;
 import no.ntnu.idatx2003.exam2025.laddersgamextreme.model.PlayingPiece;
+import no.ntnu.idatx2003.exam2025.laddersgamextreme.model.SpecialTile;
+import no.ntnu.idatx2003.exam2025.laddersgamextreme.service.SpecialTileManager;
 
+/**
+ * Represents the view of the game board in the Ladders Game Extreme.
+ * This class is responsible for rendering the game board and player tokens.
+ *
+ * @author Dennis Moe
+ */
 public class BoardView extends GridPane {
 
   private final BoardModel boardModel;
   private final GameSession gameSession; // Holds a list of PlayingPiece objects and info
 
-  private static final int TILE_SIZE = 50; // Size in pixels for each square tile
+  // Need to add this as a paramter to the BoardView to not make it static
+  private static final int TILE_SIZE = 100; // Size in pixels for each square tile
 
+  /**
+   * Constructs a BoardView with the specified BoardModel and GameSession.
+   *
+   * @param boardModel  the model of the game board
+   * @param gameSession the current game session
+   */
   public BoardView(BoardModel boardModel, GameSession gameSession) {
     this.boardModel = boardModel;
     this.gameSession = gameSession;
     this.setGridLinesVisible(true); //
-    buildBoardUI(); // Init
+    buildBoardUi(); // Init
   }
 
-  private void buildBoardUI() {
+  public int getTileSize() {
+    return TILE_SIZE;
+  }
+
+  private void buildBoardUi() {
     // Resets UI
     this.getChildren().clear();
 
@@ -53,29 +75,66 @@ public class BoardView extends GridPane {
         Rectangle tileRectangle = new Rectangle(TILE_SIZE, TILE_SIZE);
         tileRectangle.setStroke(Color.BLACK); // Black border
 
-        // Set fill colour
-        tileRectangle.setFill(Color.LIGHTGRAY);
+        // Set fill colour, potentially redundant
+        // tileRectangle.setFill(Color.LIGHTGRAY);
 
         int tileNumber = boardModel.convertToTileNumberZigzag(modelRow, col, modelCols);
 
-        /*
-         * This probably needs to get its own class.
-         * For better handling, assigning etc properties to tiles.
-         * Make it interact properly with player position/player playing piece.
-         */
-        String tileType = boardModel.getTileType(tileNumber);
-        if (tileType != null) {
-          switch (tileType) {
-            case "START_TILE" -> tileRectangle.setFill(Color.LIGHTYELLOW);
-            case "SNAKE_START" -> tileRectangle.setFill(Color.RED);
-            case "SNAKE_EXIT" -> tileRectangle.setFill(Color.PINK);
-            case "LADDER_START" -> tileRectangle.setFill(Color.DARKGREEN);
-            case "LADDER_EXIT" -> tileRectangle.setFill(Color.LIGHTGREEN);
-            case "FINISH" -> tileRectangle.setFill(Color.GOLD);
-            default -> tileRectangle.setFill(Color.LIGHTBLUE);
+        SpecialTileManager.SpecialTileRole tileRole = gameSession
+            .getSpecialTileManager().getTileRole(tileNumber);
+
+        // IF role isnt NONE
+        if (tileRole != SpecialTileManager.SpecialTileRole.NONE) {
+
+          SpecialTile specialTile = gameSession
+              .getSpecialTileManager().getSpecialTileForTileNumber(tileNumber);
+
+          // IF it is a special tile
+          if (specialTile != null) {
+
+            // Ladders, entry and exit
+            if (specialTile.getTileType() == SpecialTile.TileType.LADDER) {
+              if (tileRole == SpecialTileManager.SpecialTileRole.ENTRY) {
+                tileRectangle.setFill(Color.DARKGREEN); // Sets color dark green
+              } else if (tileRole == SpecialTileManager.SpecialTileRole.EXIT) {
+                tileRectangle.setFill(Color.LIGHTGREEN); // Sets color light green
+              }
+            }
+            // Snakes, entry and exit
+            if (specialTile.getTileType() == SpecialTile.TileType.SNAKE) {
+              if (tileRole == SpecialTileManager.SpecialTileRole.ENTRY) {
+                tileRectangle.setFill(Color.DARKRED); // Sets color dark red
+              } else if (tileRole == SpecialTileManager.SpecialTileRole.EXIT) {
+                tileRectangle.setFill(Color.ORANGE); // Sets color dark organge
+              }
+            }
+
+            // Last tile
+            if (specialTile.getTileType() == SpecialTile.TileType.FINISH) {
+              tileRectangle.setFill(Color.GOLD); // Gold colour for last tile
+            }
+
+            if (specialTile.getTileType() == SpecialTile.TileType.START_TILE) {
+              tileRectangle.setFill(Color.LIGHTYELLOW); // Light yellow for starting tile
+            }
           }
+
+        } else { // IF role is none
+          tileRectangle.setFill(Color.LIGHTBLUE);
         }
         tilePane.getChildren().add(tileRectangle);
+
+        Text tileLabel = new Text(Integer.toString(tileNumber));
+
+        tileLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 15));
+        tileLabel.setFill(Color.BLACK);
+
+        StackPane.setAlignment(tileLabel, Pos.BOTTOM_RIGHT);
+
+        tileLabel.setTranslateX(-5);
+        tileLabel.setTranslateY(-5);
+
+        tilePane.getChildren().add(tileLabel);
 
         addPlayerTokenToTile(tilePane, tileNumber);
 
@@ -106,8 +165,9 @@ public class BoardView extends GridPane {
       }
     }
     int count = tokens.size();
-    if (count == 0)
+    if (count == 0) {
       return;
+    }
 
     // Predefined positions for up to 5 tokens (expressed as percentages of the tile
     // dimensions).
@@ -116,9 +176,11 @@ public class BoardView extends GridPane {
       case 1 -> positions = new double[][] { { 0.5, 0.5 } };
       case 2 -> positions = new double[][] { { 0.3, 0.5 }, { 0.7, 0.5 } };
       case 3 -> positions = new double[][] { { 0.3, 0.3 }, { 0.7, 0.3 }, { 0.5, 0.7 } };
-      case 4 -> positions = new double[][] { { 0.3, 0.3 }, { 0.7, 0.3 }, { 0.3, 0.7 }, { 0.7, 0.7 } };
-      case 5 -> positions = new double[][] { { 0.3, 0.3 }, { 0.7, 0.3 }, { 0.3, 0.7 }, { 0.7, 0.7 }, { 0.5, 0.5 } };
-      default -> positions = new double[][] { { 0.5, 0.5 } }; // Fallback for more than 5 tokens.
+      case 4 -> positions = new double[][] { { 0.3, 0.3 },
+          { 0.7, 0.3 }, { 0.3, 0.7 }, { 0.7, 0.7 } };
+      case 5 -> positions = new double[][] { { 0.3, 0.3 },
+          { 0.7, 0.3 }, { 0.3, 0.7 }, { 0.7, 0.7 }, { 0.5, 0.5 } };
+      default -> positions = new double[][] { { 0.5, 0.5 } };
     }
 
     // Determine a token radius that scales with the number of tokens.
@@ -145,8 +207,11 @@ public class BoardView extends GridPane {
     }
   }
 
-  // Refresh after possible changes of tiles such as moving/changing a ladder.
+  /**
+   * Refreshes the game board UI after possible changes of tiles such as
+   * moving/changing a ladder or moving a playing piece.
+   */
   public void refreshBoard() {
-    buildBoardUI();
+    buildBoardUi();
   }
 }

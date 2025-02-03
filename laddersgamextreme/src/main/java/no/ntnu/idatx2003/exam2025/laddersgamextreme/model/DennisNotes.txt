@@ -1,3 +1,10 @@
+
+NB! If we're making different games/variants we need to label methods and classes
+by the game. I.e. -> LadderSession, LadderBoard etc.
+ Logic differs from game to game, i.e. the board structure, or to simply not have bloated classes
+  i.e. no need for ladders in a class for Monopoly etc.
+
+
 I think the map is the "most difficult" but all in all the entire project seems very easy.
 
 Snakes and ladders are literally just methods for changing position from ENTRY POINT to EXIT POINT

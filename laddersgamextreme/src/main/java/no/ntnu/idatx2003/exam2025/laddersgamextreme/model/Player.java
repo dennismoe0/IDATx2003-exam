@@ -15,17 +15,20 @@ public class Player {
 
   private final int playerId;
   private String playerName;
+  private int playerAge; // Apparently required
   private final PlayerStats playerStats; // Persistent stats for players
 
   /**
    * Constructs a new Player with the specified name.
    *
    * @param playerName the name of the player
+   * @param playerAge  the age of the player
    */
-  public Player(String playerName) {
+  public Player(String playerName, int playerAge) {
     this.playerId = playerIdCounter++;
     this.playerName = playerName;
     this.playerStats = new PlayerStats();
+    this.playerAge = playerAge;
   }
 
   public int getPlayerId() {
@@ -34,6 +37,14 @@ public class Player {
 
   public String getPlayerName() {
     return playerName;
+  }
+
+  public int getPlayerAge() {
+    return playerAge;
+  }
+
+  public void setplayerAge(int playerAge) {
+    this.playerAge = playerAge;
   }
 
   public void setPlayerName(String playerName) {

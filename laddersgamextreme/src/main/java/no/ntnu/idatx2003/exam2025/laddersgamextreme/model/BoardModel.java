@@ -1,8 +1,5 @@
 package no.ntnu.idatx2003.exam2025.laddersgamextreme.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Modular and resizable board class.
  *
@@ -13,19 +10,6 @@ public class BoardModel {
   public int rows;
   public int cols;
 
-  /*
-   * Stores "special" tiles by index position. This can be used to implement
-   * snakes and ladders, event spaces etc.
-   * 
-   * Integer = tileNumber. The index number of the tile that will be connected to
-   * the TYPE.
-   * 
-   * String = tileType. The type of tile => I.e. an entry point for a ladder, or
-   * an event space, or a victory space etc.
-   * 
-   */
-  private final Map<Integer, String> specialTiles; // tileNumber, tileType
-
   /**
    * Constructor for a modular/resizable board.
    *
@@ -35,7 +19,6 @@ public class BoardModel {
   public BoardModel(int rows, int cols) {
     this.rows = rows;
     this.cols = cols;
-    this.specialTiles = new HashMap<>();
   }
 
   public int getRows() {
@@ -44,35 +27,6 @@ public class BoardModel {
 
   public int getCols() {
     return cols;
-  }
-
-  /**
-   * Gets the type of a tile.
-   *
-   * @param tileNumber The tile to find the type of.
-   * @return The type of the tile. I.e. LADDER_ENTRY etc.
-   */
-  public String getTileType(int tileNumber) {
-    return specialTiles.get(tileNumber);
-  }
-
-  /**
-   * Sets the type of a tile.
-   *
-   * @param tileNumber The index position of the tile to be changed.
-   */
-  public void setTileType(int tileNumber, String tileType) {
-    specialTiles.put(tileNumber, tileType);
-  }
-
-  /**
-   * Removes the type of a tile.
-   * NB! Should not be used if we implement a standard type for all normal tiles.
-   *
-   * @param tileNumber The index position of the tile to be changed.
-   */
-  public void removeTileType(int tileNumber) {
-    specialTiles.remove(tileNumber);
   }
 
   /**

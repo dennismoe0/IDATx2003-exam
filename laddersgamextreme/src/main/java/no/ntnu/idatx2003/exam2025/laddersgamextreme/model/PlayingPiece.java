@@ -2,15 +2,28 @@ package no.ntnu.idatx2003.exam2025.laddersgamextreme.model;
 
 import javafx.scene.paint.Color;
 
+/**
+ * Represents a playing piece in the game.
+ * Each piece is associated with a player and has a color and a current tile
+ * position.
+ *
+ * @author Dennis Moe
+ */
 public class PlayingPiece {
   private final Player player; // Owner of piece
   private int currentTile; // 1-based number position
   private Color pieceColor; // Color of players piece
 
+  /**
+   * Constructs a new PlayingPiece.
+   *
+   * @param player     the player who owns this piece
+   * @param pieceColor the color of the piece
+   */
   public PlayingPiece(Player player, Color pieceColor) {
     this.player = player;
     this.pieceColor = pieceColor;
-    this.currentTile = 1; // Starting tile.
+    this.currentTile = 0; // Starting tile. Player's start outside the board
   }
 
   public Player getPlayer() {
@@ -28,6 +41,12 @@ public class PlayingPiece {
   /**
    * Updates the player position and checks boundries.
    * 
+   * <p>
+   * To "simulate" players hopping from tile to tile this should be changed to
+   * refresh the board for each step. -> for loop for i amount of steps?
+   * ^ This would activate ladders/snakes...
+   * </p>
+   *
    * @param steps   The steps the player will move.
    * @param maxTile Rows * Cols = max boundry of board.
    */
@@ -40,11 +59,10 @@ public class PlayingPiece {
     }
     if (newTile > maxTile) {
       newTile = maxTile;
+      System.out.println("Player reached a higher tile than allows, set position to maxTile");
     }
     currentTile = newTile;
-    // need to also make a check here for ABOVE max tile number allowed for size.
-    // Also need a class for game state bc the player wins if above the max allowed
-    // tile position.
+
   }
 
   public Color getPieceColor() {

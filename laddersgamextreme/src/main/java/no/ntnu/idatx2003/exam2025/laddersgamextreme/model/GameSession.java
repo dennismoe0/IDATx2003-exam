@@ -1,14 +1,18 @@
 package no.ntnu.idatx2003.exam2025.laddersgamextreme.model;
 
-import javafx.scene.paint.Color;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
+import javafx.scene.paint.Color;
+import no.ntnu.idatx2003.exam2025.laddersgamextreme.service.SpecialTileManager;
 
 /**
  * Manages a single session of the board game.
  * Holds BoardModel for backend definitions.
  * PlayerPieces for the tokens and handles turn order etc.
- * 
+ *
  * @author Dennis Moe
  */
 public class GameSession {
@@ -19,11 +23,20 @@ public class GameSession {
   private boolean gameOver; // I.e. if a player reaches 100 it goes to true.
                             // the player at the maxTile at the end wins.
 
+  private final SpecialTileManager specialTileManager;
+
+  /**
+   * Constructs the board, a list to keep active players in and their positions +
+   * game state.
+   *
+   * @param board The board that will be used/generated and tied to this session.
+   */
   public GameSession(BoardModel board) {
     this.board = board;
     this.playerPieces = new ArrayList<>();
     this.currentPlayerIndex = 0;
     this.gameOver = false;
+    this.specialTileManager = new SpecialTileManager();
   }
 
   /**
@@ -69,9 +82,13 @@ public class GameSession {
     return board.getRows() * board.getCols();
   }
 
+  public SpecialTileManager getSpecialTileManager() {
+    return specialTileManager;
+  }
+
   /**
    * Moves the current player's piece by the specified number of steps.
-   * After moving, the method checks if the player has reached the final tile.
+   * After moving, the method checks if the player has reached a special tile.
    * If so, that player wins, and the wins/losses are updated.
    *
    * @param steps the number of steps to move (can be negative). Snakes.
@@ -86,6 +103,14 @@ public class GameSession {
     int maxTile = getMaxTile();
     PlayingPiece currentPiece = playerPieces.get(currentPlayerIndex);
     currentPiece.move(steps, maxTile);
+
+    // After moving check if new tile is a special one, and applies effect
+    // effect is stored in
+    int newTile = currentPiece.getCurrentTile();
+    if (specialTileManager.isSpecialTile(newTile)) {
+      SpecialTile specialTile = specialTileManager.getSpecialTileByPos(newTile);
+      specialTile.applyMoveEffect(currentPiece);
+    }
 
     // Check if the current player has reached the winning tile.
     if (currentPiece.getCurrentTile() == maxTile) {
@@ -102,6 +127,8 @@ public class GameSession {
    * Declares the winner of the game.
    * Increments the winning player's wins and increments losses for all other
    * players.
+   * 
+   * Might need to be changed to accommodate for SpecialTileManager.
    *
    * @param winner the PlayerPiece that reached the winning tile.
    */
@@ -120,5 +147,14 @@ public class GameSession {
 
   public boolean isGameOver() {
     return gameOver;
+  }
+
+  /**
+   * Sorts the players by their age in ascending order.
+   * Resets the current player index to 0 after sorting.
+   */
+  public void sortPlayersByAge() {
+    Collections.sort(playerPieces, Comparator.comparingInt(pp -> pp.getPlayer().getPlayerAge()));
+    currentPlayerIndex = 0;
   }
 }
