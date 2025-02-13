@@ -1,8 +1,8 @@
 package no.ntnu.idatx2003.exam2025.ludo.model;
 
 public class Tile {
-  private int xpos;
-  private int ypos;
+  protected int xpos;
+  protected int ypos;
 
   public Tile(int x, int y) {
     xpos = x;

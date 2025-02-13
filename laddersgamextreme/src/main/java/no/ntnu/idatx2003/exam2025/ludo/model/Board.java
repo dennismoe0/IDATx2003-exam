@@ -1,7 +1,5 @@
 package no.ntnu.idatx2003.exam2025.ludo.model;
 
-import javafx.scene.control.Cell;
-
 import java.util.ArrayList;
 
 /**
