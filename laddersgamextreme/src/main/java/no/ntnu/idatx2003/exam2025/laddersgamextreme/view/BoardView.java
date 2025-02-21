@@ -29,7 +29,7 @@ public class BoardView extends GridPane {
   private final GameSession gameSession; // Holds a list of PlayingPiece objects and info
 
   // Need to add this as a paramter to the BoardView to not make it static
-  private static final int TILE_SIZE = 100; // Size in pixels for each square tile
+  private static final int TILE_SIZE = 75; // Size in pixels for each square tile
 
   /**
    * Constructs a BoardView with the specified BoardModel and GameSession.
