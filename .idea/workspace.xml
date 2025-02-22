@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b088ca79-71d3-470a-a65b-706e17d4d892" name="Changes" comment="Added a Dice and Player class, with rudimentary functionality. (Test Commit, last one broke)." />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="JUnit5 Test Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="backend-sasha" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Ink-Song&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:dennismoe0/IDATx2003-exam.git&quot;,
+    &quot;accountId&quot;: &quot;b063cead-b979-4ac5-923d-0fe028a7a087&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2sRgz5nYXvQvIwgyTxK5EgvDlvb" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.DiceTest.executor": "Run",
+    "JUnit.DiceTest.roll.executor": "Run",
+    "JUnit.DiceTest.rollDice.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "dev",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/sunru/git/IDATx2003-exam/laddersgamextreme",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="no.ntnu.idatx2003.exam2025.game" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.DiceTest.roll">
+    <configuration name="DiceTest.roll" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="new_world" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="no.ntnu.idatx2003.exam2025.game.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="no.ntnu.idatx2003.exam2025.game" />
+      <option name="MAIN_CLASS_NAME" value="no.ntnu.idatx2003.exam2025.game.DiceTest" />
+      <option name="METHOD_NAME" value="roll" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DiceTest.rollDice" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="new_world" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="no.ntnu.idatx2003.exam2025.game.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="no.ntnu.idatx2003.exam2025.game" />
+      <option name="MAIN_CLASS_NAME" value="no.ntnu.idatx2003.exam2025.game.DiceTest" />
+      <option name="METHOD_NAME" value="rollDice" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.DiceTest.roll" />
+        <item itemvalue="JUnit.DiceTest.rollDice" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b088ca79-71d3-470a-a65b-706e17d4d892" name="Changes" comment="" />
+      <created>1738424060190</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1738424060190</updated>
+      <workItem from="1738424061290" duration="4377000" />
+      <workItem from="1738595328398" duration="774000" />
+    </task>
+    <task id="LOCAL-00001" summary="Added a Dice and Player class, with rudimentary functionality.">
+      <option name="closed" value="true" />
+      <created>1738426937513</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1738426937513</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added a Dice and Player class, with rudimentary functionality. (Test Commit, last one broke).">
+      <option name="closed" value="true" />
+      <created>1738428115520</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1738428115520</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/backend-sasha" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added a Dice and Player class, with rudimentary functionality." />
+    <MESSAGE value="Added a Dice and Player class, with rudimentary functionality. (Test Commit, last one broke)." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a Dice and Player class, with rudimentary functionality. (Test Commit, last one broke)." />
+  </component>
+</project>

@@ -1,0 +1,17 @@
+Index: target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>C:\\Users\\denni\\OneDrive\\Prog\\2. sem\\IDATx2003\\Mappe\\IDATx2003-exam\\laddersgamextreme\\src\\main\\java\\no\\ntnu\\idatx2003\\exam2025\\laddersgamextreme\\Main.java\r\nC:\\Users\\denni\\OneDrive\\Prog\\2. sem\\IDATx2003\\Mappe\\IDATx2003-exam\\laddersgamextreme\\src\\main\\java\\no\\ntnu\\idatx2003\\exam2025\\laddersgamextreme\\model\\BoardModel.java\r\nC:\\Users\\denni\\OneDrive\\Prog\\2. sem\\IDATx2003\\Mappe\\IDATx2003-exam\\laddersgamextreme\\src\\main\\java\\no\\ntnu\\idatx2003\\exam2025\\laddersgamextreme\\model\\Player.java\r\nC:\\Users\\denni\\OneDrive\\Prog\\2. sem\\IDATx2003\\Mappe\\IDATx2003-exam\\laddersgamextreme\\src\\main\\java\\no\\ntnu\\idatx2003\\exam2025\\laddersgamextreme\\view\\BoardView.java\r\n
+===================================================================
+diff --git a/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst b/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+--- a/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst	(revision 077fdbb8b14138b3f64f0b05291323f22afb00f9)
++++ b/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst	(date 1738596697904)
+@@ -1,4 +1,4 @@
+-C:\Users\denni\OneDrive\Prog\2. sem\IDATx2003\Mappe\IDATx2003-exam\laddersgamextreme\src\main\java\no\ntnu\idatx2003\exam2025\laddersgamextreme\Main.java
+-C:\Users\denni\OneDrive\Prog\2. sem\IDATx2003\Mappe\IDATx2003-exam\laddersgamextreme\src\main\java\no\ntnu\idatx2003\exam2025\laddersgamextreme\model\BoardModel.java
+-C:\Users\denni\OneDrive\Prog\2. sem\IDATx2003\Mappe\IDATx2003-exam\laddersgamextreme\src\main\java\no\ntnu\idatx2003\exam2025\laddersgamextreme\model\Player.java
+-C:\Users\denni\OneDrive\Prog\2. sem\IDATx2003\Mappe\IDATx2003-exam\laddersgamextreme\src\main\java\no\ntnu\idatx2003\exam2025\laddersgamextreme\view\BoardView.java
++C:\Users\sunru\git\IDATx2003-exam\laddersgamextreme\src\main\java\no\ntnu\idatx2003\exam2025\laddersgamextreme\Main.java
++C:\Users\sunru\git\IDATx2003-exam\laddersgamextreme\src\main\java\no\ntnu\idatx2003\exam2025\laddersgamextreme\model\BoardModel.java
++C:\Users\sunru\git\IDATx2003-exam\laddersgamextreme\src\main\java\no\ntnu\idatx2003\exam2025\laddersgamextreme\model\Player.java
++C:\Users\sunru\git\IDATx2003-exam\laddersgamextreme\src\main\java\no\ntnu\idatx2003\exam2025\laddersgamextreme\view\BoardView.java

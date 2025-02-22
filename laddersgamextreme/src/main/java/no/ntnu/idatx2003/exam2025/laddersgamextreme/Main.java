@@ -1,5 +1,6 @@
 package no.ntnu.idatx2003.exam2025.laddersgamextreme;
 
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 import java.sql.Connection;
@@ -29,27 +30,40 @@ public class Main extends Application {
   public void start(Stage primaryStage) {
 
     //Create the main menu root.
-    Pane mainMenuRoot = new Pane();
+    VBox mainMenuRoot = createMainMenu();
     Scene mainScene = new Scene(mainMenuRoot, 800, 600);
+
+    //Load our CSS file to handle our application visuals.
+    String css = Objects.requireNonNull(this.getClass().getResource("/assets/ui_assets/application.css")).toExternalForm();
+    mainScene.getStylesheets().add(css);
+
     primaryStage.setScene(mainScene);
     primaryStage.setTitle("Board Games");
     primaryStage.show();
   }
 
 
-  public Pane createMainMenu(){
-    Pane mainMenu = new Pane();
+  public VBox createMainMenu(){
     VBox vBox = new VBox();
-    mainMenu.getChildren().add(vBox);
 
     Label titleText = new Label("Main Menu");
+    titleText.getStyleClass().add("title");
+
     Button gameButton1 = new Button("Snakes n Ladders");
+    gameButton1.getStyleClass().add("mmOption");
     Button gameButton2 = new Button("Ludo");
+    gameButton2.getStyleClass().add("mmOption");
     Button gameButton3 = new Button("Yahtzee");
+    gameButton3.getStyleClass().add("mmOption");
+
     Label settingsText = new Label("Settings and Statistics");
+    settingsText.getStyleClass().add("mmLabel");
     Button buttonSettings = new Button("Settings");
+    buttonSettings.getStyleClass().add("mmOption");
     Button buttonStatistics = new Button("Statistics");
+    buttonStatistics.getStyleClass().add("mmOption");
     Button buttonExit = new Button("Exit");
+    buttonExit.getStyleClass().add("mmOption");
 
     vBox.getChildren().add(titleText);
     vBox.getChildren().add(gameButton1);
@@ -60,7 +74,7 @@ public class Main extends Application {
     vBox.getChildren().add(buttonStatistics);
     vBox.getChildren().add(buttonExit);
 
-    return mainMenu;
+    return vBox;
   }
   public void runSnakesAndLadders(Stage primaryStage){
     // Initialize the database
