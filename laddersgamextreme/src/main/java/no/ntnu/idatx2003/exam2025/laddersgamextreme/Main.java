@@ -8,11 +8,10 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import no.ntnu.idatx2003.exam2025.laddersgamextreme.model.BoardModel;
 import no.ntnu.idatx2003.exam2025.laddersgamextreme.model.GameSession;
@@ -28,6 +27,42 @@ public class Main extends Application {
 
   @Override
   public void start(Stage primaryStage) {
+
+    //Create the main menu root.
+    Pane mainMenuRoot = new Pane();
+    Scene mainScene = new Scene(mainMenuRoot, 800, 600);
+    primaryStage.setScene(mainScene);
+    primaryStage.setTitle("Board Games");
+    primaryStage.show();
+  }
+
+
+  public Pane createMainMenu(){
+    Pane mainMenu = new Pane();
+    VBox vBox = new VBox();
+    mainMenu.getChildren().add(vBox);
+
+    Label titleText = new Label("Main Menu");
+    Button gameButton1 = new Button("Snakes n Ladders");
+    Button gameButton2 = new Button("Ludo");
+    Button gameButton3 = new Button("Yahtzee");
+    Label settingsText = new Label("Settings and Statistics");
+    Button buttonSettings = new Button("Settings");
+    Button buttonStatistics = new Button("Statistics");
+    Button buttonExit = new Button("Exit");
+
+    vBox.getChildren().add(titleText);
+    vBox.getChildren().add(gameButton1);
+    vBox.getChildren().add(gameButton2);
+    vBox.getChildren().add(gameButton3);
+    vBox.getChildren().add(settingsText);
+    vBox.getChildren().add(buttonSettings);
+    vBox.getChildren().add(buttonStatistics);
+    vBox.getChildren().add(buttonExit);
+
+    return mainMenu;
+  }
+  public void runSnakesAndLadders(Stage primaryStage){
     // Initialize the database
     DatabaseManager.initializeDatabase();
 
@@ -51,6 +86,7 @@ public class Main extends Application {
       gameSession.addPlayer(player3, Color.RED);
       gameSession.addPlayer(player4, Color.YELLOW);
       gameSession.addPlayer(player5, Color.BLACK);
+
 
       SpecialTileManager specialTileManager = gameSession.getSpecialTileManager();
 
@@ -123,6 +159,8 @@ public class Main extends Application {
       Scene scene = new Scene(root, 1000, 1000);
       primaryStage.setScene(scene);
       primaryStage.setTitle("Snakes and Ladders Prototype");
+
+
       primaryStage.show();
 
     } catch (Exception e) {
