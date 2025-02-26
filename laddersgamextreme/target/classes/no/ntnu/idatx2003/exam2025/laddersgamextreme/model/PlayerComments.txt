@@ -1,0 +1,48 @@
+I was thinking we have Player objects that store highscores/wins/losses etc as an excuse to implement a basic database.
+-> SQLite is apparently a very simply, local and efficient MySQL alternative.
+-> MySQL requires you to run a database server locally, SQLite does not it just reads and writes to a local database file I believe.
+
+
+Comments from chatgpt about DAO/Database usage with IDs:
+
+
+1. Rely on the Database for ID Generation
+If you are storing Players in a database, the simplest approach is usually to let the database handle auto-increment IDs:
+
+Use an auto-increment primary key in your table:
+
+sql
+Copy
+Edit
+CREATE TABLE IF NOT EXISTS player (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255),
+    position INT
+    -- other fields
+);
+
+(Note: The exact syntax depends on your database, e.g., MySQL vs. SQLite.)
+
+When you INSERT a new Player in your DAO:
+
+Omit the ID column (or set it to null).
+The database will automatically generate and assign the next available ID.
+Query the database afterward to retrieve the generated ID (e.g., using getGeneratedKeys() in JDBC).
+With this approach, you do not need a static counter in Java. Each time you add a record to the database, the DB itself guarantees unique, increasing IDs. Also, you don’t have to worry about the counter resetting between runs—the database maintains it.
+
+2. Store the Counter Value Manually (If Not Using Auto-Increment in DB)
+If you do not have your table set up for auto-increment or you prefer a custom ID generation scheme in your code, then yes, you would need to store the counter value somewhere so it does not reset each time your application restarts. A few options:
+
+A dedicated table or key-value store:
+
+You could create a small table, say app_settings(id INT, key VARCHAR(255), value VARCHAR(255)), and store the “next player ID” in that table.
+On application startup, read that value into your static counter.
+On application shutdown (or every time you create a new Player), update that table.
+Reading from the existing players:
+
+At startup, query the maximum existing player ID in the database, e.g. SELECT MAX(id) FROM player.
+Set nextId to maxId + 1. That way, you continue counting from the largest ID already in the DB.
+A small config file (JSON, properties, or similar) you store on disk:
+
+Each time your application closes (or each time you create a new Player), write the updated counter to the file.
+On startup, read the file and set the nextId.

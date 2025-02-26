@@ -6,7 +6,9 @@
 
 # Ignore build directories
 /target/
+**/target/  # Ensure all target folders are ignored
 /out/
+**/out/  # Ensure all out folders are ignored
 
 # Ignore Maven build artifacts
 .mvn/
@@ -19,7 +21,6 @@
 *.iws
 .vscode/
 
-<<<<<<< Updated upstream
 # Ignore OS-specific files
 .DS_Store
 Thumbs.db
@@ -56,14 +57,11 @@ target/surefire-reports/
 *.swo
 *~
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# Virtual machine crash logs
 hs_err_pid*
 replay_pid*
 
-# Build files
-target/
-
-# Eclipse
+# Eclipse-specific files
 .classpath
 .project
 .settings/
