@@ -114,7 +114,11 @@ public class GameSession {
 
     // Check if the current player has reached the winning tile.
     if (currentPiece.getCurrentTile() == maxTile) {
-      declareWinner(currentPiece);
+      if (currentPiece.getPlayer() != null) {
+        declareWinner(currentPiece);
+      } else {
+        System.out.print("Error: No player is associated to the PlayingPiece.");
+      }
       gameOver = true;
       return; // Game ends immediately when a player wins.
     }
@@ -133,15 +137,21 @@ public class GameSession {
    * @param winner the PlayerPiece that reached the winning tile.
    */
   private void declareWinner(PlayingPiece winner) {
-    // Increment wins for the winning player.
-    winner.getPlayer().getStats().addWin();
-    System.out.println("Player " + winner.getPlayer().getPlayerName() + " wins!");
+    Player winnerPlayer = winner.getPlayer();
+    if (winnerPlayer != null) {
+      // Increment wins for the winning player.
+      winnerPlayer.getStats().addWin();
+      System.out.println("Player " + winnerPlayer.getPlayerName() + " wins!");
 
-    // Increment losses for every other player.
-    for (PlayingPiece piece : playerPieces) {
-      if (piece != winner) {
-        piece.getPlayer().getStats().addLoss();
+      // Increment losses for every other player.
+      for (PlayingPiece piece : playerPieces) {
+        Player player = piece.getPlayer();
+        if (player != null && piece != winner) {
+          player.getStats().addLoss();
+        }
       }
+    } else {
+      System.out.println("Error: Winner's player is null.");
     }
   }
 
