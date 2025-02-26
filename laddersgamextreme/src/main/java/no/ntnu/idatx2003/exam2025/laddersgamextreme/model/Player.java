@@ -11,9 +11,7 @@ package no.ntnu.idatx2003.exam2025.laddersgamextreme.model;
  */
 public class Player {
 
-  private static int playerIdCounter = 1;
-
-  private final int playerId;
+  private int playerId;
   private String playerName;
   private int playerAge; // Apparently required
   private final PlayerStats playerStats; // Persistent stats for players
@@ -24,8 +22,8 @@ public class Player {
    * @param playerName the name of the player
    * @param playerAge  the age of the player
    */
-  public Player(String playerName, int playerAge) {
-    this.playerId = playerIdCounter++;
+  public Player(int playerId, String playerName, int playerAge) {
+    this.playerId = playerId;
     this.playerName = playerName;
     this.playerStats = new PlayerStats();
     this.playerAge = playerAge;
