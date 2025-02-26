@@ -1,0 +1,69 @@
+# Ignore compiled Java class files
+*.class
+
+# Ignore log files
+*.log
+
+# Ignore build directories
+/target/
+/out/
+
+# Ignore Maven build artifacts
+.mvn/
+!**/src/main/**/.mvn
+
+# Ignore IDE-specific files
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+<<<<<<< Updated upstream
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore dependency caches
+**/node_modules/
+**/.gradle/
+**/.m2/
+**/.cache/
+
+# Ignore JavaFX build artifacts
+**/jfx/build/
+
+# Ignore coverage reports
+jacoco.exec
+*.coverage
+*.cover
+
+# Ignore database files
+*.db
+*.sqlite
+*.db-journal
+
+# Ignore generated Javadoc files
+docs/
+javadoc/
+
+# Ignore compiled test reports
+test-output/
+target/surefire-reports/
+
+# Ignore temporary files
+*.swp
+*.swo
+*~
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+replay_pid*
+
+# Build files
+target/
+
+# Eclipse
+.classpath
+.project
+.settings/
