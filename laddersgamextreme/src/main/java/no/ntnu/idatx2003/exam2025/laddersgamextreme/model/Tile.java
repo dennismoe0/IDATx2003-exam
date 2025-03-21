@@ -4,6 +4,8 @@ public class Tile {
   private TileAction action;
 
   public void landingAction(GamePiece gamePiece){
-
+    if(action != null){
+      action.Action(gamePiece);
+    }
   }
 }
