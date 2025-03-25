@@ -1,16 +1,12 @@
 package no.ntnu.idatx2003.exam2025.laddersgamextreme.model;
 
 public class GamePiece {
-  private Tile currentTile;
+  private int currentTile;
 
-  public Tile getTile(){
+  public int getTile(){
     return currentTile;
   }
-  public void setTile(Tile tile){
+  public void setTile(int tile){
     currentTile = tile;
-  }
-
-  private void performTileAction(){
-    currentTile.landingAction(this);
   }
 }
