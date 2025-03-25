@@ -12,4 +12,12 @@ public class Board {
     return tiles.get(position);
   }
 
+  public void addTile(Tile tile) {
+    tiles.add(tile);
+  }
+
+  public int getBoardLength(){
+    return tiles.size();
+  }
+
 }
