@@ -17,11 +17,13 @@ import no.ntnu.idatx2003.exam2025.laddersgamextreme.service.SpecialTileManager;
  */
 public class GameSession {
   private final BoardModel board;
+  private List<Player> players;
   private final List<PlayingPiece> playerPieces; // Stores players in the game.
                                                  // Position is stored in the object.
   private int currentPlayerIndex; // Which player has an active turn.
   private boolean gameOver; // I.e. if a player reaches 100 it goes to true.
                             // the player at the maxTile at the end wins.
+  private List<Dice> die;
 
   private final SpecialTileManager specialTileManager;
 
