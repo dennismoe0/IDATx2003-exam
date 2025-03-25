@@ -14,7 +14,7 @@ public class Dice {
   }
 
   public int roll(){
-    this.lastRoll = rand.nextInt(diceSize);
+    this.lastRoll = rand.nextInt(diceSize) + 1;
     return this.lastRoll;
   }
   public void setDiceSize(int diceSize) {

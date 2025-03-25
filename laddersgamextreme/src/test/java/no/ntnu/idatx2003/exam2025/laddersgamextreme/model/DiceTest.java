@@ -13,6 +13,7 @@ class DiceTest {
   }
   @Test
   void roll() {
+    // Roll 1000 times to ensure the roll is always within the specified range, and never exceeds it.
     int iterations = 1000;
     for (int i = 0; i < iterations; i++) {
       assertTrue(dice.roll() < 7);
