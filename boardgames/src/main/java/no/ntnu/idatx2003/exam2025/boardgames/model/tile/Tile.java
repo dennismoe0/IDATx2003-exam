@@ -36,11 +36,7 @@ public class Tile {
   public void setId(int id){
     this.id = id;
   }
-  public TileStrategy getTileStrategy() throws NullPointerException{
-    if(tileStrategy == null){
-      log.error("Tile {}: Get Tile Strategy, Tile Strategy is Null", this.id);
-      throw new NullPointerException();
-    }
+  public TileStrategy getTileStrategy() {
     return tileStrategy;
   }
   public void setTileStrategy(TileStrategy tileStrategy){
@@ -49,10 +45,6 @@ public class Tile {
 
   public void applyTileEffect() throws IllegalStateException {
     log.debug("Tile {}: Applying tile effect", this.id);
-    if(tileStrategy == null){
-      log.error("Tile {}: Tile strategy is null", this.id);
-      throw new IllegalStateException("Tile strategy not set");
-    }
     tileStrategy.applyEffect();
   }
 
