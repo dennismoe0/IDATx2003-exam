@@ -1,0 +1,20 @@
+Need to make the board size/tile sizes resize based on the size of the window
+
+Need to add menus/clear logging
+-> Which player's turn it is
+-> What they rolled etc
+
+Ladders need to be shown
+
+Player turn doesnt work based on age even though I added a method
+
+If a player gets 6, set the player turn index back one point to make them get another turn
+-> Add message "You rolled a 6, you can throw again!"
+
+
+Using CHATGPT to make laders and snakes, nvrm didnt work it sucks ass
+
+Found random images online:
+http://www.publicdomainfiles.com/show_file.php?id=13925523615499
+https://pngtree.com/so/pretty-snake
+https://www.vecteezy.com/png/42051835-ai-generated-ladder-hand-drawn-cartoon-style-illustration
