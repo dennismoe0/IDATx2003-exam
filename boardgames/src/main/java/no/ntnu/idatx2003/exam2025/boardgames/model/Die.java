@@ -38,7 +38,7 @@ public class Die {
    */
   public int roll() {
     int result = RNG.nextInt(sides) + 1;
-    log.info("Rolles a {}", result);
+    log.info("Rolled a {}", result);
     return result;
   }
 }
