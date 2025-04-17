@@ -1,4 +1,4 @@
-package no.ntnu.idatx2003.exam2025.boardgames.model;
+package no.ntnu.idatx2003.exam2025.boardgames.model.tile;
 
 import org.slf4j.Logger;
 
