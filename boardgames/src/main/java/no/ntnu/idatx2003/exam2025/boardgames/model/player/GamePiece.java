@@ -9,5 +9,6 @@ public class GamePiece {
     for (int i = 0; i < steps; i++) {
       currentTile = currentTile.getNextTile();
     }
+    currentTile.getTileStrategy().applyEffect(this);
   }
 }
