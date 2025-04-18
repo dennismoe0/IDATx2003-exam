@@ -22,4 +22,12 @@ public class Board{
   public int getBoardSize(){
     return tiles.size();
   }
+
+//  public Tile getFirstTile(){
+//    return tiles.values().iterator().next();
+//  }
+
+//  public Tile getLastTile(){
+//
+//  }
 }
