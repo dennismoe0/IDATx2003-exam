@@ -1,4 +1,4 @@
-package no.ntnu.idatx2003.exam2025.laddersgamextreme.model;
+package no.ntnu.idatx2003.exam2025.boardgames.model;
 
 import no.ntnu.idatx2003.exam2025.boardgames.model.Die;
 import org.junit.jupiter.api.Test;
