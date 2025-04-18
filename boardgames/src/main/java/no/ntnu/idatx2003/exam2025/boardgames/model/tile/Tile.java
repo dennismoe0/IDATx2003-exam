@@ -12,6 +12,7 @@ public class Tile {
   private static final Logger log = Log.get(Tile.class);
   private int id;
   private TileStrategy tileStrategy;
+  private Tile nextTile;
 
   /**
    *
@@ -22,6 +23,7 @@ public class Tile {
     this.id = id;
     this.tileStrategy = tileStrategy;
     logCreateNewTile();
+    nextTile = null;
   }
 
   public Tile(int id){
@@ -38,6 +40,12 @@ public class Tile {
   }
   public TileStrategy getTileStrategy() {
     return tileStrategy;
+  }
+  public void setNextTile(Tile nextTile) {
+    this.nextTile = nextTile;
+  }
+  public Tile getNextTile() {
+    return nextTile;
   }
   public void setTileStrategy(TileStrategy tileStrategy){
     this.tileStrategy = tileStrategy;
