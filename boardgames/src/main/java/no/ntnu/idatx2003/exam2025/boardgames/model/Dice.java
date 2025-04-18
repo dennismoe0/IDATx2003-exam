@@ -1,11 +1,9 @@
 package no.ntnu.idatx2003.exam2025.boardgames.model;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import org.slf4j.Logger;
-
-import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
 
 /**
  * Represents a list of Die from the Die class.
@@ -14,7 +12,6 @@ import java.util.stream.Collectors;
 public class Dice {
 
   private static final Logger log = Log.get(Dice.class);
-  private static final Random RNG = new Random();
 
   private final List<Die> dice;
 
