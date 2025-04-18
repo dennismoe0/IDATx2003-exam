@@ -19,9 +19,17 @@ class GamePieceTest {
   static void setUp(){
     gamePiece = new GamePiece();
     board = new Board();
+    //adding tiles to the board
     for (int i = 0; i < 12; i++) {
       board.setTile(i,new Tile(i, new EmptyTileStrategy()));
     }
+    //need to manually set the next tile for the time being, since we don't have a factory set up quite yet.
+    for(int i = 0; i < 12; i++){
+      if(i+1 < 12){
+        board.getTile(i).setNextTile(board.getTile(i+1));
+      }
+    }
+
   }
   @BeforeEach
   void setUpGamePiece(){
@@ -44,9 +52,7 @@ class GamePieceTest {
 
   @Test
   void move() {
-    System.out.println(gamePiece.getCurrentTile().getId());
     gamePiece.move(6);
-    System.out.println(gamePiece.getCurrentTile().getId());
-    assertEquals(gamePiece.getCurrentTile(),board.getTile(5));
+    assertEquals(gamePiece.getCurrentTile(),board.getTile(6));
   }
 }

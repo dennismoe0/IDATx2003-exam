@@ -29,7 +29,7 @@ public class GamePiece {
    */
   public void move(int steps){
     this.previousTile = currentTile;
-    for (int i = 0; i <= steps; i++) {
+    for (int i = 0; i < steps; i++) {
       if(currentTile.getNextTile() != null){
         currentTile = currentTile.getNextTile();
       }
