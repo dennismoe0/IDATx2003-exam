@@ -18,4 +18,8 @@ public class Board{
   public void removeTile(int id){
     tiles.remove(id);
   }
+
+  public int getBoardSize(){
+    return tiles.size();
+  }
 }
