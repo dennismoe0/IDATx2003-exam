@@ -1,5 +1,6 @@
 package no.ntnu.idatx2003.exam2025.boardgames.model.tile;
 
+import no.ntnu.idatx2003.exam2025.boardgames.model.player.GamePiece;
 import org.slf4j.Logger;
 
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
@@ -12,6 +13,7 @@ public class Tile {
   private static final Logger log = Log.get(Tile.class);
   private int id;
   private TileStrategy tileStrategy;
+  private Tile nextTile;
 
   /**
    *
@@ -22,6 +24,7 @@ public class Tile {
     this.id = id;
     this.tileStrategy = tileStrategy;
     logCreateNewTile();
+    nextTile = null;
   }
 
   public Tile(int id){
@@ -39,14 +42,20 @@ public class Tile {
   public TileStrategy getTileStrategy() {
     return tileStrategy;
   }
+  public void setNextTile(Tile nextTile) {
+    this.nextTile = nextTile;
+  }
+  public Tile getNextTile() {
+    return nextTile;
+  }
   public void setTileStrategy(TileStrategy tileStrategy){
     this.tileStrategy = tileStrategy;
   }
 
-  public void applyTileEffect() throws IllegalStateException {
-    log.debug("Tile {}: Applying tile effect", this.id);
-    tileStrategy.applyEffect();
-  }
+//  public void applyTileEffect() throws IllegalStateException {
+//    log.debug("Tile {}: Applying tile effect", this.id);
+//    tileStrategy.applyEffect();
+//  }
 
   private void logCreateNewTile(){
     log.debug("Tile {}: Creating new tile.", id);
