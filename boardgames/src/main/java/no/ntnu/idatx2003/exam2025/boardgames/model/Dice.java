@@ -54,4 +54,8 @@ public class Dice {
     log.info("Sum of all dice rolls: {}, sum");
     return sum;
   }
+
+  public List<Die> getDice() {
+    return dice;
+  }
 }
