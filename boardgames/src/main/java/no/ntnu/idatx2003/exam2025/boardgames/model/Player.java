@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 
 public class Player {
 
-  private static final Logger log = Log.get(Dice.class);
+  private static final Logger log = Log.get(Player.class);
 
   private final int playerId;
   private String playerName;
@@ -59,29 +59,58 @@ public class Player {
     this.playerName = playerName;
   }
 
+  // TO BE REMOVED / MOVED TO GameSession
+
   /**
-   * Assigns a game piece to the player.
+   * Adds a game piece to the player's collection of game pieces.
    *
-   * @param gamePiece The game piece to be assigned to the player.
+   * @param gamePiece The game piece to be added to the player.
    */
-  public void assignGamePieceToPlayer(GamePiece gamePiece) {
-    this.gamePiece = gamePiece;
+  public void addGamePieceToPlayer(GamePiece gamePiece) {
+    gamePieces.add(gamePiece);
+    log.debug("Added a GamePiece to player {}", playerName);
   }
 
   /**
-   * Checks if the player has been assigned a game piece.
+   * Removes a game piece from the player's collection of game pieces.
    *
-   * @return true if the player has a game piece assigned, false otherwise.
+   * @param gamePiece The game piece to be removed from the player.
    */
-  public boolean playerHasGamePiece() {
-    return gamePiece != null;
+  public void removeGamePieceFromPlayer(GamePiece gamePiece) {
+    gamePieces.remove(gamePiece);
+    log.debug("Removed a GamePiece from player {}.", playerName);
   }
 
-  public GamePiece getGamePiece() {
-    if (!playerHasGamePiece()) {
-      throw new IllegalArgumentException("Player has no gamePiece assigned");
+  public List<GamePiece> getGamePieces() {
+    if (gamePieces.isEmpty()) {
+      log.debug("There are no Game Pieces assigned to {}", playerName);
+      return gamePieces;
     }
-    return gamePiece;
+    return gamePieces;
+  }
+
+  /**
+   * Checks if the player has any game pieces assigned.
+   *
+   * @return true if the player has one or more game pieces, false otherwise.
+   */
+  public boolean playerHasGamePieces() {
+    return !gamePieces.isEmpty();
+  }
+
+  public GamePiece getGamePiece(int index) {
+    if (!playerHasGamePieces()) {
+      throw new IllegalArgumentException("Player has no Game Pieces assigne.");
+    }
+    if (index < 0 || index >= gamePieces.size()) {
+      throw new IndexOutOfBoundsException("No game piece at index: " + index);
+    }
+    return gamePieces.get(index);
+  }
+
+  public void clearAllGamePieces() {
+    gamePieces.clear();
+    log.debug("Removed all gamePieces from {}", playerName);
   }
 
 }
