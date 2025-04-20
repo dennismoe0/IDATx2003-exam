@@ -34,6 +34,9 @@ public abstract class BoardGame {
   public GamePiece getFirstPlayerPiece(Player player){
     return playerPieces.get(player).getFirst();
   }
+  public List<GamePiece> getPlayerPieces(Player player){
+    return playerPieces.get(player);
+  }
 
   public void takeTurn(Player player){
 

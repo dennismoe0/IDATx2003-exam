@@ -1,8 +1,10 @@
 package no.ntnu.idatx2003.exam2025.boardgames.model.boardgame;
 
 import no.ntnu.idatx2003.exam2025.boardgames.model.Dice;
+import no.ntnu.idatx2003.exam2025.boardgames.model.Die;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
+import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +15,15 @@ public class LadderBoardGame extends BoardGame {
   private Dice dice;
   private GamePiece currentGamePiece;
 
+  public LadderBoardGame(Board board, List<Player> players, int boardChoice) {
+    setBoard(board);
+    setUp(players);
+  }
 
   @Override
   public void setUp(List<Player> players){
+    dice.addDice(new Die(6));
+
     List<GamePiece> pieces = new ArrayList<GamePiece>();
     for (Player player : players) {
       pieces.clear();
@@ -26,8 +34,11 @@ public class LadderBoardGame extends BoardGame {
 
   @Override
   public void takeTurn(Player player) {
-
+    super.getFirstPlayerPiece(player).move(dice.rollAllDiceSum());
   }
+
+  //use observer pattern to track player piece positions and fire a "game over" event.
+
 
 
 }
