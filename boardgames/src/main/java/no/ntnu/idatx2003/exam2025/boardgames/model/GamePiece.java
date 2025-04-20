@@ -11,6 +11,7 @@ public class GamePiece {
   private static final Logger log = Log.get(GamePiece.class);
   private Tile previousTile;
   private Tile currentTile;
+  private Tile startingTile;
 
   public GamePiece() {
     currentTile = null;
@@ -23,6 +24,10 @@ public class GamePiece {
 
   public void setCurrentTile(Tile tile) {
     currentTile = tile;
+  }
+
+  public void setStartingTile(Tile tile) {
+    startingTile = tile;
   }
 
   /**

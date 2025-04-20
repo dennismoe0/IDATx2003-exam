@@ -1,5 +1,6 @@
 package no.ntnu.idatx2003.exam2025.boardgames.model.boardgame;
 
+import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 
@@ -9,7 +10,6 @@ import java.util.List;
 public class BoardGame {
   private Board board;
   private String name;
-  private List<Player> playerList = new ArrayList<Player>();
 
   public Board getBoard(){
     return board;
@@ -22,5 +22,9 @@ public class BoardGame {
   }
   public void setName(String name){
     this.name = name;
+  }
+
+  public void takeTurn(GamePiece gamePiece){
+
   }
 }

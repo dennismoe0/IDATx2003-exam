@@ -1,5 +1,6 @@
 package no.ntnu.idatx2003.exam2025.boardgames.model.player;
 
+import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.EmptyTileStrategy;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
