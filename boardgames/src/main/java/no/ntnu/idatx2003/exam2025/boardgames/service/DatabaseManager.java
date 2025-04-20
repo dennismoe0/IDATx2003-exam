@@ -15,7 +15,7 @@ public class DatabaseManager {
 
   private static final Logger log = Log.get(DatabaseManager.class);
 
-  private static final String DB_PATH = "database/laddersgamextreme.db";
+  private static final String DB_PATH = "database/boardgames.db";
   private static final String DB_URL = "jdbc:sqlite:" + DB_PATH;
 
   static {
@@ -82,28 +82,28 @@ public class DatabaseManager {
 
       // Snakes and Ladders stats table
       String createSnakesAndLaddersStatsTable = """
-              CREATE TABLE IF NOT EXISTS snakes_and_ladders_stats (
-                stats_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                player_id INTEGER NOT NULL,
-                wins INTEGER DEFAULT 0,
-                losses INTEGER DEFAULT 0,
-                games_played INTEGER DEFAULT 0,
-                ladders_used INTEGER DEFAULT 0,
-                snakes_used INTEGER DEFAULT 0,
-                highest_dice_roll INTEGER DEFAULT 0,
-                total_dice_rolls INTEGER DEFAULT 0,
-                sum_of_all_dice_rolls INTEGER DEFAULT 0,
-                total_moves INTEGER DEFAULT 0,
-                FOREIGN KEY (player_id) REFERENCES players(player_id) ON DELETE CASCADE
-              );
-          """;
+            CREATE TABLE IF NOT EXISTS snakes_and_ladders_stats (
+            stats_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            player_id INTEGER NOT NULL UNIQUE,
+            wins INTEGER DEFAULT 0,
+            losses INTEGER DEFAULT 0,
+            games_played INTEGER DEFAULT 0,
+            ladders_used INTEGER DEFAULT 0,
+            snakes_used INTEGER DEFAULT 0,
+            highest_dice_roll INTEGER DEFAULT 0,
+            total_dice_rolls INTEGER DEFAULT 0,
+            sum_of_all_dice_rolls INTEGER DEFAULT 0,
+            total_moves INTEGER DEFAULT 0,
+            FOREIGN KEY (player_id) REFERENCES players(player_id) ON DELETE CASCADE
+          );
+              """;
       log.debug("Created Snakes & Ladders stat table.");
 
       // Ludo stats table
       String createLudoStatsTable = """
-              CREATE TABLE IF NOT EXISTS ludo_stats (
+                CREATE TABLE IF NOT EXISTS ludo_stats (
                 stats_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                player_id INTEGER NOT NULL,
+                player_id INTEGER NOT NULL UNIQUE,
                 wins INTEGER DEFAULT 0,
                 losses INTEGER DEFAULT 0,
                 games_played INTEGER DEFAULT 0,

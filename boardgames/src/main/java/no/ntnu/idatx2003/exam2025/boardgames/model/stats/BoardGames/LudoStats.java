@@ -1,16 +1,18 @@
-package no.ntnu.idatx2003.exam2025.boardgames.model.stats.BoardGames;
+package no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames;
 
-/**
- * Represents the statistics for the Ludo board game.
- * Tracks the total number of dice rolls and moves made during the game.
- */
 public class LudoStats implements BoardGameStats {
   private int totalDiceRolls;
   private int totalMoveCount;
+  private int wins;
+  private int losses;
+  private int gamesPlayed;
+  private int piecesCompleted;
+  private int doubleSixRolls;
+  private int piecesKnocked;
 
   @Override
-  public int getTotalDiceRolls() {
-    return totalDiceRolls;
+  public void incrementMove() {
+    totalMoveCount++;
   }
 
   @Override
@@ -24,7 +26,90 @@ public class LudoStats implements BoardGameStats {
   }
 
   @Override
-  public void incrementMove() {
-    totalMoveCount++;
+  public int getTotalDiceRolls() {
+    return totalDiceRolls;
+  }
+
+  public void incrementWins() {
+    wins++;
+  }
+
+  public void incrementLosses() {
+    losses++;
+  }
+
+  public void incrementGamesPlayed() {
+    gamesPlayed++;
+  }
+
+  public void incrementPiecesCompleted() {
+    piecesCompleted++;
+  }
+
+  public void incrementDoubleSixRolls() {
+    doubleSixRolls++;
+  }
+
+  /**
+   * Increments the count of pieces "knocked out" during the game.
+   */
+  public void incrementPiecesKnocked() {
+    piecesKnocked++;
+  }
+
+  public int getWins() {
+    return wins;
+  }
+
+  public int getLosses() {
+    return losses;
+  }
+
+  public int getGamesPlayed() {
+    return gamesPlayed;
+  }
+
+  public int getPiecesCompleted() {
+    return piecesCompleted;
+  }
+
+  public int getDoubleSixRolls() {
+    return doubleSixRolls;
+  }
+
+  public int getPiecesKnocked() {
+    return piecesKnocked;
+  }
+
+  public void setTotalMoveCount(int value) {
+    totalMoveCount = value;
+  }
+
+  public void setTotalDiceRolls(int value) {
+    totalDiceRolls = value;
+  }
+
+  public void setWins(int value) {
+    wins = value;
+  }
+
+  public void setLosses(int value) {
+    losses = value;
+  }
+
+  public void setGamesPlayed(int value) {
+    gamesPlayed = value;
+  }
+
+  public void setPiecesCompleted(int value) {
+    piecesCompleted = value;
+  }
+
+  public void setDoubleSixRolls(int value) {
+    doubleSixRolls = value;
+  }
+
+  public void setPiecesKnocked(int value) {
+    piecesKnocked = value;
   }
 }

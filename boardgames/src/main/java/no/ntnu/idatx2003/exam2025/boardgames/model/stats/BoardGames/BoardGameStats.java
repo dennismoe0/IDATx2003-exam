@@ -1,4 +1,4 @@
-package no.ntnu.idatx2003.exam2025.boardgames.model.stats.BoardGames;
+package no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames;
 
 import no.ntnu.idatx2003.exam2025.boardgames.model.stats.PlayerStats;
 
