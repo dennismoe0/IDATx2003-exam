@@ -57,6 +57,7 @@ public class DatabaseManager {
     try (Statement stmt = connection.createStatement()) {
       stmt.execute("PRAGMA journal_mode=WAL");
       stmt.execute("PRAGMA busy_timeout=5000");
+      stmt.execute("PRAGMA foreign_keys=ON");
     }
 
     return connection;
