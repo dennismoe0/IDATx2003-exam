@@ -5,11 +5,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
+import org.slf4j.Logger;
 
 /**
  * Manages the SQLite database connection and ensures tables exist.
  */
 public class DatabaseManager {
+
+  private static final Logger log = Log.get(DatabaseManager.class);
 
   private static final String DB_PATH = "database/laddersgamextreme.db";
   private static final String DB_URL = "jdbc:sqlite:" + DB_PATH;
@@ -74,6 +78,7 @@ public class DatabaseManager {
             player_age INTEGER NOT NULL
           );
           """;
+      log.debug("Created Players table.");
 
       // Snakes and Ladders stats table
       String createSnakesAndLaddersStatsTable = """
@@ -91,22 +96,7 @@ public class DatabaseManager {
             FOREIGN KEY (player_id) REFERENCES players(player_id) ON DELETE CASCADE
           );
           """;
-
-      // Chess stats table
-      String createChessStatsTable = """
-          CREATE TABLE IF NOT EXISTS chess_stats (
-            stats_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            player_id INTEGER NOT NULL,
-            wins INTEGER DEFAULT 0,
-            losses INTEGER DEFAULT 0,
-            games_played INTEGER DEFAULT 0,
-            checkmates INTEGER DEFAULT 0,
-            stalemates INTEGER DEFAULT 0,
-            pieces_captured INTEGER DEFAULT 0,
-            total_moves INTEGER DEFAULT 0,
-            FOREIGN KEY (player_id) REFERENCES players(player_id) ON DELETE CASCADE
-          );
-          """;
+      log.debug("Created Snakes & Ladders stat table.");
 
       // Ludo stats table
       String createLudoStatsTable = """
@@ -117,26 +107,33 @@ public class DatabaseManager {
             losses INTEGER DEFAULT 0,
             games_played INTEGER DEFAULT 0,
             pieces_completed INTEGER DEFAULT 0,
-            six_rolls INTEGER DEFAULT 0,
+            double_six_rolls INTEGER DEFAULT 0,
             pieces_knocked INTEGER DEFAULT 0,
             FOREIGN KEY (player_id) REFERENCES players(player_id) ON DELETE CASCADE
           );
           """;
 
+      log.debug("Created Ludo Stat table.");
+
       // Execute table creation
-      stmt.execute(createPlayersTable);
-      stmt.execute(createSnakesAndLaddersStatsTable);
-      // stmt.execute(createChessStatsTable);
-      // stmt.execute(createLudoStatsTable);
+      try {
+        stmt.execute(createPlayersTable);
+        stmt.execute(createSnakesAndLaddersStatsTable);
+        stmt.execute(createLudoStatsTable);
+      } catch (SQLException e) {
+        log.error("Failed to create tables: {}", e.getMessage());
+        throw new RuntimeException("Table creation failed", e);
+      }
+      log.debug("Successfully created all tables.");
 
       // Create indexes for faster lookups
-      stmt.execute("CREATE INDEX IF NOT EXISTS idx_snl_player_id ON snakes_and_ladders_stats(player_id)");
-      // stmt.execute("CREATE INDEX IF NOT EXISTS idx_chess_player_id ON
-      // chess_stats(player_id)");
-      // stmt.execute("CREATE INDEX IF NOT EXISTS idx_ludo_player_id ON
-      // ludo_stats(player_id)");
+      stmt.execute("CREATE INDEX IF NOT EXISTS idx_snl_player_id "
+          + "ON snakes_and_ladders_stats(player_id)");
+      stmt.execute("CREATE INDEX IF NOT EXISTS idx_ludo_player_id ON ludo_stats(player_id)");
 
-      System.out.println("Database initialized successfully.");
+      log.debug("Indexes creates");
+
+      log.debug("Database initialized successfully.");
     } catch (SQLException e) {
       System.err.println("Database initialization failed: " + e.getMessage());
     }
