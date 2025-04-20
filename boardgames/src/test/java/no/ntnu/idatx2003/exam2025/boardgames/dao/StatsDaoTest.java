@@ -10,10 +10,12 @@ import no.ntnu.idatx2003.exam2025.boardgames.service.DatabaseManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.File;
 import java.nio.file.Files;
 import java.sql.Connection;
+import java.sql.Statement;
 
 class StatsDaoTest {
   private static final String DB_FILE = "database/laddersgamextreme.db";
@@ -23,6 +25,14 @@ class StatsDaoTest {
   void setup() throws Exception {
     conn = DatabaseManager.connect();
     DatabaseManager.initializeDatabase();
+
+    // ✅ Add test players so foreign key checks pass
+    try (Statement stmt = conn.createStatement()) {
+      stmt.execute(
+          "INSERT INTO players (player_id, player_name, player_age) VALUES (1, 'TestPlayer1', 25)");
+      stmt.execute(
+          "INSERT INTO players (player_id, player_name, player_age) VALUES (2, 'TestPlayer2', 30)");
+    }
   }
 
   @AfterEach
