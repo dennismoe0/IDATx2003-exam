@@ -14,7 +14,6 @@ public class Player {
   private final int playerId;
   private String playerName;
   private final PlayerStats playerStats;
-  private final List<GamePiece> gamePieces; // can be null
 
   /**
    * Constructor for a NEW player.
@@ -27,7 +26,6 @@ public class Player {
     this.playerId = playerId;
     this.playerName = playerName;
     this.playerStats = new DefaultPlayerStats(playerName);
-    this.gamePieces = new ArrayList<>();
   }
 
   /**
@@ -40,7 +38,6 @@ public class Player {
   public Player(int playerId, PlayerStats playerStats) {
     this.playerId = playerId;
     this.playerStats = playerStats;
-    this.gamePieces = new ArrayList<>();
   }
 
   public int getPlayerId() {
