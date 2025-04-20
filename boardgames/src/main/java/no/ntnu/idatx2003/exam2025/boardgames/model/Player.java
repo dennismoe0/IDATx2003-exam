@@ -14,6 +14,7 @@ public class Player {
   private final int playerId;
   private String playerName;
   private final PlayerStats playerStats;
+  private int playerAge;
 
   /**
    * Constructor for a NEW player.
@@ -22,10 +23,11 @@ public class Player {
    * @param playerId   Unique ID to distinguish each player.
    * @param playerName Non-unique String to visually represent player in-game.
    */
-  public Player(int playerId, String playerName) {
+  public Player(int playerId, String playerName, int playerAge) {
     this.playerId = playerId;
     this.playerName = playerName;
     this.playerStats = new DefaultPlayerStats(playerName);
+    this.playerAge = playerAge;
   }
 
   /**
@@ -52,8 +54,16 @@ public class Player {
     return playerStats;
   }
 
+  public int getPlayerAge() {
+    return playerAge;
+  }
+
   public void setPlayerName(String playerName) {
     this.playerName = playerName;
+  }
+
+  public void setPlayerAge(int playerAge) {
+    this.playerAge = playerAge;
   }
 
   // TO BE REMOVED / MOVED TO GameSession
