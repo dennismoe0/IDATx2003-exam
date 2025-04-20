@@ -21,13 +21,13 @@ public class LadderBoardGame extends BoardGame {
   }
 
   @Override
-  public void setUp(List<Player> players){
+  public void setUp(List<Player> players) {
     dice.addDice(new Die(6));
 
     List<GamePiece> pieces = new ArrayList<GamePiece>();
     for (Player player : players) {
       pieces.clear();
-      pieces.add(new GamePiece());
+      pieces.add(new GamePiece(null)); // Null as placeholder
       super.addPlayerPieces(player, pieces);
     }
   }
@@ -37,8 +37,7 @@ public class LadderBoardGame extends BoardGame {
     super.getFirstPlayerPiece(player).move(dice.rollAllDiceSum());
   }
 
-  //use observer pattern to track player piece positions and fire a "game over" event.
-
-
+  // use observer pattern to track player piece positions and fire a "game over"
+  // event.
 
 }
