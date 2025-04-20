@@ -97,10 +97,10 @@ public class Player {
 
   public GamePiece getGamePiece(int index) {
     if (!playerHasGamePieces()) {
-      throw new IllegalArgumentException("Player has no Game Pieces assigne.");
+      throw new IllegalArgumentException("Player (" + playerName + ") has no Game Pieces assigned.");
     }
     if (index < 0 || index >= gamePieces.size()) {
-      throw new IndexOutOfBoundsException("No game piece at index: " + index);
+      throw new IndexOutOfBoundsException("No game piece at index: " + index + ".");
     }
     return gamePieces.get(index);
   }
