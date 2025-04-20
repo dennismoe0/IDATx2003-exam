@@ -16,10 +16,12 @@ public class BoardFactory {
       switch (i){
         case 0:
 
+
         default:
           tile = new Tile(i,new EmptyTileStrategy());
+          break;
       }
-
+      board.setTile(i, tile);
     }
 
 
