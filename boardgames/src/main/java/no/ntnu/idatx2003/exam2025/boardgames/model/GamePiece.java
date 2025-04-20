@@ -1,4 +1,4 @@
-package no.ntnu.idatx2003.exam2025.boardgames.model.player;
+package no.ntnu.idatx2003.exam2025.boardgames.model;
 
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
