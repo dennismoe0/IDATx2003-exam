@@ -12,7 +12,14 @@ public class DefaultPlayerStats implements PlayerStats {
 
   // Sets the initial value
   private int moveCount = 0;
+  private int playerId;
+  private String playerName;
+
   private static final Logger log = Log.get(Dice.class);
+
+  public DefaultPlayerStats(String playerName) {
+    this.playerName = playerName;
+  }
 
   @Override
   public void incrementMove() {
