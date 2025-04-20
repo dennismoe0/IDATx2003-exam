@@ -55,6 +55,14 @@ public class Dice {
     return sum;
   }
 
+  /**
+   * Adds a dice to the list of dice.
+   * @param die A die object which is used to roll integers.
+   */
+  public void addDice(Die die){
+    dice.add(die);
+  }
+
   public List<Die> getDice() {
     return dice;
   }
