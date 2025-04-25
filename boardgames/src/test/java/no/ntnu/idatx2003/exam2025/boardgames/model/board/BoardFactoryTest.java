@@ -1,7 +1,6 @@
 package no.ntnu.idatx2003.exam2025.boardgames.model.board;
 
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.LadderTileStrategy;
-import no.ntnu.idatx2003.exam2025.boardgames.model.tile.TileStrategy;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

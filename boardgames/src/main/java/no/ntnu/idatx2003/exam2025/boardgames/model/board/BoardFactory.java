@@ -8,11 +8,14 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.tile.LadderTileStrategy;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.SnakeTileStrategy;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
 import no.ntnu.idatx2003.exam2025.boardgames.util.IntPair;
+import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
+import org.slf4j.Logger;
 
 /**
  * Board Factory class used to build boards for various board games.
  */
 public class BoardFactory {
+  private static final Logger log = Log.get(BoardFactory.class);
 
   /**
    * Method for creating the default board game for Snakes n Ladders.
@@ -20,6 +23,7 @@ public class BoardFactory {
    * @return a finished board object with assigned tiles.
    */
   public Board createDefaultLadderBoard() {
+    log.info("Creating default ladder board");
     Board board = new Board();
     Tile tile;
     //initialize the tiles
@@ -58,6 +62,7 @@ public class BoardFactory {
       Tile endTile = board.getTile(pair.b());
       startTile.setTileStrategy(new SnakeTileStrategy(startTile, endTile));
     }
+    log.info("Default ladder board created, {} tiles", board.getBoardSize());
     return board;
   }
 
