@@ -1,25 +1,32 @@
 package no.ntnu.idatx2003.exam2025.boardgames.model.board;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.EmptyTileStrategy;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.LadderTileStrategy;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.SnakeTileStrategy;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
 import no.ntnu.idatx2003.exam2025.boardgames.util.IntPair;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+/**
+ * Board Factory class used to build boards for various board games.
+ */
 public class BoardFactory {
 
-  public Board createDefaultLadderBoard(){
+  /**
+   * Method for creating the default board game for Snakes n Ladders.
+   *
+   * @return a finished board object with assigned tiles.
+   */
+  public Board createDefaultLadderBoard() {
     Board board = new Board();
     Tile tile;
     //initialize the tiles
     //When reading from an XML we'll break the initialize and assemble into separate steps.
-    for (int i = 0; i < 90; i++) {
+    for (int i = 1; i < 91; i++) {
       //switch statement to handle assigning tile functions.
-      tile = new Tile(i,new EmptyTileStrategy());
+      tile = new Tile(i, new EmptyTileStrategy());
       board.setTile(i, tile);
     }
     List<IntPair> ladders = new ArrayList<IntPair>(Arrays.asList(
@@ -51,7 +58,6 @@ public class BoardFactory {
       Tile endTile = board.getTile(pair.b());
       startTile.setTileStrategy(new SnakeTileStrategy(startTile, endTile));
     }
-
     return board;
   }
 
