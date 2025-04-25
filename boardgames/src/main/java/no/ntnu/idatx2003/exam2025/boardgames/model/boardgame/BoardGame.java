@@ -7,7 +7,9 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 
-
+/**
+ * An abstract class to be used when defining custom board games.
+ */
 public abstract class BoardGame {
   private Board board;
   private String name;
@@ -15,6 +17,7 @@ public abstract class BoardGame {
 
   /**
    * A method where each board game should initialize itself.
+   *
    * @param players the players that will be participating in the game.
    */
   public void setUp(List<Player> players) {
