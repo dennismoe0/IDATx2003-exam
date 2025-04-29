@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 
 /**
  * Basic piece that can move around the game board.
- *
  * Would need to be refactored if we want pieces to be special (Chess)
  */
 public class GamePiece {
@@ -80,6 +79,12 @@ public class GamePiece {
    * @param steps An integer getting the number of spaces the piece will move.
    */
   public void move(int steps) {
+
+    if (currentTile == null) {
+      if (startingTile != null) {
+        currentTile = startingTile;
+      }
+    }
     if (currentTile.getNextTile() == null) {
       throw new IllegalArgumentException("Cannot move to a non-existent tile.");
     }
