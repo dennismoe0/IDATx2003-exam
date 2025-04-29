@@ -83,10 +83,8 @@ public abstract class BoardGame {
 
   /**
    * An empty/default method intended to be overridden. Used for initiating a turn phase.
-   *
-   * @param player the player object who is taking their turn.
    */
-  public void takeTurn(Player player) {
+  public void takeTurn() {
 
   }
 

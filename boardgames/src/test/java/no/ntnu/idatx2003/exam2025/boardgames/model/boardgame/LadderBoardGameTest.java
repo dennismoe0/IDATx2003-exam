@@ -38,8 +38,9 @@ class LadderBoardGameTest {
   @Test
   void takeTurn() {
     ladderBoardGame.setUp(players);
-    ladderBoardGame.takeTurn(sasha);
+    ladderBoardGame.takeTurn();
 
-    assertNotEquals(1, ladderBoardGame.getFirstPlayerPiece(sasha).getCurrentTile().getId());
+    assertNotEquals(1, ladderBoardGame.getFirstPlayerPiece(
+        ladderBoardGame.getCurrentPlayer()).getCurrentTile().getId());
   }
 }
