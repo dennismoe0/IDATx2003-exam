@@ -17,6 +17,7 @@ public class LadderBoardGame extends BoardGame {
   private List<Player> players;
   private Player currentPlayer;
   private int playerIndex;
+  private boolean gameIsOver;
 
   /**
    * The default constructor for the Ladder Game class.
@@ -32,6 +33,7 @@ public class LadderBoardGame extends BoardGame {
 
   @Override
   public void setUp(List<Player> players) {
+    gameIsOver = false;
     dice = new Dice();
     dice.addDice(new Die(6));
 
@@ -49,6 +51,9 @@ public class LadderBoardGame extends BoardGame {
   public void takeTurn() {
     currentPlayer = getNextPlayer();
     super.getFirstPlayerPiece(currentPlayer).move(dice.rollAllDiceSum());
+    if (super.getFirstPlayerPiece(currentPlayer).getCurrentTile() == getBoard().getTile(90)) {
+      gameIsOver = true;
+    }
   }
 
   /**
@@ -62,6 +67,10 @@ public class LadderBoardGame extends BoardGame {
 
   private Player getNextPlayer() {
     return (players.get(++playerIndex));
+  }
+
+  public boolean isGameOver() {
+    return gameIsOver;
   }
 
   // use observer pattern to track player piece positions and fire a "game over"
