@@ -33,6 +33,14 @@ public class BoardFactory {
       tile = new Tile(i, new EmptyTileStrategy());
       board.setTile(i, tile);
     }
+    // Ensure that each tile has an assigned next tile.
+    for (int i = 1; i < 91; i++) {
+      if (i + 1 < 91) {
+        board.getTile(i).setNextTile(board.getTile(i + 1));
+      }
+
+    }
+
     List<IntPair> ladders = new ArrayList<IntPair>(Arrays.asList(
         new IntPair(1, 40),
         new IntPair(8, 10),

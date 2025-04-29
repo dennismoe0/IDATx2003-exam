@@ -56,7 +56,7 @@ public class GamePiece {
    */
   public void setCurrentTile(Tile tile) {
     currentTile = tile;
-    log.debug("Set position of Game Piece {} to tile {}", gamePieceId, currentTile);
+    log.info("Set position of Game Piece {} to tile {}", gamePieceId, currentTile);
   }
 
   /**
@@ -66,7 +66,7 @@ public class GamePiece {
    */
   public void setStartingTile(Tile tile) {
     startingTile = tile;
-    log.debug("Set starting tile of {} to {}.", gamePieceId, startingTile);
+    log.info("Set starting tile of {} to {}.", gamePieceId, startingTile);
   }
 
   public Tile getStartingTile() {
@@ -79,7 +79,6 @@ public class GamePiece {
    * @param steps An integer getting the number of spaces the piece will move.
    */
   public void move(int steps) {
-
     if (currentTile == null) {
       if (startingTile != null) {
         currentTile = startingTile;
@@ -101,7 +100,7 @@ public class GamePiece {
       currentTile.getTileStrategy().applyEffect(this);
     }
 
-    log.debug("GamePiece {} moved {} steps, from tile({}) to tile({})", gamePieceId, steps,
+    log.info("GamePiece {} moved {} steps, from tile({}) to tile({})", gamePieceId, steps,
         previousTile.getId(), currentTile.getId());
   }
 
