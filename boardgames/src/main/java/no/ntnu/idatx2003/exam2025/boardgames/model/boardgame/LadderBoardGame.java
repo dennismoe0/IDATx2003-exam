@@ -14,8 +14,9 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 public class LadderBoardGame extends BoardGame {
   private Dice dice;
   private GamePiece currentGamePiece;
+  private List<Player> players;
   private Player currentPlayer;
-  private Player previousPlayer;
+  private int playerIndex;
 
   /**
    * The default constructor for the Ladder Game class.
@@ -24,6 +25,7 @@ public class LadderBoardGame extends BoardGame {
    * @param players the players participating in the game, to keep track of turns.
    */
   public LadderBoardGame(Board board, List<Player> players) {
+    this.players = new ArrayList<>(players);
     super.setBoard(board);
     setUp(players);
   }
@@ -39,12 +41,14 @@ public class LadderBoardGame extends BoardGame {
       pieces.add(new GamePiece(getBoard().getTile(1))); // Null as placeholder
       super.addPlayerPieces(player, pieces);
     }
+    playerIndex = 0;
+    currentPlayer = players.get(playerIndex);
   }
 
   @Override
-  public void takeTurn(Player player) {
-    currentPlayer = player;
-    super.getFirstPlayerPiece(player).move(dice.rollAllDiceSum());
+  public void takeTurn() {
+    currentPlayer = getNextPlayer();
+    super.getFirstPlayerPiece(currentPlayer).move(dice.rollAllDiceSum());
   }
 
   /**
@@ -54,6 +58,10 @@ public class LadderBoardGame extends BoardGame {
    */
   public Player getCurrentPlayer() {
     return currentPlayer;
+  }
+
+  private Player getNextPlayer() {
+    return (players.get(++playerIndex));
   }
 
   // use observer pattern to track player piece positions and fire a "game over"
