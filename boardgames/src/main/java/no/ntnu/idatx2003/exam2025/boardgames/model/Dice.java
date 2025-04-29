@@ -1,5 +1,6 @@
 package no.ntnu.idatx2003.exam2025.boardgames.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
@@ -31,6 +32,13 @@ public class Dice {
   }
 
   /**
+   * Alternate constructor takes zero argument to create an empty Dice class.
+   */
+  public Dice() {
+    this.dice = new ArrayList<>();
+  }
+
+  /**
    * Calls the roll method for each individual die.
    * Did this instead of pretending to roll to be more Object Oriented.
    *
@@ -51,7 +59,7 @@ public class Dice {
    */
   public int rollAllDiceSum() {
     int sum = rollAllDice().stream().mapToInt(Integer::intValue).sum();
-    log.info("Sum of all dice rolls: {}, sum");
+    log.info("Sum of all dice rolls: {}", sum);
     return sum;
   }
 
@@ -59,7 +67,7 @@ public class Dice {
    * Adds a dice to the list of dice.
    * @param die A die object which is used to roll integers.
    */
-  public void addDice(Die die){
+  public void addDice(Die die) {
     dice.add(die);
   }
 

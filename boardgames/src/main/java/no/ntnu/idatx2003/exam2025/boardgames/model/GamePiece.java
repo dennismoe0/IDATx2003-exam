@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 
 /**
  * Basic piece that can move around the game board.
- *
  * Would need to be refactored if we want pieces to be special (Chess)
  */
 public class GamePiece {
@@ -57,7 +56,7 @@ public class GamePiece {
    */
   public void setCurrentTile(Tile tile) {
     currentTile = tile;
-    log.debug("Set position of Game Piece {} to tile {}", gamePieceId, currentTile);
+    log.info("Set position of Game Piece {} to tile {}", gamePieceId, currentTile);
   }
 
   /**
@@ -67,7 +66,7 @@ public class GamePiece {
    */
   public void setStartingTile(Tile tile) {
     startingTile = tile;
-    log.debug("Set starting tile of {} to {}.", gamePieceId, startingTile);
+    log.info("Set starting tile of {} to {}.", gamePieceId, startingTile);
   }
 
   public Tile getStartingTile() {
@@ -80,6 +79,12 @@ public class GamePiece {
    * @param steps An integer getting the number of spaces the piece will move.
    */
   public void move(int steps) {
+    if (currentTile == null) {
+      if (startingTile != null) {
+        currentTile = startingTile;
+        steps -= 1;
+      }
+    }
     if (currentTile.getNextTile() == null) {
       throw new IllegalArgumentException("Cannot move to a non-existent tile.");
     }
@@ -96,7 +101,7 @@ public class GamePiece {
       currentTile.getTileStrategy().applyEffect(this);
     }
 
-    log.debug("GamePiece {} moved {} steps, from tile({}) to tile({})", gamePieceId, steps,
+    log.info("GamePiece {} moved {} steps, from tile({}) to tile({})", gamePieceId, steps,
         previousTile.getId(), currentTile.getId());
   }
 
