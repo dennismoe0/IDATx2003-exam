@@ -47,6 +47,15 @@ public class LadderBoardGame extends BoardGame {
     super.getFirstPlayerPiece(player).move(dice.rollAllDiceSum());
   }
 
+  /**
+   * A method for getting the player who just took their turn.
+   *
+   * @return returns a player object.
+   */
+  public Player getCurrentPlayer() {
+    return currentPlayer;
+  }
+
   // use observer pattern to track player piece positions and fire a "game over"
   // event.
 
