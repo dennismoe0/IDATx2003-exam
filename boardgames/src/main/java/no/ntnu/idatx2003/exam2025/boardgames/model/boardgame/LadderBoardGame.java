@@ -17,22 +17,24 @@ public class LadderBoardGame extends BoardGame {
 
   /**
    * The default constructor for the Ladder Game class.
-   * @param board a collection of tiles to act as a game board.
+   *
+   * @param board   a collection of tiles to act as a game board.
    * @param players the players participating in the game, to keep track of turns.
    */
   public LadderBoardGame(Board board, List<Player> players) {
-    setBoard(board);
+    super.setBoard(board);
     setUp(players);
   }
 
   @Override
   public void setUp(List<Player> players) {
+    dice = new Dice();
     dice.addDice(new Die(6));
 
     List<GamePiece> pieces = new ArrayList<GamePiece>();
     for (Player player : players) {
       pieces.clear();
-      pieces.add(new GamePiece(null)); // Null as placeholder
+      pieces.add(new GamePiece(getBoard().getTile(1))); // Null as placeholder
       super.addPlayerPieces(player, pieces);
     }
   }
