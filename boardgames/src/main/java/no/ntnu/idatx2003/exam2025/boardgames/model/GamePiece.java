@@ -82,6 +82,7 @@ public class GamePiece {
     if (currentTile == null) {
       if (startingTile != null) {
         currentTile = startingTile;
+        steps -= 1;
       }
     }
     if (currentTile.getNextTile() == null) {

@@ -14,6 +14,8 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 public class LadderBoardGame extends BoardGame {
   private Dice dice;
   private GamePiece currentGamePiece;
+  private Player currentPlayer;
+  private Player previousPlayer;
 
   /**
    * The default constructor for the Ladder Game class.
@@ -41,6 +43,7 @@ public class LadderBoardGame extends BoardGame {
 
   @Override
   public void takeTurn(Player player) {
+    currentPlayer = player;
     super.getFirstPlayerPiece(player).move(dice.rollAllDiceSum());
   }
 
