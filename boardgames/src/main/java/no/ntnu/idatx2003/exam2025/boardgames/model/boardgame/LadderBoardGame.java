@@ -1,21 +1,26 @@
 package no.ntnu.idatx2003.exam2025.boardgames.model.boardgame;
 
+import java.util.ArrayList;
+import java.util.List;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Dice;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Die;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * A Board Game class representing Snakes n Ladders / Stigespillet.
+ */
 public class LadderBoardGame extends BoardGame {
-  private int NUMBER_OF_PIECES = 1;
-  private int NUMBER_OF_DICE = 1;
   private Dice dice;
   private GamePiece currentGamePiece;
 
-  public LadderBoardGame(Board board, List<Player> players, int boardChoice) {
+  /**
+   * The default constructor for the Ladder Game class.
+   * @param board a collection of tiles to act as a game board.
+   * @param players the players participating in the game, to keep track of turns.
+   */
+  public LadderBoardGame(Board board, List<Player> players) {
     setBoard(board);
     setUp(players);
   }
