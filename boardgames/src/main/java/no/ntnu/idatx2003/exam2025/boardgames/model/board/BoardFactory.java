@@ -41,7 +41,7 @@ public class BoardFactory {
 
     }
 
-    List<IntPair> ladders = new ArrayList<IntPair>(Arrays.asList(
+    List<IntPair> ladders = new ArrayList<>(Arrays.asList(
         new IntPair(1, 40),
         new IntPair(8, 10),
         new IntPair(36, 52),
@@ -56,7 +56,7 @@ public class BoardFactory {
       startTile.setTileStrategy(new LadderTileStrategy(startTile, endTile));
     }
 
-    List<IntPair> snakes = new ArrayList<IntPair>(Arrays.asList(
+    List<IntPair> snakes = new ArrayList<>(Arrays.asList(
         new IntPair(24, 5),
         new IntPair(33, 3),
         new IntPair(42, 30),
