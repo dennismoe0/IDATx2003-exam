@@ -6,10 +6,9 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import no.ntnu.idatx2003.exam2025.boardgames.model.tile.EmptyTileStrategy;
-import no.ntnu.idatx2003.exam2025.boardgames.model.tile.LadderTileStrategy;
-import no.ntnu.idatx2003.exam2025.boardgames.model.tile.SnakeTileStrategy;
-import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
+
+import no.ntnu.idatx2003.exam2025.boardgames.model.tile.*;
+import no.ntnu.idatx2003.exam2025.boardgames.model.tile.tilefactory.TileFactory;
 import no.ntnu.idatx2003.exam2025.boardgames.util.IntPair;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import org.slf4j.Logger;
@@ -19,6 +18,15 @@ import org.slf4j.Logger;
  */
 public class BoardFactory {
   private static final Logger log = Log.get(BoardFactory.class);
+  private final TileRegistry tileRegistry;
+
+  public BoardFactory(){
+    tileRegistry = new TileRegistry();
+  }
+
+  public BoardFactory (TileRegistry tileRegistry) {
+    this.tileRegistry = tileRegistry;
+  }
 
   /**
    * Method for creating the default board game for Snakes n Ladders.
@@ -86,9 +94,16 @@ public class BoardFactory {
   public Board buildBoardFromJson(JsonObject boardJson) {
     Board board = new Board();
     JsonArray tiles = boardJson.get("tiles").getAsJsonArray();
+    TileFactory tileFactory;
+    Tile tile;
     for (JsonElement tileJson : tiles) {
       JsonObject obj = tileJson.getAsJsonObject();
       String type = obj.get("tile-type").getAsString();
+      tileFactory = tileRegistry.getTileFactory(type);
+      if (tileFactory == null) {
+        throw new IllegalArgumentException("Unknown tile type: " + type);
+      }
+
     }
     return null;
   }
