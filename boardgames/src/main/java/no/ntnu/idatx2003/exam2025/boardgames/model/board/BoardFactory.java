@@ -6,8 +6,11 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import no.ntnu.idatx2003.exam2025.boardgames.model.tile.*;
+import no.ntnu.idatx2003.exam2025.boardgames.model.tile.EmptyTileStrategy;
+import no.ntnu.idatx2003.exam2025.boardgames.model.tile.LadderTileStrategy;
+import no.ntnu.idatx2003.exam2025.boardgames.model.tile.SnakeTileStrategy;
+import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
+import no.ntnu.idatx2003.exam2025.boardgames.model.tile.TileRegistry;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.tilefactory.TileFactory;
 import no.ntnu.idatx2003.exam2025.boardgames.util.IntPair;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
@@ -20,11 +23,20 @@ public class BoardFactory {
   private static final Logger log = Log.get(BoardFactory.class);
   private final TileRegistry tileRegistry;
 
-  public BoardFactory(){
+  /**
+   * Empty BoardFactory, creates a new tile registry.
+   */
+  public BoardFactory() {
     tileRegistry = new TileRegistry();
   }
 
-  public BoardFactory (TileRegistry tileRegistry) {
+  /**
+   * Alternative BoardFactory, takes in a TileRegistry as an argument.
+   *
+   * @param tileRegistry a filled TileRegistry
+   *                     from which tiles will be constructed.
+   */
+  public BoardFactory(TileRegistry tileRegistry) {
     this.tileRegistry = tileRegistry;
   }
 
