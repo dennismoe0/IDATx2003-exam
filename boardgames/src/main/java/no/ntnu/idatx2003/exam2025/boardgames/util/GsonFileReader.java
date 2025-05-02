@@ -6,9 +6,18 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-
+/**
+ * A reader for parsing json objects from a Json file, uses gson formatting.
+ */
 public class GsonFileReader implements JsonFileReader {
 
+  /**
+   * Main method for reading a json file.
+   *
+   * @param path the path to the specified file.
+   * @return returns the entire file as a JsonObject
+   * @throws IOException can throw an error for a missing or empty file.
+   */
   public JsonObject readJson(String path) throws IOException {
     BufferedReader reader = new BufferedReader(new FileReader(path));
     StringBuilder json = new StringBuilder();
