@@ -2,7 +2,6 @@ package no.ntnu.idatx2003.exam2025.boardgames.model.tile.tilefactory;
 
 import com.google.gson.JsonObject;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
-import no.ntnu.idatx2003.exam2025.boardgames.model.tile.LadderTileStrategy;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.SnakeTileStrategy;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
 

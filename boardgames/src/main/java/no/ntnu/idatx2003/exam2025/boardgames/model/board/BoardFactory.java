@@ -1,5 +1,8 @@
 package no.ntnu.idatx2003.exam2025.boardgames.model.board;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -72,6 +75,22 @@ public class BoardFactory {
     }
     log.info("Default ladder board created, {} tiles", board.getBoardSize());
     return board;
+  }
+
+  /**
+   * A method for Constructing a board from Json objects.
+   *
+   * @param boardJson the Json extracted from a file representing a board.
+   * @return returns a Board object.
+   */
+  public Board buildBoardFromJson(JsonObject boardJson) {
+    Board board = new Board();
+    JsonArray tiles = boardJson.get("tiles").getAsJsonArray();
+    for (JsonElement tileJson : tiles) {
+      JsonObject obj = tileJson.getAsJsonObject();
+      String type = obj.get("tile-type").getAsString();
+    }
+    return null;
   }
 
 }

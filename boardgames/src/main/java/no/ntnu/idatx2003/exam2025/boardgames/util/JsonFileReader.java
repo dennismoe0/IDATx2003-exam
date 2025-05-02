@@ -1,16 +1,18 @@
 package no.ntnu.idatx2003.exam2025.boardgames.util;
 
-import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
+import com.google.gson.JsonObject;
+
+import java.io.IOException;
 
 /**
  * Reads JSON info from a file and converts it to Board information.
  */
-public interface JsonBoardReader {
+public interface JsonFileReader {
   /**
    * Reads the info from a JSON file and reports it.
    *
    * @param path
    * @return
    */
-  Board readBoard(String path);
+  public JsonObject readJson(String path) throws IOException;
 }
