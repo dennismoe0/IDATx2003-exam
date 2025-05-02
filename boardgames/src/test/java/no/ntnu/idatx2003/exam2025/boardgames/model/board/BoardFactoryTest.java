@@ -1,7 +1,11 @@
 package no.ntnu.idatx2003.exam2025.boardgames.model.board;
 
+import com.google.gson.JsonObject;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.LadderTileStrategy;
+import no.ntnu.idatx2003.exam2025.boardgames.util.GsonFileReader;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,5 +26,22 @@ class BoardFactoryTest {
     assertNotEquals(LadderTileStrategy.class, ladderGameBoard.getTile(2).getTileStrategy().getClass());
     //Now we check to make sure we have the correct number of tiles.
     assertEquals(90, ladderGameBoard.getBoardSize());
+  }
+
+  @Test
+  void buildBoardFromJson(){
+    BoardFactory boardFactory = new BoardFactory();
+    GsonFileReader gsonFileReader = new GsonFileReader();
+    Board board = null;
+    try{
+      JsonObject json = gsonFileReader.readJson(
+          "src/main/resources/assets/boards/laddergameboards/laddergame_classic.json");
+      board = boardFactory.buildBoardFromJson(json);
+    } catch (IOException e) {
+      System.out.println(e.getMessage());
+    }
+    assertNotNull(board);
+    assertEquals(90, board.getBoardSize());
+
   }
 }

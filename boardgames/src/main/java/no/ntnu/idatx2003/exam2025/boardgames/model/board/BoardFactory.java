@@ -1,5 +1,8 @@
 package no.ntnu.idatx2003.exam2025.boardgames.model.board;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -7,6 +10,8 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.tile.EmptyTileStrategy;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.LadderTileStrategy;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.SnakeTileStrategy;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
+import no.ntnu.idatx2003.exam2025.boardgames.model.tile.TileRegistry;
+import no.ntnu.idatx2003.exam2025.boardgames.model.tile.tilefactory.TileFactory;
 import no.ntnu.idatx2003.exam2025.boardgames.util.IntPair;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import org.slf4j.Logger;
@@ -16,6 +21,24 @@ import org.slf4j.Logger;
  */
 public class BoardFactory {
   private static final Logger log = Log.get(BoardFactory.class);
+  private final TileRegistry tileRegistry;
+
+  /**
+   * Empty BoardFactory, creates a new tile registry.
+   */
+  public BoardFactory() {
+    tileRegistry = new TileRegistry();
+  }
+
+  /**
+   * Alternative BoardFactory, takes in a TileRegistry as an argument.
+   *
+   * @param tileRegistry a filled TileRegistry
+   *                     from which tiles will be constructed.
+   */
+  public BoardFactory(TileRegistry tileRegistry) {
+    this.tileRegistry = tileRegistry;
+  }
 
   /**
    * Method for creating the default board game for Snakes n Ladders.
@@ -41,7 +64,7 @@ public class BoardFactory {
 
     }
 
-    List<IntPair> ladders = new ArrayList<IntPair>(Arrays.asList(
+    List<IntPair> ladders = new ArrayList<>(Arrays.asList(
         new IntPair(1, 40),
         new IntPair(8, 10),
         new IntPair(36, 52),
@@ -56,7 +79,7 @@ public class BoardFactory {
       startTile.setTileStrategy(new LadderTileStrategy(startTile, endTile));
     }
 
-    List<IntPair> snakes = new ArrayList<IntPair>(Arrays.asList(
+    List<IntPair> snakes = new ArrayList<>(Arrays.asList(
         new IntPair(24, 5),
         new IntPair(33, 3),
         new IntPair(42, 30),
@@ -71,6 +94,42 @@ public class BoardFactory {
       startTile.setTileStrategy(new SnakeTileStrategy(startTile, endTile));
     }
     log.info("Default ladder board created, {} tiles", board.getBoardSize());
+    return board;
+  }
+
+  /**
+   * A method for Constructing a board from Json objects.
+   *
+   * @param boardJson the Json extracted from a file representing a board.
+   * @return returns a Board object.
+   */
+  public Board buildBoardFromJson(JsonObject boardJson) {
+    JsonArray tiles = boardJson.get("tiles").getAsJsonArray();
+    int boardSize = boardJson.get("board-size").getAsInt();
+    Board board = createBoard(boardSize);
+    TileFactory tileFactory;
+    Tile tile;
+    JsonObject obj;
+    String type;
+
+    for (JsonElement tileJson : tiles) {
+      obj = tileJson.getAsJsonObject();
+      type = obj.get("tile-type").getAsString();
+      tileFactory = tileRegistry.getTileFactory(type);
+      if (tileFactory == null) {
+        throw new IllegalArgumentException("Unknown tile type: " + type);
+      }
+      tile = tileFactory.tileFromJson(obj, board);
+    }
+    return board;
+  }
+
+
+  private Board createBoard(int size) {
+    Board board = new Board();
+    for (int i = 1; i < size + 1; i++) {
+      board.setTile(i, new Tile(i, new EmptyTileStrategy()));
+    }
     return board;
   }
 
