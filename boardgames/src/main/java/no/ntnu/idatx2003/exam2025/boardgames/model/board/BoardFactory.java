@@ -92,13 +92,17 @@ public class BoardFactory {
    * @return returns a Board object.
    */
   public Board buildBoardFromJson(JsonObject boardJson) {
-    Board board = new Board();
     JsonArray tiles = boardJson.get("tiles").getAsJsonArray();
+    int boardSize = boardJson.get("board-size").getAsInt();
     TileFactory tileFactory;
     Tile tile;
+    JsonObject obj;
+    String type;
+
+
     for (JsonElement tileJson : tiles) {
-      JsonObject obj = tileJson.getAsJsonObject();
-      String type = obj.get("tile-type").getAsString();
+      obj = tileJson.getAsJsonObject();
+      type = obj.get("tile-type").getAsString();
       tileFactory = tileRegistry.getTileFactory(type);
       if (tileFactory == null) {
         throw new IllegalArgumentException("Unknown tile type: " + type);
@@ -106,6 +110,15 @@ public class BoardFactory {
 
     }
     return null;
+  }
+
+
+  private Board createBoard(int size) {
+    Board board = new Board();
+    for (int i = 1; i < size + 1; i++) {
+      board.setTile(i, new Tile(i, new EmptyTileStrategy()));
+    }
+    return board;
   }
 
 }
