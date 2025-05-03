@@ -42,6 +42,6 @@ class BoardFactoryTest {
     }
     assertNotNull(board);
     assertEquals(90, board.getBoardSize());
-
+    assertEquals(LadderTileStrategy.class, board.getTile(1).getTileStrategy().getClass());
   }
 }
