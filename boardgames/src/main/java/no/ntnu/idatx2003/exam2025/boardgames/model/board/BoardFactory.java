@@ -120,6 +120,7 @@ public class BoardFactory {
         throw new IllegalArgumentException("Unknown tile type: " + type);
       }
       tile = tileFactory.tileFromJson(obj, board);
+      board.setTile(tile.getId(), tile);
     }
     return board;
   }
