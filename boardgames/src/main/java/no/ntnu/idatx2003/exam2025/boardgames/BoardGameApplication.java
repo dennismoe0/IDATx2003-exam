@@ -14,11 +14,12 @@ import no.ntnu.idatx2003.exam2025.boardgames.view.MenuView;
  * The main Application File for starting and stopping the program.
  */
 public class BoardGameApplication extends Application {
-  private final MenuView view = new MenuView("Main Menu", buildTestMenu());
+
 
   @Override
   public void start(Stage primaryStage) throws Exception {
-    Scene scene = new Scene(view.asParent());
+    MenuView view = new MenuView("Main Menu", buildTestMenu());
+    Scene scene = new Scene(view.asParent(), 400, 400);
     primaryStage.setScene(scene);
     primaryStage.show();
   }
@@ -29,7 +30,7 @@ public class BoardGameApplication extends Application {
    * @param args default args.
    */
   public static void main(String[] args) {
-
+    launch(args);
   }
 
   private List<MenuOption> buildTestMenu() {

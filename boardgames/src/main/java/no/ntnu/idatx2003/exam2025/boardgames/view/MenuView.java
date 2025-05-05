@@ -27,7 +27,7 @@ public class MenuView {
     this.title = new Text(title);
     this.options = options;
     createView();
-    createView();
+    createAndConfigureMenu();
     view.setTop(this.title);
     view.setCenter(menu);
   }
