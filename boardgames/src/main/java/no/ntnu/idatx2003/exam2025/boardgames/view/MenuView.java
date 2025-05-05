@@ -17,7 +17,7 @@ public class MenuView {
   private final List<MenuOption> options;
 
   /**
-   * Default constructor for a MenuView
+   * Default constructor for a MenuView.
    *
    * @param title   the title of the Menu to be displayed.
    * @param options A list of Menu options (buttons).
