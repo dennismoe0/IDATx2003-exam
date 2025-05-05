@@ -4,20 +4,31 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+import java.util.List;
+
 /**
  * Custom container class for displaying menu options visually.
  */
-public class MenuView extends BorderPane {
-  private MenuList menuList = new MenuList();
+public class MenuView {
   private Text title;
+  private BorderPane view;
+  private VBox menu;
+  private List<MenuOption> options;
 
-  public MenuView(String title) {
+
+  public MenuView(String title, List<MenuOption> options) {
+    view = new BorderPane();
     this.title = new Text(title);
-    MenuView.super.setTop(this.title);
-    MenuView.super.setCenter(menuList);
   }
 
-  public void build() {
-
+  private void createView() {
+    menu = new VBox();
   }
+
+  private void createAndConfigureMenu() {
+    for (MenuOption option : options) {
+      menu.getChildren().add(option);
+    }
+  }
+
 }
