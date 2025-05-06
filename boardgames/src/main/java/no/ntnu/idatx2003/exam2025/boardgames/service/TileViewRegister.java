@@ -7,8 +7,12 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.tile.LadderTileStrategy;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.SnakeTileStrategy;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.TileStrategy;
 
+/**
+ * Uses AI.
+ */
 public class TileViewRegister {
   private Map<Class<? extends TileStrategy>, String> registry = new HashMap<>();
+  //Specifically AI was used for the Class<?> suggestion.
 
   public TileViewRegister() {
     register(EmptyTileStrategy.class, "ts-empty");
