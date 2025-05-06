@@ -39,6 +39,12 @@ public class BoardView {
     assembleBoard(tileViews);
   }
 
+  private void setConstraints() {
+    grid.setPrefSize(600, 600);
+    grid.setHgap(5);
+    grid.setVgap(5);
+  }
+
   private void assembleBoard(List<TileView> tileViews) {
     int index = 0;
     int j = 1;
