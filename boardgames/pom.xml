@@ -33,7 +33,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>no.ntnu.idatx2003.exam2025.laddersgamextreme.StatsTestingApplication</mainClass>
+                    <mainClass>no.ntnu.idatx2003.exam2025.boardgames.BoardGameApplication</mainClass>
                 </configuration>
             </plugin>
 

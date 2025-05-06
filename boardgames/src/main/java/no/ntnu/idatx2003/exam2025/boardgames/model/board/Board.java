@@ -1,7 +1,10 @@
 package no.ntnu.idatx2003.exam2025.boardgames.model.board;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import org.slf4j.Logger;
@@ -58,5 +61,14 @@ public class Board {
    */
   public int getBoardSize() {
     return tiles.size();
+  }
+
+  /**
+   * Method for getting the whole board of Tiles as a List.
+   *
+   * @return returns a list of Tiles objects.
+   */
+  public List<Tile> getTilesAsList() {
+    return new ArrayList<>(tiles.values());
   }
 }
