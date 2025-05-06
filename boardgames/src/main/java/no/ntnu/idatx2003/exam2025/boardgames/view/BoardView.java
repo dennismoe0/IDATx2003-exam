@@ -42,6 +42,7 @@ public class BoardView {
     List<Tile> tiles = board.getTilesAsList();
     TileView view;
     String tileType;
+    double tileSize = 600.0 / board.getColumns();
 
     for (Tile tile : tiles) {
       try {
@@ -50,7 +51,7 @@ public class BoardView {
         e.printStackTrace();
         tileType = "ts-empty";
       }
-      view = new TileView(tile, 50, tileType);
+      view = new TileView(tile, ((int) tileSize), tileType);
       tileViews.add(view);
     }
     assembleBoard(tileViews);
