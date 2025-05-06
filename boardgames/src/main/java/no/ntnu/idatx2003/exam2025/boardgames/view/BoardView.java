@@ -1,5 +1,6 @@
 package no.ntnu.idatx2003.exam2025.boardgames.view;
 
+import javafx.scene.Parent;
 import javafx.scene.layout.GridPane;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
@@ -18,6 +19,10 @@ public class BoardView {
     grid = new GridPane();
     tileViewRegister = new TileViewRegister();
     buildBoardView();
+  }
+
+  public Parent asParent() {
+    return grid;
   }
 
   private void buildBoardView() {

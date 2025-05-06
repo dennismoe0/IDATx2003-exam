@@ -19,6 +19,7 @@ public class BoardGameApplication extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
     MenuView view = new MenuView("Main Menu", buildTestMenu());
+
     Scene scene = new Scene(view.asParent(), 400, 400);
     primaryStage.setScene(scene);
     primaryStage.show();
