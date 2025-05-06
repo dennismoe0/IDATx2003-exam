@@ -2,6 +2,8 @@ package no.ntnu.idatx2003.exam2025.boardgames.view;
 
 import javafx.css.StyleClass;
 import javafx.scene.Node;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
@@ -9,7 +11,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
 /**
  * Base TileView class.
  */
-public class TileView extends Node {
+public class TileView extends BorderPane {
   private Tile tile;
   private Text tileNumber;
   private int width;
@@ -22,6 +24,7 @@ public class TileView extends Node {
     view = new StackPane();
     view.getStyleClass().add(styleClass);
     buildView();
+    super.setCenter(view);
   }
   public Tile getTile() {
     return tile;
@@ -40,6 +43,7 @@ public class TileView extends Node {
     view.setMinSize(minSize, minSize);
     view.setPrefSize(width, width);
     tileNumber.setText(String.valueOf(tile.getId()));
+    tileNumber.setStyle("-fx-text-fill: black;");
     view.getChildren().add(tileNumber);
   }
 

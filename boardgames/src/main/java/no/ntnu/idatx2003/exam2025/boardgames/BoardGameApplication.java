@@ -5,7 +5,11 @@ import java.util.List;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
+import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardFactory;
+import no.ntnu.idatx2003.exam2025.boardgames.util.GsonFileReader;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.PrintLineCommand;
+import no.ntnu.idatx2003.exam2025.boardgames.view.BoardView;
 import no.ntnu.idatx2003.exam2025.boardgames.view.MenuOption;
 import no.ntnu.idatx2003.exam2025.boardgames.view.MenuView;
 
@@ -19,8 +23,13 @@ public class BoardGameApplication extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
     MenuView view = new MenuView("Main Menu", buildTestMenu());
-
-    Scene scene = new Scene(view.asParent(), 400, 400);
+    BoardFactory factory = new BoardFactory();
+    GsonFileReader reader = new GsonFileReader();
+    Board board = factory.buildBoardFromJson(reader.readJson(
+        "src/main/resources/assets/boards/laddergameboards/laddergame_classic.json"));
+    BoardView boardView = new BoardView(board);
+    //Scene scene = new Scene(view.asParent(), 400, 400);
+    Scene scene = new Scene(boardView.asParent(), 600, 600);
     primaryStage.setScene(scene);
     primaryStage.show();
   }

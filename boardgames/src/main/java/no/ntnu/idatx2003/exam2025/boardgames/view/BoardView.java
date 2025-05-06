@@ -1,6 +1,7 @@
 package no.ntnu.idatx2003.exam2025.boardgames.view;
 
 import javafx.scene.Parent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BoardView {
+  private BorderPane root;
   private GridPane grid;
   private Board board;
   private TileViewRegister tileViewRegister;
@@ -19,6 +21,8 @@ public class BoardView {
     grid = new GridPane();
     tileViewRegister = new TileViewRegister();
     buildBoardView();
+//    root = new BorderPane();
+//    root.setCenter(grid);
   }
 
   public Parent asParent() {
@@ -38,7 +42,7 @@ public class BoardView {
         e.printStackTrace();
         tileType = "ts-empty";
       }
-      view = new TileView(tile, tile.getId(), tileType);
+      view = new TileView(tile, 50, tileType);
       tileViews.add(view);
     }
     assembleBoard(tileViews);
@@ -51,19 +55,30 @@ public class BoardView {
   }
 
   private void assembleBoard(List<TileView> tileViews) {
+    System.out.println("Assembling Board");
+    System.out.println("Tile View Size: " + tileViews.size());
     int index = 0;
-    int j = 1;
+    int i = 1;
+    int j = 9;
+    boolean countUp = true;
     while (index < tileViews.size()) {
-      for (int i = 0; i < 10; i++) {
-        grid.add(tileViews.get(index), i, j);
-        index++;
+      grid.add(tileViews.get(index), i, j);
+      if (countUp) {
+        i++;
+      } else {
+        i--;
       }
-      j++;
-      for (int i = 10; i > 0; i--) {
-        grid.add(tileViews.get(index), i, j);
-        index++;
+      if (i == 10) {
+        countUp = false;
+        j--;
+        i--;
       }
-      j++;
+      if (i == 0) {
+        countUp = true;
+        j--;
+        i++;
+      }
+      index++;
     }
   }
 }
