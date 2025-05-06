@@ -24,7 +24,11 @@ public class TileViewRegister {
     registry.put(strategy, name);
   }
 
-  public String get(Class<? extends TileStrategy> strategy) {
-    return registry.get(strategy);
+  public String get(Class<? extends TileStrategy> strategy) throws Exception {
+    String result = registry.get(strategy);
+    if (result == null) {
+      throw new Exception("No view registered for Tile Strategy: " + strategy);
+    }
+    return result;
   }
 }

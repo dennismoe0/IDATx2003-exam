@@ -23,5 +23,36 @@ public class BoardView {
   private void buildBoardView() {
     List<TileView> tileViews = new ArrayList<TileView>();
     List<Tile> tiles = board.getTilesAsList();
+    TileView view;
+    String tileType;
+
+    for (Tile tile : tiles) {
+      try {
+        tileType = tileViewRegister.get(tile.getTileStrategy().getClass());
+      } catch (Exception e) {
+        e.printStackTrace();
+        tileType = "ts-empty";
+      }
+      view = new TileView(tile, tile.getId(), tileType);
+      tileViews.add(view);
+    }
+    assembleBoard(tileViews);
+  }
+
+  private void assembleBoard(List<TileView> tileViews) {
+    int index = 0;
+    int j = 1;
+    while (index < tileViews.size()) {
+      for (int i = 0; i < 10; i++) {
+        grid.add(tileViews.get(index), i, j);
+        index++;
+      }
+      j++;
+      for (int i = 10; i > 0; i--) {
+        grid.add(tileViews.get(index), i, j);
+        index++;
+      }
+      j++;
+    }
   }
 }
