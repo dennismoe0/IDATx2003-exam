@@ -112,6 +112,9 @@ public class BoardFactory {
     JsonObject obj;
     String type;
 
+    board.setRows(boardJson.get("rows").getAsInt());
+    board.setColumns(boardJson.get("columns").getAsInt());
+
     for (JsonElement tileJson : tiles) {
       obj = tileJson.getAsJsonObject();
       type = obj.get("tile-type").getAsString();
