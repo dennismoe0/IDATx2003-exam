@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BoardView {
-  private BorderPane root;
   private GridPane grid;
   private Board board;
   private TileViewRegister tileViewRegister;
@@ -21,8 +20,6 @@ public class BoardView {
     grid = new GridPane();
     tileViewRegister = new TileViewRegister();
     buildBoardView();
-//    root = new BorderPane();
-//    root.setCenter(grid);
   }
 
   public Parent asParent() {
@@ -59,7 +56,7 @@ public class BoardView {
     System.out.println("Tile View Size: " + tileViews.size());
     int index = 0;
     int i = 1;
-    int j = 9;
+    int j = board.getRows();
     boolean countUp = true;
     while (index < tileViews.size()) {
       grid.add(tileViews.get(index), i, j);
@@ -68,7 +65,7 @@ public class BoardView {
       } else {
         i--;
       }
-      if (i == 10) {
+      if (i == board.getColumns() + 1) {
         countUp = false;
         j--;
         i--;

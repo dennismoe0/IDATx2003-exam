@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
+import no.ntnu.idatx2003.exam2025.boardgames.util.IntPair;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import org.slf4j.Logger;
 
@@ -16,6 +17,8 @@ import org.slf4j.Logger;
 public class Board {
   private HashMap<Integer, Tile> tiles;
   private static final Logger log = Log.get(Board.class);
+  private int rows;
+  private int columns;
 
   /**
    * Default constructor, initializes tile map.
@@ -70,5 +73,21 @@ public class Board {
    */
   public List<Tile> getTilesAsList() {
     return new ArrayList<>(tiles.values());
+  }
+
+  public int getRows() {
+    return rows;
+  }
+
+  public int getColumns() {
+    return columns;
+  }
+
+  public void setColumns(int columns) {
+    this.columns = columns;
+  }
+
+  public void setRows(int rows) {
+    this.rows = rows;
   }
 }
