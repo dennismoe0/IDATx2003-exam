@@ -30,6 +30,8 @@ public class BoardGameApplication extends Application {
     BoardView boardView = new BoardView(board);
     //Scene scene = new Scene(view.asParent(), 400, 400);
     Scene scene = new Scene(boardView.asParent(), 600, 600);
+    scene.getStylesheets().add(
+        getClass().getResource("/assets/style/styles.css").toExternalForm());
     primaryStage.setScene(scene);
     primaryStage.show();
   }
