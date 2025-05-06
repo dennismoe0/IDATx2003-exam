@@ -1,20 +1,26 @@
 package no.ntnu.idatx2003.exam2025.boardgames.view;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.Parent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
 import no.ntnu.idatx2003.exam2025.boardgames.service.TileViewRegister;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * View class for Boards. Uses GridPane as a base.
+ */
 public class BoardView {
-  private GridPane grid;
-  private Board board;
-  private TileViewRegister tileViewRegister;
+  private final GridPane grid;
+  private final Board board;
+  private final TileViewRegister tileViewRegister;
 
+  /**
+   * The default constructor, requires a Board object.
+   *
+   * @param board the board to be constructed.
+   */
   public BoardView(Board board) {
     this.board = board;
     grid = new GridPane();
@@ -22,6 +28,11 @@ public class BoardView {
     buildBoardView();
   }
 
+  /**
+   * Returns the grid object as a parent. For testing purposes.
+   *
+   * @return returns a Node object as a parent.
+   */
   public Parent asParent() {
     return grid;
   }
