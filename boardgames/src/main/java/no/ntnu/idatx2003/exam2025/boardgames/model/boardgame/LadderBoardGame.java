@@ -21,7 +21,7 @@ public class LadderBoardGame extends BoardGame {
   private Player currentPlayer;
   private int playerIndex;
   private boolean gameIsOver;
-  private ObservableList<LadderGameMessage> messages = FXCollections.observableArrayList();
+  private LadderGameMoveHistory moveHistory = new LadderGameMoveHistory();
 
   /**
    * The default constructor for the Ladder Game class.
@@ -59,7 +59,7 @@ public class LadderBoardGame extends BoardGame {
     super.getFirstPlayerPiece(currentPlayer).move(dice.rollAllDiceSum());
     int roll = dice.getLastRoll();
     int endTile = currentGamePiece.getCurrentTile().getId();
-    addMessage(new LadderGameMessage(currentPlayer, startTile, endTile, roll));
+    moveHistory.addMessage(new LadderGameMessage(currentPlayer, startTile, endTile, roll));
     if (super.getFirstPlayerPiece(currentPlayer).getCurrentTile() == getBoard().getTile(90)) {
       gameIsOver = true;
     }
@@ -67,16 +67,7 @@ public class LadderBoardGame extends BoardGame {
 
   }
 
-  private void addMessage(LadderGameMessage message) {
-    messages.add(message);
-    if (messages.size() >= 20) {
-      messages.removeFirst();
-    }
-  }
 
-  public ObservableList<LadderGameMessage> getMessages() {
-    return messages;
-  }
 
   /**
    * A method for getting the player who just took their turn.
