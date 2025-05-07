@@ -2,6 +2,8 @@ package no.ntnu.idatx2003.exam2025.boardgames.model.boardgame;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Dice;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Die;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
@@ -19,7 +21,7 @@ public class LadderBoardGame extends BoardGame {
   private Player currentPlayer;
   private int playerIndex;
   private boolean gameIsOver;
-  private List<LadderGameMessage> messages;
+  private ObservableList<LadderGameMessage> messages = FXCollections.observableArrayList();
 
   /**
    * The default constructor for the Ladder Game class.
@@ -29,7 +31,6 @@ public class LadderBoardGame extends BoardGame {
    */
   public LadderBoardGame(Board board, List<Player> players) {
     this.players = new ArrayList<>(players);
-    messages = new ArrayList<>();
     super.setBoard(board);
     setUp(players);
   }
@@ -71,6 +72,10 @@ public class LadderBoardGame extends BoardGame {
     if (messages.size() >= 20) {
       messages.removeFirst();
     }
+  }
+
+  public ObservableList<LadderGameMessage> getMessages() {
+    return messages;
   }
 
   /**
