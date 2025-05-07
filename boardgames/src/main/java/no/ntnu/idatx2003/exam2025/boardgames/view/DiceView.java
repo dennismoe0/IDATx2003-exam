@@ -2,6 +2,8 @@ package no.ntnu.idatx2003.exam2025.boardgames.view;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Dice;
@@ -43,8 +45,12 @@ public class DiceView {
       dieViews.add(dieView);
       diceView.getChildren().add(dieView);
     }
-
+    diceView.setOnMouseClicked(event -> {});
     root.setCenter(diceView);
+  }
+
+  public Parent getRoot() {
+    return root;
   }
 
   private void buildDiceView(){
