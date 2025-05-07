@@ -1,5 +1,8 @@
 package no.ntnu.idatx2003.exam2025.boardgames.view;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ObservableIntegerValue;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -8,16 +11,20 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.Die;
 /**
  * Die view for handling individual dice in the view.
  */
-public class DieView extends Rectangle {
+public class DieView extends StackPane {
   private final Text resultText = new Text();
+  private final Rectangle dieView;
   private final Die die;
   private final double ARC_WIDTH = 7;
 
   public DieView(Die die, double widthHeight) {
-    super(widthHeight, widthHeight, Color.BLUE);
-    super.setArcHeight(widthHeight / ARC_WIDTH);
-    super.setArcWidth(widthHeight / ARC_WIDTH);
+    super();
+    dieView = new Rectangle(widthHeight, widthHeight, Color.BLUE);
+    dieView.setArcHeight(widthHeight / ARC_WIDTH);
+    dieView.setArcWidth(widthHeight / ARC_WIDTH);
     this.die = die;
     this.resultText.setText("Hello");
+    this.getChildren().add(dieView);
+    this.getChildren().add(resultText);
   }
 }
