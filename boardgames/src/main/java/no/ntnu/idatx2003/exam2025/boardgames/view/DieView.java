@@ -17,6 +17,12 @@ public class DieView extends StackPane {
   private final Die die;
   private final double ARC_WIDTH = 7;
 
+  /**
+   * Default Constructor for the DieView.
+   *
+   * @param die a Die object.
+   * @param widthHeight the dimensions the dice should take.
+   */
   public DieView(Die die, double widthHeight) {
     super();
     dieView = new Rectangle(widthHeight, widthHeight, Color.BLUE);
