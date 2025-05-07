@@ -49,19 +49,21 @@ public class BoardFactory {
     log.info("Creating default ladder board");
     Board board = new Board();
     Tile tile;
-    //initialize the tiles
-    //When reading from an XML we'll break the initialize and assemble into separate steps.
+    // initialize the tiles
+    // When reading from an XML we'll break the initialize and assemble into
+    // separate steps.
     for (int i = 1; i < 91; i++) {
-      //switch statement to handle assigning tile functions.
+      // switch statement to handle assigning tile functions.
       tile = new Tile(i, new EmptyTileStrategy());
       board.setTile(i, tile);
     }
-    // Ensure that each tile has an assigned next tile.
     for (int i = 1; i < 91; i++) {
       if (i + 1 < 91) {
-        board.getTile(i).setNextTile(board.getTile(i + 1));
+        Tile currentTile = board.getTile(i);
+        Tile nextTile = board.getTile(i + 1);
+        currentTile.setNextTile(nextTile);
+        log.debug("Linked tile {} to tile {}", currentTile.getId(), nextTile.getId());
       }
-
     }
 
     List<IntPair> ladders = new ArrayList<>(Arrays.asList(
@@ -71,8 +73,7 @@ public class BoardFactory {
         new IntPair(43, 52),
         new IntPair(49, 79),
         new IntPair(65, 82),
-        new IntPair(68, 85)
-    ));
+        new IntPair(68, 85)));
     for (IntPair pair : ladders) {
       Tile startTile = board.getTile(pair.a());
       Tile endTile = board.getTile(pair.b());
@@ -86,8 +87,7 @@ public class BoardFactory {
         new IntPair(56, 37),
         new IntPair(64, 27),
         new IntPair(74, 12),
-        new IntPair(87, 70)
-    ));
+        new IntPair(87, 70)));
     for (IntPair pair : snakes) {
       Tile startTile = board.getTile(pair.a());
       Tile endTile = board.getTile(pair.b());
@@ -125,9 +125,16 @@ public class BoardFactory {
       tile = tileFactory.tileFromJson(obj, board);
       board.setTile(tile.getId(), tile);
     }
+    for (int i = 1; i <= board.getBoardSize(); i++) {
+      Tile currentTile = board.getTile(i);
+      Tile nextTile = board.getTile(i + 1); // Get the next tile
+      if (nextTile != null) {
+        currentTile.setNextTile(nextTile);
+        log.debug("Linked tile {} to tile {}", currentTile.getId(), nextTile.getId());
+      }
+    }
     return board;
   }
-
 
   private Board createBoard(int size) {
     Board board = new Board();

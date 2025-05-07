@@ -7,3 +7,9 @@
 .ts-snake {
     -fx-background-color: red;
 }
+.ts-win {
+  -fx-background-color: yellow;
+}
+.ts-start {
+    -fx-background-color: blue;
+}
