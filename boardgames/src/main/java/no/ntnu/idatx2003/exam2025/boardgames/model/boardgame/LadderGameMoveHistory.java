@@ -8,7 +8,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.util.LadderGameMessage;
  * Class for tracking the moves in the ladder game.
  */
 public class LadderGameMoveHistory {
-  private ObservableList<LadderGameMessage> messages = FXCollections.observableArrayList();
+  private final ObservableList<LadderGameMessage> messages = FXCollections.observableArrayList();
 
   /**
    * A method for adding a new message to the move history.

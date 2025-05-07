@@ -63,11 +63,7 @@ public class LadderBoardGame extends BoardGame {
     if (super.getFirstPlayerPiece(currentPlayer).getCurrentTile() == getBoard().getTile(90)) {
       gameIsOver = true;
     }
-
-
   }
-
-
 
   /**
    * A method for getting the player who just took their turn.
