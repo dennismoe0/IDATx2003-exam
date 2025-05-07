@@ -1,0 +1,9 @@
+.ts-empty {
+    -fx-background-color: gray;
+}
+.ts-ladder {
+    -fx-background-color: green;
+}
+.ts-snake {
+    -fx-background-color: red;
+}
