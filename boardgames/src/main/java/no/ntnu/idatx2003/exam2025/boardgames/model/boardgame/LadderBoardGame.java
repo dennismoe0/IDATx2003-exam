@@ -7,6 +7,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.Die;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
+import no.ntnu.idatx2003.exam2025.boardgames.util.LadderGameMessage;
 
 /**
  * A Board Game class representing Snakes n Ladders / Stigespillet.
@@ -18,6 +19,7 @@ public class LadderBoardGame extends BoardGame {
   private Player currentPlayer;
   private int playerIndex;
   private boolean gameIsOver;
+  private List<LadderGameMessage> messages;
 
   /**
    * The default constructor for the Ladder Game class.
@@ -27,6 +29,7 @@ public class LadderBoardGame extends BoardGame {
    */
   public LadderBoardGame(Board board, List<Player> players) {
     this.players = new ArrayList<>(players);
+    messages = new ArrayList<>();
     super.setBoard(board);
     setUp(players);
   }
@@ -50,6 +53,7 @@ public class LadderBoardGame extends BoardGame {
   @Override
   public void takeTurn() {
     currentPlayer = getNextPlayer();
+    int startTile = super.getFirstPlayerPiece(currentPlayer).getCurrentTile().getId();
     super.getFirstPlayerPiece(currentPlayer).move(dice.rollAllDiceSum());
     if (super.getFirstPlayerPiece(currentPlayer).getCurrentTile() == getBoard().getTile(90)) {
       gameIsOver = true;
@@ -72,6 +76,7 @@ public class LadderBoardGame extends BoardGame {
   public boolean isGameOver() {
     return gameIsOver;
   }
+
 
   // use observer pattern to track player piece positions and fire a "game over"
   // event.
