@@ -1,7 +1,5 @@
 package no.ntnu.idatx2003.exam2025.boardgames.view;
 
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ObservableIntegerValue;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -29,7 +27,8 @@ public class DieView extends StackPane {
     dieView.setArcHeight(widthHeight / ARC_WIDTH);
     dieView.setArcWidth(widthHeight / ARC_WIDTH);
     this.die = die;
-    this.resultText.setText("Hello");
+    resultText.textProperty().bind(this.die.rollProperty().asString());
+    resultText.setFill(Color.WHITE);
     this.getChildren().add(dieView);
     this.getChildren().add(resultText);
   }

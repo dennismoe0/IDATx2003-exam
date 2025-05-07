@@ -1,15 +1,42 @@
 package no.ntnu.idatx2003.exam2025.boardgames.model;
 
+import java.util.Random;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import org.slf4j.Logger;
 
-import java.util.Random;
-
+/**
+ * A class representing a single Die object, for use in board games.
+ */
 public class Die {
   private static final Logger log = Log.get(Die.class);
   private static final Random RNG = new Random();
-
   private final int sides;
+  private final IntegerProperty roll = new SimpleIntegerProperty();
+
+
+  /**
+   * A method for retrieving and binding an integer property in Javafx.
+   *
+   * @return returns an Integer Property.
+   */
+  public IntegerProperty rollProperty() {
+    return roll;
+  }
+
+  public int getRoll() {
+    return roll.get();
+  }
+
+  /**
+   * Manually set the result of a die.
+   *
+   * @param roll an int representing the result you want to set.
+   */
+  public void setRoll(int roll) {
+    this.roll.set(roll);
+  }
 
   /**
    * Die constructor that takes in the amount of sides the die should have.
@@ -39,6 +66,7 @@ public class Die {
   public int roll() {
     int result = RNG.nextInt(sides) + 1;
     log.info("Rolled a {}", result);
+    roll.set(result);
     return result;
   }
 }
