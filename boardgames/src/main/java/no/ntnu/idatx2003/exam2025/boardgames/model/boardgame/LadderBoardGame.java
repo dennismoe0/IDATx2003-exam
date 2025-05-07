@@ -71,7 +71,7 @@ public final class LadderBoardGame extends BoardGame {
   public void takeTurn() {
     currentPlayer = getNextPlayer();
     int diceRoll = dice.rollAllDiceSum();
-    super.getFirstPlayerPiece(currentPlayer).move(dice.rollAllDiceSum());
+    super.getFirstPlayerPiece(currentPlayer).move(diceRoll);
 
     // Stat registration part
     SnakesAndLaddersStats stats;
