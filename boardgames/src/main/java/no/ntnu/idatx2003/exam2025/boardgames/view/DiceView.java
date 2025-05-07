@@ -5,10 +5,11 @@ import java.util.List;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import no.ntnu.idatx2003.exam2025.boardgames.controller.DiceController;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Dice;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Die;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.Command;
-import no.ntnu.idatx2003.exam2025.boardgames.util.command.PrintLineCommand;
+import no.ntnu.idatx2003.exam2025.boardgames.util.command.RollDiceCommand;
 
 
 /**
@@ -32,7 +33,9 @@ public class DiceView {
     root = new BorderPane();
     diceView = new FlowPane();
     this.dice = dice;
-    command = new PrintLineCommand("Dice Clicked!");
+    DiceController diceController = new DiceController(dice);
+
+    command = new RollDiceCommand(diceController);
     double gapSize = 10;
 
     root.prefHeight(height);
