@@ -53,10 +53,23 @@ public class LadderBoardGame extends BoardGame {
   @Override
   public void takeTurn() {
     currentPlayer = getNextPlayer();
-    int startTile = super.getFirstPlayerPiece(currentPlayer).getCurrentTile().getId();
+    GamePiece currentGamePiece = super.getFirstPlayerPiece(currentPlayer);
+    int startTile = currentGamePiece.getCurrentTile().getId();
     super.getFirstPlayerPiece(currentPlayer).move(dice.rollAllDiceSum());
+    int roll = dice.getLastRoll();
+    int endTile = currentGamePiece.getCurrentTile().getId();
+    addMessage(new LadderGameMessage(currentPlayer, startTile, endTile, roll));
     if (super.getFirstPlayerPiece(currentPlayer).getCurrentTile() == getBoard().getTile(90)) {
       gameIsOver = true;
+    }
+
+
+  }
+
+  private void addMessage(LadderGameMessage message) {
+    messages.add(message);
+    if (messages.size() >= 20) {
+      messages.removeFirst();
     }
   }
 
