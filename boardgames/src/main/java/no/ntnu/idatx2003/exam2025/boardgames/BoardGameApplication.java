@@ -11,7 +11,9 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardFactory;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.util.GsonFileReader;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.PrintLineCommand;
-import no.ntnu.idatx2003.exam2025.boardgames.view.*;
+import no.ntnu.idatx2003.exam2025.boardgames.view.BoardGameView;
+import no.ntnu.idatx2003.exam2025.boardgames.view.MenuOption;
+import no.ntnu.idatx2003.exam2025.boardgames.view.MenuView;
 
 
 /**
