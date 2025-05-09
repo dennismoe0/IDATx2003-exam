@@ -12,8 +12,8 @@ public class SnakesAndLaddersStats implements BoardGameStats {
   private int sumOfAllDiceRolls;
 
   @Override
-  public void incrementMove() {
-    totalMoveCount++;
+  public void incrementMove(int diceRoll) {
+    totalMoveCount += diceRoll;
   }
 
   @Override
@@ -55,10 +55,6 @@ public class SnakesAndLaddersStats implements BoardGameStats {
     highestDiceRoll = value;
   }
 
-  public void addToSumOfAllDiceRolls(int value) {
-    sumOfAllDiceRolls += value;
-  }
-
   public int getWins() {
     return wins;
   }
@@ -81,10 +77,6 @@ public class SnakesAndLaddersStats implements BoardGameStats {
 
   public int getHighestDiceRoll() {
     return highestDiceRoll;
-  }
-
-  public int getSumOfAllDiceRolls() {
-    return sumOfAllDiceRolls;
   }
 
   public void setWins(int v) {
@@ -113,9 +105,5 @@ public class SnakesAndLaddersStats implements BoardGameStats {
 
   public void setTotalDiceRolls(int v) {
     totalDiceRolls = v;
-  }
-
-  public void setSumOfAllDiceRolls(int v) {
-    sumOfAllDiceRolls = v;
   }
 }

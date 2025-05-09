@@ -74,35 +74,58 @@ public class GamePiece {
   }
 
   /**
-   * A function for moving the game piece.
+   * Moves the game piece a specified number of steps from its current position.
+   * If the current tile is null, it initializes the game piece to the starting
+   * tile.
+   * Throws an exception if the target tile does not exist.
    *
-   * @param steps An integer getting the number of spaces the piece will move.
+   * @param steps The number of steps to move the game piece.
+   * @throws IllegalStateException    If the game piece has no starting tile.
+   * @throws IllegalArgumentException If the target tile does not exist.
    */
   public void move(int steps) {
+
     if (currentTile == null) {
       if (startingTile != null) {
         currentTile = startingTile;
-        steps -= 1;
+        log.info("GamePiece {} initialized to starting tile {}", gamePieceId, startingTile.getId());
+      } else {
+        throw new IllegalStateException("Gamepiece has no starting tile");
       }
-    }
-    if (currentTile.getNextTile() == null) {
-      throw new IllegalArgumentException("Cannot move to a non-existent tile.");
     }
 
-    this.previousTile = currentTile;
+    log.info(
+        "GamePiece {} attempting to move {} steps from tile {}",
+        gamePieceId, steps, currentTile);
+
+    Tile targetTile = currentTile;
     for (int i = 0; i < steps; i++) {
-      if (currentTile.getNextTile() != null) {
-        currentTile = currentTile.getNextTile();
-      } else {
-        break;
+      if (targetTile.getNextTile() == null) {
+        log.error("Tile {} has no next tile. Cannot move further.", targetTile.getId());
+        throw new IllegalArgumentException("Cannot move to a non-existent tile");
       }
+      targetTile = targetTile.getNextTile();
+      log.info(
+          "GamePiece {} moved to intermediate tile {}",
+          gamePieceId, targetTile.getId());
     }
+
+    previousTile = currentTile;
+    currentTile = targetTile;
+
+    // Apply effects
     if (currentTile.getTileStrategy() != null) {
+      String strategyName = currentTile.getTileStrategy().getClass().getSimpleName();
+      log.info(
+          "GamePiece {} landed on tile {} with strategy. Applying effect {}.",
+          gamePieceId, currentTile.getId(),
+          strategyName);
       currentTile.getTileStrategy().applyEffect(this);
     }
 
-    log.info("GamePiece {} moved {} steps, from tile({}) to tile({})", gamePieceId, steps,
-        previousTile.getId(), currentTile.getId());
+    log.info(
+        "GamePiece {} finished moving. Final tile: {}",
+        gamePieceId, currentTile.getId());
   }
 
   @Override

@@ -1,6 +1,7 @@
 package no.ntnu.idatx2003.exam2025.boardgames.service;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -33,11 +34,12 @@ public class DatabaseManager {
     File dbFile = new File(DB_PATH);
     if (!dbFile.exists()) {
       try {
+        log.info("Database file does not exist. Creating a new one...");
         new File("database").mkdirs(); // Ensure directory exists
         if (dbFile.createNewFile()) {
-          System.out.println("Database file created: " + DB_PATH);
+          log.info("Database file created: " + DB_PATH);
         }
-      } catch (Exception e) {
+      } catch (SecurityException | IOException e) {
         System.err.println("Failed to create database file: " + e.getMessage());
       }
     }

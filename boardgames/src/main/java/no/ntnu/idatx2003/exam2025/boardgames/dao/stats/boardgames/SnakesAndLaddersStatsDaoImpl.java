@@ -18,6 +18,7 @@ public class SnakesAndLaddersStatsDaoImpl implements SnakesAndLaddersStatsDao {
 
   @Override
   public void save(int playerId, SnakesAndLaddersStats stats) throws SQLException {
+    log.info("Saving stats for player ID {}: {}", playerId, stats);
     String sql = """
           INSERT INTO snakes_and_ladders_stats (
             player_id, wins, losses, games_played,
@@ -32,7 +33,6 @@ public class SnakesAndLaddersStatsDaoImpl implements SnakesAndLaddersStatsDao {
             snakes_used = excluded.snakes_used,
             highest_dice_roll = excluded.highest_dice_roll,
             total_dice_rolls = excluded.total_dice_rolls,
-            sum_of_all_dice_rolls = excluded.sum_of_all_dice_rolls,
             total_moves = excluded.total_moves;
         """;
 
@@ -45,8 +45,7 @@ public class SnakesAndLaddersStatsDaoImpl implements SnakesAndLaddersStatsDao {
       stmt.setInt(6, stats.getSnakesUsed());
       stmt.setInt(7, stats.getHighestDiceRoll());
       stmt.setInt(8, stats.getTotalDiceRolls());
-      stmt.setInt(9, stats.getSumOfAllDiceRolls());
-      stmt.setInt(10, stats.getTotalMoveCount());
+      stmt.setInt(9, stats.getTotalMoveCount());
       stmt.executeUpdate();
       log.debug("Saved SnakesAndLaddersStats for player {}", playerId);
     }
@@ -68,7 +67,6 @@ public class SnakesAndLaddersStatsDaoImpl implements SnakesAndLaddersStatsDao {
         stats.setSnakesUsed(rs.getInt("snakes_used"));
         stats.setHighestDiceRoll(rs.getInt("highest_dice_roll"));
         stats.setTotalDiceRolls(rs.getInt("total_dice_rolls"));
-        stats.setSumOfAllDiceRolls(rs.getInt("sum_of_all_dice_rolls"));
         stats.setTotalMoveCount(rs.getInt("total_moves"));
         log.debug("Loaded SnakesAndLaddersStats for player {}", playerId);
         return stats;

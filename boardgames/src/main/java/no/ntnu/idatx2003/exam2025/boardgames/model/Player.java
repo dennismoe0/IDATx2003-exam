@@ -10,9 +10,9 @@ public class Player {
 
   private static final Logger log = Log.get(Player.class);
 
-  private final int playerId;
+  private int playerId;
   private String playerName;
-  private final PlayerStats playerStats;
+  private PlayerStats playerStats;
   private int playerAge;
 
   /**
@@ -59,12 +59,20 @@ public class Player {
     return playerAge;
   }
 
+  public void setPlayerId(int playerId) {
+    this.playerId = playerId;
+  }
+
   public void setPlayerName(String playerName) {
     this.playerName = playerName;
   }
 
   public void setPlayerAge(int playerAge) {
     this.playerAge = playerAge;
+  }
+
+  public void setPlayerStats(PlayerStats playerStats) {
+    this.playerStats = playerStats;
   }
 
   // // TO BE REMOVED / MOVED TO GameSession
