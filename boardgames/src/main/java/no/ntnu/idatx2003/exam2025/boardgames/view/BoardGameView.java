@@ -23,11 +23,9 @@ public class BoardGameView {
   private MoveHistoryView moveHistoryView;
   private BoardView boardView;
   private LadderBoardGame ladderBoardGame;
-  //BoardViewController
-  //DiceView controller
 
   /**
-   * Default constructor for BoardGameView
+   * Default constructor for BoardGameView.
    *
    * @param title     a string representing the name of the Board Game
    *                  (Probably should be pulled from the game itself).
