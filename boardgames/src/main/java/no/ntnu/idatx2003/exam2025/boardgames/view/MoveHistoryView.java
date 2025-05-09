@@ -36,16 +36,16 @@ public class MoveHistoryView {
     this.moveHistory = moveHistory;
     storedMoves = new HashMap<>();
     scrollPane = new ScrollPane(root);
-    scrollPane.setPrefHeight(200);
+    scrollPane.setPrefSize(400, 200);
 
     realRoot = new VBox(5);
     realRoot.getChildren().add(scrollPane);
     tempMoveMessageCommand = new TempMoveMessageCommand(moveHistory);
 
-    button = new Button("Add New Message");
-    button.setOnAction(event -> tempMoveMessageCommand.execute());
-    realRoot.getChildren().add(button);
-    realRoot.setPrefSize(400, 500);
+//    button = new Button("Add New Message");
+//    button.setOnAction(event -> tempMoveMessageCommand.execute());
+//    realRoot.getChildren().add(button);
+//    realRoot.setPrefSize(400, 500);
 
     moveHistory.getMessages().addListener((ListChangeListener<? super LadderGameMessage>) change -> {
       while (change.next()) {
@@ -67,7 +67,7 @@ public class MoveHistoryView {
   }
 
   public Parent getRoot() {
-    return realRoot;
+    return root;
   }
 
   private String buildLabel(LadderGameMessage message) {

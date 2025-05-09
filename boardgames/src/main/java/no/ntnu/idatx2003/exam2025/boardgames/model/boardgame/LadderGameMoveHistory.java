@@ -17,7 +17,7 @@ public class LadderGameMoveHistory {
    */
   public void addMessage(LadderGameMessage message) {
     messages.add(message);
-    if (messages.size() >= 7) {
+    if (messages.size() >= 20) {
       messages.removeFirst();
     }
   }
