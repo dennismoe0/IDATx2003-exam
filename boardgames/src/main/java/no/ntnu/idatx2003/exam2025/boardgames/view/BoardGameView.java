@@ -51,6 +51,8 @@ public class BoardGameView {
     view.setCenter(content);
     content.getChildren().add(boardView.asParent());
     content.getChildren().add(rightMenu);
+    rightMenu.prefHeight(750);
+    rightMenu.prefWidth(400);
     view.setTop(title);
   }
 
