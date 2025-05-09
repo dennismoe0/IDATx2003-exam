@@ -9,12 +9,10 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.Dice;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Die;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardFactory;
+import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderGameMoveHistory;
 import no.ntnu.idatx2003.exam2025.boardgames.util.GsonFileReader;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.PrintLineCommand;
-import no.ntnu.idatx2003.exam2025.boardgames.view.BoardView;
-import no.ntnu.idatx2003.exam2025.boardgames.view.DiceView;
-import no.ntnu.idatx2003.exam2025.boardgames.view.MenuOption;
-import no.ntnu.idatx2003.exam2025.boardgames.view.MenuView;
+import no.ntnu.idatx2003.exam2025.boardgames.view.*;
 
 
 /**
@@ -38,9 +36,15 @@ public class BoardGameApplication extends Application {
     dice.addDice(new Die(6));
     DiceView diceView = new DiceView(dice, 300, 400);
 
+
+    LadderGameMoveHistory moveHistory = new LadderGameMoveHistory();
+    MoveHistoryView moveHistoryView = new MoveHistoryView(moveHistory);
+
+
     //Scene scene = new Scene(view.asParent(), 400, 400);
     //Scene scene = new Scene(boardView.asParent(), 600, 600);
-    Scene scene = new Scene(diceView.getRoot(), 300, 400);
+    //Scene scene = new Scene(diceView.getRoot(), 300, 400);
+    Scene scene = new Scene(moveHistoryView.getRoot(), 400, 500);
     scene.getStylesheets().add(
         getClass().getResource("/assets/style/styles.css").toExternalForm());
     primaryStage.setScene(scene);
