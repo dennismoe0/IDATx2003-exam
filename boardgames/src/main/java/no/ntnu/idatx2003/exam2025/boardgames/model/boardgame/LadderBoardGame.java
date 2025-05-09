@@ -16,7 +16,6 @@ import no.ntnu.idatx2003.exam2025.boardgames.util.LadderGameMessage;
  */
 public class LadderBoardGame extends BoardGame {
   private Dice dice;
-  private GamePiece currentGamePiece;
   private List<Player> players;
   private Player currentPlayer;
   private int playerIndex;
@@ -33,6 +32,15 @@ public class LadderBoardGame extends BoardGame {
     this.players = new ArrayList<>(players);
     super.setBoard(board);
     setUp(players);
+  }
+
+
+  public Dice getDice() {
+    return dice;
+  }
+
+  public LadderGameMoveHistory getMoveHistory() {
+    return moveHistory;
   }
 
   @Override
@@ -55,7 +63,12 @@ public class LadderBoardGame extends BoardGame {
   public void takeTurn() {
     currentPlayer = getNextPlayer();
     GamePiece currentGamePiece = super.getFirstPlayerPiece(currentPlayer);
-    int startTile = currentGamePiece.getCurrentTile().getId();
+    int startTile;
+    try {
+      startTile = currentGamePiece.getCurrentTile().getId();
+    } catch (NullPointerException e) {
+      startTile = 0;
+    }
     super.getFirstPlayerPiece(currentPlayer).move(dice.rollAllDiceSum());
     int roll = dice.getLastRoll();
     int endTile = currentGamePiece.getCurrentTile().getId();
@@ -75,7 +88,12 @@ public class LadderBoardGame extends BoardGame {
   }
 
   private Player getNextPlayer() {
-    return (players.get(++playerIndex));
+    if (playerIndex == players.size()) {
+      playerIndex = 0;
+    }
+    Player player = players.get(playerIndex);
+    playerIndex++;
+    return player;
   }
 
   public boolean isGameOver() {

@@ -125,6 +125,11 @@ public class BoardFactory {
       tile = tileFactory.tileFromJson(obj, board);
       board.setTile(tile.getId(), tile);
     }
+    for (int i = 1; i < 91; i++) {
+      if (i + 1 < 91) {
+        board.getTile(i).setNextTile(board.getTile(i + 1));
+      }
+    }
     return board;
   }
 
