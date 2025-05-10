@@ -18,6 +18,7 @@ public class LudoStatsDaoImpl implements LudoStatsDao {
 
   @Override
   public void save(int playerId, LudoStats stats) throws SQLException {
+
     String sql = """
           INSERT INTO ludo_stats (
             player_id, wins, losses, games_played,

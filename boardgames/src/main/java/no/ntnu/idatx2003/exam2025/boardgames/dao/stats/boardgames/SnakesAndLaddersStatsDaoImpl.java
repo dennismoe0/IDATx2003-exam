@@ -18,6 +18,16 @@ public class SnakesAndLaddersStatsDaoImpl implements SnakesAndLaddersStatsDao {
 
   @Override
   public void save(int playerId, SnakesAndLaddersStats stats) throws SQLException {
+
+    String checkPlayerSql = "SELECT 1 FROM players WHERE player_id = ?";
+    try (PreparedStatement checkStmt = connection.prepareStatement(checkPlayerSql)) {
+      checkStmt.setInt(1, playerId);
+      ResultSet rs = checkStmt.executeQuery();
+      if (!rs.next()) {
+        throw new SQLException("Cannot save stats: Player with ID " + playerId + " does not exist.");
+      }
+    }
+
     log.info("Saving stats for player ID {}: {}", playerId, stats);
     String sql = """
           INSERT INTO snakes_and_ladders_stats (
@@ -44,8 +54,7 @@ public class SnakesAndLaddersStatsDaoImpl implements SnakesAndLaddersStatsDao {
       stmt.setInt(5, stats.getLaddersUsed());
       stmt.setInt(6, stats.getSnakesUsed());
       stmt.setInt(7, stats.getHighestDiceRoll());
-      stmt.setInt(8, stats.getTotalDiceRolls());
-      stmt.setInt(9, stats.getTotalMoveCount());
+      stmt.setInt(8, stats.getTotalMoveCount());
       stmt.executeUpdate();
       log.debug("Saved SnakesAndLaddersStats for player {}", playerId);
     }
@@ -73,6 +82,6 @@ public class SnakesAndLaddersStatsDaoImpl implements SnakesAndLaddersStatsDao {
       }
     }
     log.warn("No SnakesAndLaddersStats found for player {}", playerId);
-    return new SnakesAndLaddersStats();
+    return null; // Return null if no stats are found
   }
 }
