@@ -65,14 +65,33 @@ public class DatabaseManager {
     return connection;
   }
 
-  /**
-   * Initializes the database and ensures required tables exist.
-   */
-  public static void initializeDatabase() {
-    // Ensure the 'database' directory exists
+  public static void wipeDatabase() {
     new File("database").mkdirs();
 
     try (Connection conn = connect(); Statement stmt = conn.createStatement()) {
+      String dropPlayersTable = "DROP TABLE IF EXISTS players;";
+      String dropSnakesAndLaddersStatsTable = "DROP TABLE IF EXISTS snakes_and_ladders_stats;";
+      String dropLudoStatsTable = "DROP TABLE IF EXISTS ludo_stats;";
+
+      stmt.execute(dropSnakesAndLaddersStatsTable);
+      log.debug(" Attempted to drop snakes and ladder tables.");
+      stmt.execute(dropLudoStatsTable);
+      log.debug("Attempted to drop ludo tables.");
+      stmt.execute(dropPlayersTable);
+      log.debug("Attempted to drop player tables.");
+    } catch (SQLException e) {
+      System.err.println("Database wiping failed: " + e.getMessage());
+    }
+  }
+
+  /**
+   * Initializes the database and ensures required tables exist.
+   */
+  public static void initializeDatabase(Connection connection) {
+    // Ensure the 'database' directory exists
+    new File("database").mkdirs();
+
+    try (Statement stmt = connection.createStatement()) {
       // Players table
       String createPlayersTable = """
           CREATE TABLE IF NOT EXISTS players (
@@ -142,6 +161,22 @@ public class DatabaseManager {
       log.debug("Database initialized successfully.");
     } catch (SQLException e) {
       System.err.println("Database initialization failed: " + e.getMessage());
+    }
+  }
+
+  /**
+   * Closes the given database connection.
+   *
+   * @param connection the Connection object to close
+   */
+  public static void closeConnection(Connection connection) {
+    if (connection != null) {
+      try {
+        connection.close();
+        log.debug("Database connection closed successfully.");
+      } catch (SQLException e) {
+        log.error("Failed to close database connection: {}", e.getMessage());
+      }
     }
   }
 }

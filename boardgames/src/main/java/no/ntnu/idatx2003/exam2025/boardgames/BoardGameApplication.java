@@ -33,16 +33,17 @@ import org.slf4j.Logger;
  */
 public class BoardGameApplication extends Application {
   private static final Logger log = Log.get(BoardGameApplication.class);
+  private Connection connection;
 
   // Dennis note: Need to add connection to creation of Board Game to instantiate
   // the database connection for stats
   @Override
   public void start(Stage primaryStage) throws Exception {
 
-    DatabaseManager.initializeDatabase();
+    try {
 
-    // Connect to database
-    try (Connection connection = DatabaseManager.connect()) {
+      connection = DatabaseManager.connect();
+      DatabaseManager.initializeDatabase(connection);
 
       MenuView view = new MenuView("Main Menu", buildTestMenu());
 
