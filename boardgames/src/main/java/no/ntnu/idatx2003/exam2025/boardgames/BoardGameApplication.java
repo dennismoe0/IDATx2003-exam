@@ -10,16 +10,18 @@ import org.slf4j.Logger;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardFactory;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
+import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.SnakesAndLaddersStats;
 import no.ntnu.idatx2003.exam2025.boardgames.util.GsonFileReader;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.PrintLineCommand;
-import no.ntnu.idatx2003.exam2025.boardgames.view.BoardView;
+import no.ntnu.idatx2003.exam2025.boardgames.view.BoardGameView;
 import no.ntnu.idatx2003.exam2025.boardgames.view.MenuOption;
 import no.ntnu.idatx2003.exam2025.boardgames.view.MenuView;
 import no.ntnu.idatx2003.exam2025.boardgames.service.DatabaseManager;
@@ -127,6 +129,22 @@ public class BoardGameApplication extends Application {
    */
   public static void main(String[] args) {
     launch(args);
+  }
+
+  private BoardGameView createBoardGameView() throws Exception {
+    BoardFactory factory = new BoardFactory();
+    GsonFileReader reader = new GsonFileReader();
+    Board board = factory.buildBoardFromJson(reader.readJson(
+        "src/main/resources/assets/boards/laddergameboards/laddergame_classic.json"));
+
+    List<Player> players = new ArrayList<Player>();
+    Player player1 = new Player(1, "Dennis", 24);
+    players.add(player1);
+    Player player2 = new Player(2, "Sasha", 27);
+    players.add(player2);
+
+    LadderBoardGame ladderBoardGame = new LadderBoardGame(board, players);
+    return new BoardGameView("Snake's n Ladders", ladderBoardGame);
   }
 
   private List<MenuOption> buildTestMenu() {

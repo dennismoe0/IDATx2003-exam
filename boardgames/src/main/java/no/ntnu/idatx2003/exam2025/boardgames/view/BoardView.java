@@ -15,6 +15,7 @@ public class BoardView {
   private final GridPane grid;
   private final Board board;
   private final TileViewRegister tileViewRegister;
+  //need to add a way for tracking the movement of game pieces in here, or displaying them in any case.
 
   /**
    * The default constructor, requires a Board object.

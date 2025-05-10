@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.slf4j.Logger;
-
 import no.ntnu.idatx2003.exam2025.boardgames.model.Dice;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Die;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
@@ -18,18 +18,18 @@ import no.ntnu.idatx2003.exam2025.boardgames.service.DatabaseManager;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.SnakesAndLaddersStatsDao;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.SnakesAndLaddersStatsDaoImpl;
-import no.ntnu.idatx2003.exam2025.boardgames.service.DatabaseManager;
+import no.ntnu.idatx2003.exam2025.boardgames.util.LadderGameMessage;
 
 /**
  * A Board Game class representing Snakes n Ladders / Stigespillet.
  */
 public final class LadderBoardGame extends BoardGame {
   private Dice dice;
-  private GamePiece currentGamePiece;
   private List<Player> players;
   private Player currentPlayer;
   private int playerIndex;
   private boolean gameIsOver;
+  private LadderGameMoveHistory moveHistory = new LadderGameMoveHistory();
   private final SnakesAndLaddersStatsDao statsDao;
   private static final Logger log = Log.get(LadderBoardGame.class);
 
@@ -45,6 +45,15 @@ public final class LadderBoardGame extends BoardGame {
     this.statsDao = new SnakesAndLaddersStatsDaoImpl(connection) {
     };
     setUp(this.players);
+  }
+
+
+  public Dice getDice() {
+    return dice;
+  }
+
+  public LadderGameMoveHistory getMoveHistory() {
+    return moveHistory;
   }
 
   @Override
@@ -70,8 +79,8 @@ public final class LadderBoardGame extends BoardGame {
   @Override
   public void takeTurn() {
     // Get the current player for this turn
+    currentPlayer = getNextPlayer();
     log.info("Starting turn for player index: {}, player: {}", playerIndex, currentPlayer.getPlayerName());
-    currentPlayer = players.get(playerIndex);
 
     // Roll the dice once
     int diceRoll = dice.rollAllDiceSum();
@@ -82,7 +91,17 @@ public final class LadderBoardGame extends BoardGame {
       throw new IllegalStateException("No game piece found for player: "
           + currentPlayer.getPlayerName());
     }
+    int startTile;
+    try {
+      startTile = playerPiece.getCurrentTile().getId();
+    } catch (NullPointerException e) {
+      startTile = 0;
+    }
+
     playerPiece.move(diceRoll);
+
+    int endTile = playerPiece.getCurrentTile().getId();
+    moveHistory.addMessage(new LadderGameMessage(currentPlayer, startTile, endTile, diceRoll));
 
     // Log the player's move
     log.info(
@@ -137,10 +156,6 @@ public final class LadderBoardGame extends BoardGame {
         }
       }
     }
-
-    // Move to the next player
-    playerIndex = (playerIndex + 1) % players.size();
-    log.info("Ending turn. Next player index: {}", playerIndex);
   }
 
   /**
@@ -153,8 +168,12 @@ public final class LadderBoardGame extends BoardGame {
   }
 
   private Player getNextPlayer() {
-    playerIndex = (playerIndex + 1) % players.size();
-    return players.get(playerIndex);
+    if (playerIndex == players.size()) {
+      playerIndex = 0;
+    }
+    Player player = players.get(playerIndex);
+    playerIndex++;
+    return player;
   }
 
   public boolean isGameOver() {

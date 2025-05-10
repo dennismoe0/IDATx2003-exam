@@ -13,8 +13,8 @@ import org.slf4j.Logger;
 public class Dice {
 
   private static final Logger log = Log.get(Dice.class);
-
   private final List<Die> dice;
+  private int lastRoll = 0;
 
   /**
    * Constructs a Dice object with a list of Die.
@@ -60,7 +60,12 @@ public class Dice {
   public int rollAllDiceSum() {
     int sum = rollAllDice().stream().mapToInt(Integer::intValue).sum();
     log.info("Sum of all dice rolls: {}", sum);
+    lastRoll = sum;
     return sum;
+  }
+
+  public int getLastRoll() {
+    return lastRoll;
   }
 
   /**
