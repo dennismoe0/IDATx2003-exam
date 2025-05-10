@@ -14,7 +14,6 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardFactory;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
-import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.SnakesAndLaddersStats;
 import no.ntnu.idatx2003.exam2025.boardgames.service.DatabaseManager;
 import no.ntnu.idatx2003.exam2025.boardgames.util.GsonFileReader;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
@@ -71,7 +70,7 @@ public class BoardGameApplication extends Application {
       }
 
       // Create game
-      LadderBoardGame game = new LadderBoardGame(board, players, connection);
+      LadderBoardGame game = new LadderBoardGame(board, players);
 
       // Test the game logic
       log.info("Starting basic test of LadderBoardGame...");
@@ -128,7 +127,7 @@ public class BoardGameApplication extends Application {
     launch(args);
   }
 
-  private BoardGameView createBoardGameView(Connection connection) throws Exception {
+  private BoardGameView createBoardGameView() throws Exception {
     BoardFactory factory = new BoardFactory();
     GsonFileReader reader = new GsonFileReader();
     Board board = factory.buildBoardFromJson(reader.readJson(
@@ -140,7 +139,7 @@ public class BoardGameApplication extends Application {
     Player player2 = new Player(2, "Sasha", 27);
     players.add(player2);
 
-    LadderBoardGame ladderBoardGame = new LadderBoardGame(board, players, connection);
+    LadderBoardGame ladderBoardGame = new LadderBoardGame(board, players);
     return new BoardGameView("Snake's n Ladders", ladderBoardGame);
   }
 
