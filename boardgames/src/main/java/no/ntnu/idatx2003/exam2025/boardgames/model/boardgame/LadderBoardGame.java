@@ -1,11 +1,7 @@
 package no.ntnu.idatx2003.exam2025.boardgames.model.boardgame;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.SnakesAndLaddersStatsDao;
-import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.SnakesAndLaddersStatsDaoImpl;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Dice;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Die;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
@@ -26,8 +22,8 @@ public final class LadderBoardGame extends BoardGame {
   private Player currentPlayer;
   private int playerIndex;
   private boolean gameIsOver;
+  private final SnakesAndLaddersStats stats;
   private LadderGameMoveHistory moveHistory = new LadderGameMoveHistory();
-  private final SnakesAndLaddersStatsDao statsDao;
   private static final Logger log = Log.get(LadderBoardGame.class);
 
   /**
@@ -36,14 +32,12 @@ public final class LadderBoardGame extends BoardGame {
    * @param board   a collection of tiles to act as a game board.
    * @param players the players participating in the game, to keep track of turns.
    */
-  public LadderBoardGame(Board board, List<Player> players, Connection connection) {
+  public LadderBoardGame(Board board, List<Player> players) {
     this.players = new ArrayList<>(players);
-    super.setBoard(board);
-    this.statsDao = new SnakesAndLaddersStatsDaoImpl(connection) {
-    };
-    setUp(this.players);
+    this.stats = new SnakesAndLaddersStats(); // Fixed stat connection
+    super.setBoard(board); // Board setup is loaded
+    setUp(this.players); // Gamepieces are made
   }
-
 
   public Dice getDice() {
     return dice;
@@ -77,7 +71,9 @@ public final class LadderBoardGame extends BoardGame {
   public void takeTurn() {
     // Get the current player for this turn
     currentPlayer = getNextPlayer();
-    log.info("Starting turn for player index: {}, player: {}", playerIndex, currentPlayer.getPlayerName());
+    log.info(
+        "Starting turn for player index: {}, player: {}",
+        playerIndex, currentPlayer.getPlayerName());
 
     // Roll the dice once
     int diceRoll = dice.rollAllDiceSum();
@@ -106,21 +102,17 @@ public final class LadderBoardGame extends BoardGame {
         currentPlayer.getPlayerName(), playerPiece.getCurrentTile());
 
     // Update stats for the current player
-    if (!(currentPlayer.getPlayerStats() instanceof SnakesAndLaddersStats stats)) {
+    if (!(currentPlayer.getPlayerStats() instanceof SnakesAndLaddersStats playerStats)) {
       throw new IllegalStateException("PlayerStats is not an instance of SnakesAndLaddersStats");
     }
 
     // Update dice roll and movement stats
-    stats.incrementDiceRoll();
-    stats.incrementMove(diceRoll);
-
-    try {
-      statsDao.save(currentPlayer.getPlayerId(), stats);
-    } catch (SQLException e) {
-      log.error(
-          "Failed to save stats for player ID {}: {}",
-          currentPlayer.getPlayerId(), e.getMessage());
-    }
+    // dont have time to make a listener
+    playerStats.incrementDiceRoll();
+    log.info("Incremented diceRoll/steps for player {}: {}.", currentPlayer.getPlayerId(),
+        currentPlayer.getPlayerName());
+    playerStats.incrementMove(diceRoll);
+    log.info("Incremented movecount for player {}: {}.", currentPlayer.getPlayerId(), currentPlayer.getPlayerName());
 
     // Check if the player has won
     int winTile = 90; // Example win condition
@@ -128,28 +120,18 @@ public final class LadderBoardGame extends BoardGame {
       gameIsOver = true;
       log.info("Player {} has won the game!", currentPlayer.getPlayerName());
 
-      // Update win stats
-      stats.incrementWins();
-      try {
-        statsDao.save(currentPlayer.getPlayerId(), stats);
-      } catch (SQLException e) {
-        log.error(
-            "Failed to save stats for player ID {}: {}",
-            currentPlayer.getPlayerId(), e.getMessage());
-      }
+      // Increment win stats
+      playerStats.incrementWins();
+      log.info("Incremented win for player {}: {}.", currentPlayer.getPlayerId(), currentPlayer.getPlayerName());
 
-      // Update losses for other players
+      // Increment losses for other players
       for (Player player : players) {
         if (!player.equals(currentPlayer)
             && player.getPlayerStats() instanceof SnakesAndLaddersStats otherStats) {
           otherStats.incrementLosses();
-          try {
-            statsDao.save(player.getPlayerId(), otherStats);
-          } catch (SQLException e) {
-            log.error(
-                "Failed to save stats for player ID {}: {}",
-                player.getPlayerId(), e.getMessage());
-          }
+
+          playerStats.incrementLosses();
+          log.info("Incremented loss for player {}: {}.", player.getPlayerId(), player.getPlayerName());
         }
       }
     }
