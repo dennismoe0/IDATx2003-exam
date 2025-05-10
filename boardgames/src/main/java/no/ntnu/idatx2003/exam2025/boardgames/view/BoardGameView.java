@@ -1,12 +1,10 @@
 package no.ntnu.idatx2003.exam2025.boardgames.view;
 
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
@@ -15,7 +13,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
  * Class for displaying the current board game.
  */
 public class BoardGameView {
-  private Text title;
+  private Label title;
   private BorderPane view;
   private HBox content;
   private VBox rightMenu;
@@ -23,6 +21,9 @@ public class BoardGameView {
   private MoveHistoryView moveHistoryView;
   private BoardView boardView;
   private LadderBoardGame ladderBoardGame;
+  private BorderPane titleBar;
+  private Rectangle rightMenuBackground;
+  private StackPane rightMenuContainer;
 
   /**
    * Default constructor for BoardGameView.
@@ -33,7 +34,7 @@ public class BoardGameView {
    */
   public BoardGameView(String title, LadderBoardGame boardGame) {
     createPanes();
-    this.title = new Text(title);
+    this.title = new Label(title);
     this.ladderBoardGame = boardGame;
     createViews();
     configurePanes();
@@ -41,20 +42,61 @@ public class BoardGameView {
 
   private void createPanes() {
     view = new BorderPane();
-    content = new HBox(10);
-    rightMenu = new VBox();
+    content = new HBox(30);
+    rightMenu = new VBox(30);
+    titleBar = new BorderPane();
+    rightMenuBackground = new Rectangle();
+    rightMenuContainer = new StackPane();
   }
 
   private void configurePanes() {
     view.setCenter(content);
-    view.setRight(new Rectangle(250, 600));
-    view.setLeft(new Rectangle(250, 600));
+    rightMenuContainer.prefHeight(500);
+    rightMenuContainer.prefWidth(300);
+    rightMenuContainer.setMaxHeight(600);
+    rightMenu.setPrefWidth(200);
+    rightMenu.setMaxHeight(550);
+    rightMenu.setMaxWidth(200);
+
+    rightMenuBackground.heightProperty().bind(rightMenuContainer.heightProperty());
+    rightMenuBackground.widthProperty().bind(rightMenuContainer.widthProperty());
+    rightMenuContainer.getChildren().add(rightMenuBackground);
+    rightMenuContainer.getChildren().add(rightMenu);
+
     content.getChildren().add(boardView.asParent());
-    content.getChildren().add(rightMenu);
-    rightMenu.prefHeight(600);
-    rightMenu.prefWidth(300);
-    view.setTop(title);
+    content.getChildren().add(rightMenuContainer);
+
+    titleBar.setPrefHeight(75);
+    titleBar.setCenter(title);
+    titleBar.getStyleClass().add("title-bar");
+    title.getStyleClass().add("title-bar");
+    rightMenuContainer.getStyleClass().add("board-game-sidebar");
+    rightMenuBackground.getStyleClass().add("board-game-sidebar");
+
+    StackPane.setAlignment(rightMenu, Pos.CENTER);
+
+    buildMainView();
+    view.setTop(titleBar);
+
     view.getStyleClass().add("board-game-view");
+  }
+
+  private void buildMainView() {
+    Region left = new Region();
+    Region right = new Region();
+    BorderPane.setAlignment(right, Pos.CENTER);
+    BorderPane.setAlignment(left, Pos.CENTER);
+    left.setMinWidth(0);
+    left.setMinHeight(0);
+    right.setMinWidth(0);
+    right.setMinHeight(0);
+    left.setPrefWidth(150);
+    right.setPrefWidth(150);
+    left.setPrefHeight(750);
+    right.setPrefHeight(750);
+
+    view.setLeft(left);
+    view.setRight(right);
   }
 
   private void createViews() {

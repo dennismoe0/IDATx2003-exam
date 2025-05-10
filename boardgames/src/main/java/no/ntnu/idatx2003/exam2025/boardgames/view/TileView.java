@@ -44,7 +44,6 @@ public class TileView extends BorderPane {
     view.setMinSize(minSize, minSize);
     view.setPrefSize(width, width);
     tileNumber.setText(String.valueOf(tile.getId()));
-    tileNumber.setStyle("-fx-text-fill: black;");
     view.getChildren().add(tileNumber);
   }
 
