@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDao;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
+import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.GameStatsDao;
+import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.SnakesAndLaddersStatsDaoImpl;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
@@ -16,6 +18,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardFactory;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.SnakesAndLaddersStats;
 import no.ntnu.idatx2003.exam2025.boardgames.service.DatabaseManager;
+import no.ntnu.idatx2003.exam2025.boardgames.service.StatsManager;
 import no.ntnu.idatx2003.exam2025.boardgames.util.GsonFileReader;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.PrintLineCommand;
@@ -62,16 +65,16 @@ public class BoardGameApplication extends Application {
       // Create PlayerDAO
       PlayerDao playerDao = new PlayerDaoImpl(connection);
 
-      // Assign stats
-      for (Player player : players) {
-        int playerId = playerDao.create(player);
-        player.setPlayerId(playerId);
-        //player.setPlayerStats(new SnakesAndLaddersStats());
-        log.info("Created player with ID {}: {}", playerId, player.getPlayerName());
-      }
+      // Create statsdao for SnakesAndLaddersStats
+      GameStatsDao<SnakesAndLaddersStats> snakesStats = new SnakesAndLaddersStatsDaoImpl(connection);
+
+      // Create StatManager for that game
+      StatsManager<SnakesAndLaddersStats> snakesStatsManager = new StatsManager<>(playerDao, snakesStats);
+
+      snakesStatsManager.createPersistedPlayerWithStats(players, SnakesAndLaddersStats.class);
 
       // Create game
-      LadderBoardGame game = new LadderBoardGame(board, players, connection);
+      LadderBoardGame game = new LadderBoardGame(board, players);
 
       // Test the game logic
       log.info("Starting basic test of LadderBoardGame...");
@@ -140,7 +143,7 @@ public class BoardGameApplication extends Application {
     Player player2 = new Player(2, "Sasha", 27);
     players.add(player2);
 
-    LadderBoardGame ladderBoardGame = new LadderBoardGame(board, players, connection);
+    LadderBoardGame ladderBoardGame = new LadderBoardGame(board, players);
     return new BoardGameView("Snake's n Ladders", ladderBoardGame);
   }
 

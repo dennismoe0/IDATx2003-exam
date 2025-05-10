@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 /**
  * A Data Access Object (DAO) interface for managing game statistics.
- * 
+ *
  * @param <T> the type of the statistics object
  */
 public interface GameStatsDao<T> {
