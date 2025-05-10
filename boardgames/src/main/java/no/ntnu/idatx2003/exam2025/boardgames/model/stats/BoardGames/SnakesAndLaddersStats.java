@@ -9,7 +9,6 @@ public class SnakesAndLaddersStats implements BoardGameStats {
   private int laddersUsed;
   private int snakesUsed;
   private int highestDiceRoll;
-  private int sumOfAllDiceRolls;
 
   @Override
   public void incrementMove(int diceRoll) {
