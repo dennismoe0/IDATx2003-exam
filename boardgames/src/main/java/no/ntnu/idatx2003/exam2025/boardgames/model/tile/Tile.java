@@ -66,4 +66,12 @@ public class Tile {
     log.debug("Tile {}: Creating new tile.", id);
   }
 
+  @Override
+  public String toString() {
+    return "Tile{" +
+        "id=" + id +
+        ", tileStrategy=" + (tileStrategy != null ? tileStrategy.getClass().getSimpleName() : "null") +
+        ", nextTileId=" + (nextTile != null ? nextTile.getId() : "null") +
+        '}';
+  }
 }

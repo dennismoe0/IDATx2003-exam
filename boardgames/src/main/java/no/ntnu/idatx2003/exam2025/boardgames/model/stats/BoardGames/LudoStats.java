@@ -11,8 +11,8 @@ public class LudoStats implements BoardGameStats {
   private int piecesKnocked;
 
   @Override
-  public void incrementMove() {
-    totalMoveCount++;
+  public void incrementMove(int diceRoll) {
+    totalMoveCount += diceRoll;
   }
 
   @Override

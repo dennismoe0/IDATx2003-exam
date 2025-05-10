@@ -1,37 +1,125 @@
 package no.ntnu.idatx2003.exam2025.boardgames;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.slf4j.Logger;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
+import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
+import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardFactory;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
+import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
+import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.SnakesAndLaddersStats;
 import no.ntnu.idatx2003.exam2025.boardgames.util.GsonFileReader;
+import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.PrintLineCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.view.BoardGameView;
 import no.ntnu.idatx2003.exam2025.boardgames.view.MenuOption;
 import no.ntnu.idatx2003.exam2025.boardgames.view.MenuView;
-
+import no.ntnu.idatx2003.exam2025.boardgames.service.DatabaseManager;
+import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDao;
+import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
 
 /**
  * The main Application File for starting and stopping the program.
  */
 public class BoardGameApplication extends Application {
+  private static final Logger log = Log.get(BoardGameApplication.class);
 
-
+  // Dennis note: Need to add connectio to creation of Board Game to instantiate
+  // the database connection for stats
   @Override
   public void start(Stage primaryStage) throws Exception {
-    MenuView view = new MenuView("Main Menu", buildTestMenu());
-    BoardGameView ladderGameView = createBoardGameView();
 
-    Scene scene = new Scene(ladderGameView.asParent(), 1200, 750);
-    scene.getStylesheets().add(
-        getClass().getResource("/assets/style/styles.css").toExternalForm());
-    primaryStage.setScene(scene);
-    primaryStage.show();
+    DatabaseManager.initializeDatabase();
+
+    // Connect to database
+    try (Connection connection = DatabaseManager.connect()) {
+
+      MenuView view = new MenuView("Main Menu", buildTestMenu());
+
+      BoardFactory factory = new BoardFactory();
+      GsonFileReader reader = new GsonFileReader();
+      Board board = factory.buildBoardFromJson(reader.readJson(
+          "src/main/resources/assets/boards/laddergameboards/laddergame_classic.json"));
+
+      // Validate board
+      if (board == null || board.getTile(1) == null) {
+        log.error("Board is not properly initialized. Please check the JSON file.");
+        return;
+      }
+
+      // Create test players
+      List<Player> players = new ArrayList<>();
+      players.add(new Player(0, "Player 1", 25));
+      players.add(new Player(0, "Player 2", 27));
+
+      // Create PlayerDAO
+      PlayerDao playerDao = new PlayerDaoImpl(connection);
+
+      // Assign stats
+      for (Player player : players) {
+        int playerId = playerDao.create(player);
+        player.setPlayerId(playerId);
+        player.setPlayerStats(new SnakesAndLaddersStats());
+        log.info("Created player with ID {}: {}", playerId, player.getPlayerName());
+      }
+
+      // Create game
+      LadderBoardGame game = new LadderBoardGame(board, players, connection);
+
+      // Test the game logic
+      log.info("Starting basic test of LadderBoardGame...");
+      log.info("Initial player: {}", players.get(0).getPlayerName());
+
+      // Simulate a few turns
+      for (int i = 0; i < 5; i++) {
+        log.info("Turn {}: Current player is {}", i + 1, game.getCurrentPlayer().getPlayerName());
+        try {
+          game.takeTurn();
+          GamePiece piece = game.getFirstPlayerPiece(game.getCurrentPlayer());
+          if (piece == null || piece.getCurrentTile() == null) {
+            log.error(
+                "Player {} has no valid game piece or current tile.",
+                game.getCurrentPlayer().getPlayerName());
+          } else {
+            log.info(
+                "Player {} moved. Current tile: {}",
+                game.getCurrentPlayer().getPlayerName(),
+                (piece.getCurrentTile() != null ? piece.getCurrentTile() : "Unknown"));
+          }
+        } catch (IllegalArgumentException e) {
+          log.error("Invalid move: {}", e.getMessage(), e);
+        } catch (Exception e) {
+          log.error("An unexpected error occurred: {}", e.getMessage(), e);
+        }
+      }
+
+      // Check if the game is over
+      if (game.isGameOver()) {
+        log.info("Game over! Winner: {}", game.getCurrentPlayer().getPlayerName());
+      } else {
+        log.info("Game is still ongoing.");
+      }
+
+      BoardView boardView = new BoardView(board);
+      // Scene scene = new Scene(view.asParent(), 400, 400);
+      Scene scene = new Scene(boardView.asParent(), 600, 600);
+      scene.getStylesheets().add(
+          getClass().getResource("/assets/style/styles.css").toExternalForm());
+      primaryStage.setScene(scene);
+      primaryStage.show();
+    } catch (SQLException e) {
+      log.error("Failed to connect to database: {}", e.getMessage(), e);
+    }
   }
 
   /**

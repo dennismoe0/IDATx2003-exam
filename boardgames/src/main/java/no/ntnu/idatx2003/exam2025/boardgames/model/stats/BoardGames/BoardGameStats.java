@@ -10,12 +10,12 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.stats.PlayerStats;
 public interface BoardGameStats extends PlayerStats {
 
   /**
-   * Increments the count of moves made in the board game by one.
+   * Increments the spaces moved (dice roll).
    */
-  void incrementMove();
+  void incrementMove(int diceRoll);
 
   /**
-   * Retrieves the total number of moves made in the board game.
+   * Retrieves the total number of moves made for the board game.
    *
    * @return the total move count
    */
@@ -23,6 +23,7 @@ public interface BoardGameStats extends PlayerStats {
 
   /**
    * Increments the count of dice rolls made in the board game by one.
+   * Basically a turn counter
    */
   void incrementDiceRoll();
 
