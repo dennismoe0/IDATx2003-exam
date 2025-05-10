@@ -58,6 +58,8 @@ public class DiceView {
     diceView.setVgap(10);
     diceView.setHgap(10);
     root.setCenter(diceView);
+
+    root.getStyleClass().add("dice-view");
   }
 
   public Parent getRoot() {

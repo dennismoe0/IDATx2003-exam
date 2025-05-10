@@ -27,6 +27,7 @@ public class BoardView {
     grid = new GridPane();
     tileViewRegister = new TileViewRegister();
     buildBoardView();
+    grid.getStyleClass().add("board-view");
   }
 
   /**

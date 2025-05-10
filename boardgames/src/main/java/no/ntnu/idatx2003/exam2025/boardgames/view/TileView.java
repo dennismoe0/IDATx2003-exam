@@ -22,6 +22,7 @@ public class TileView extends BorderPane {
     this.width = width;
     tileNumber = new Text();
     view = new StackPane();
+    view.getStyleClass().add("tile-view");
     view.getStyleClass().add(styleClass);
     buildView();
     super.setCenter(view);

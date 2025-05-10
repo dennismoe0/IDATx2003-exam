@@ -5,7 +5,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 
@@ -45,11 +47,14 @@ public class BoardGameView {
 
   private void configurePanes() {
     view.setCenter(content);
+    view.setRight(new Rectangle(250, 600));
+    view.setLeft(new Rectangle(250, 600));
     content.getChildren().add(boardView.asParent());
     content.getChildren().add(rightMenu);
-    rightMenu.prefHeight(750);
-    rightMenu.prefWidth(400);
+    rightMenu.prefHeight(600);
+    rightMenu.prefWidth(300);
     view.setTop(title);
+    view.getStyleClass().add("board-game-view");
   }
 
   private void createViews() {
