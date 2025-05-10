@@ -4,29 +4,26 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.slf4j.Logger;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
+import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDao;
+import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardFactory;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
-import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.SnakesAndLaddersStats;
+import no.ntnu.idatx2003.exam2025.boardgames.service.DatabaseManager;
 import no.ntnu.idatx2003.exam2025.boardgames.util.GsonFileReader;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.PrintLineCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.view.BoardGameView;
+import no.ntnu.idatx2003.exam2025.boardgames.view.BoardView;
 import no.ntnu.idatx2003.exam2025.boardgames.view.MenuOption;
 import no.ntnu.idatx2003.exam2025.boardgames.view.MenuView;
-import no.ntnu.idatx2003.exam2025.boardgames.service.DatabaseManager;
-import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDao;
-import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
+import org.slf4j.Logger;
 
 /**
  * The main Application File for starting and stopping the program.
@@ -34,7 +31,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
 public class BoardGameApplication extends Application {
   private static final Logger log = Log.get(BoardGameApplication.class);
 
-  // Dennis note: Need to add connectio to creation of Board Game to instantiate
+  // Dennis note: Need to add connection to creation of Board Game to instantiate
   // the database connection for stats
   @Override
   public void start(Stage primaryStage) throws Exception {
@@ -69,7 +66,7 @@ public class BoardGameApplication extends Application {
       for (Player player : players) {
         int playerId = playerDao.create(player);
         player.setPlayerId(playerId);
-        player.setPlayerStats(new SnakesAndLaddersStats());
+        //player.setPlayerStats(new SnakesAndLaddersStats());
         log.info("Created player with ID {}: {}", playerId, player.getPlayerName());
       }
 
@@ -131,7 +128,7 @@ public class BoardGameApplication extends Application {
     launch(args);
   }
 
-  private BoardGameView createBoardGameView() throws Exception {
+  private BoardGameView createBoardGameView(Connection connection) throws Exception {
     BoardFactory factory = new BoardFactory();
     GsonFileReader reader = new GsonFileReader();
     Board board = factory.buildBoardFromJson(reader.readJson(
@@ -143,7 +140,7 @@ public class BoardGameApplication extends Application {
     Player player2 = new Player(2, "Sasha", 27);
     players.add(player2);
 
-    LadderBoardGame ladderBoardGame = new LadderBoardGame(board, players);
+    LadderBoardGame ladderBoardGame = new LadderBoardGame(board, players, connection);
     return new BoardGameView("Snake's n Ladders", ladderBoardGame);
   }
 
