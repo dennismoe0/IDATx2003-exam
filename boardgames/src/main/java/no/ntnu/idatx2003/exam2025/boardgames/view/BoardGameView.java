@@ -6,14 +6,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 
 /**
  * Class for displaying the current board game.
  */
 public class BoardGameView {
-  private Label title;
+  private final Label title;
   private BorderPane view;
   private HBox content;
   private VBox rightMenu;
