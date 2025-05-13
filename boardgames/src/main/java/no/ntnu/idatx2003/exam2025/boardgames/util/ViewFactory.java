@@ -7,7 +7,13 @@ import no.ntnu.idatx2003.exam2025.boardgames.view.BoardGameView;
 
 public class ViewFactory {
 
-  public BoardGameView buildLadderBoardGameView(LadderBoardGame LadderBoardGame) {
-
+  /**
+   * Default method for making a LadderBoardGameView
+   *
+   * @param boardGame the game to be built.
+   * @return returns a BoardGameView object.
+   */
+  public BoardGameView buildLadderBoardGameView(BoardGame boardGame) {
+    return new BoardGameView("LadderBoardGame", (LadderBoardGame) boardGame);
   }
 }

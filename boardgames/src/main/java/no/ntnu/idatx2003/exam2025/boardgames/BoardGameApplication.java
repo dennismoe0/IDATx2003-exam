@@ -14,17 +14,22 @@ import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.GameStatsDao;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.SnakesAndLaddersStatsDaoImpl;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
+import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardFactory;
+import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.BoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.SnakesAndLaddersStats;
 import no.ntnu.idatx2003.exam2025.boardgames.service.DatabaseManager;
+import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
 import no.ntnu.idatx2003.exam2025.boardgames.service.StatsManager;
 import no.ntnu.idatx2003.exam2025.boardgames.util.GsonFileReader;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
+import no.ntnu.idatx2003.exam2025.boardgames.util.ViewFactory;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.ChangeScreenCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.PrintLineCommand;
+import no.ntnu.idatx2003.exam2025.boardgames.util.command.StartGameCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.view.BoardGameView;
 import no.ntnu.idatx2003.exam2025.boardgames.view.BoardView;
 import no.ntnu.idatx2003.exam2025.boardgames.view.MenuOption;
@@ -44,11 +49,17 @@ public class BoardGameApplication extends Application {
     //DatabaseManager.initializeDatabase();
 
     StackPane stackpane = new StackPane();
+    Scene scene = new Scene(stackpane, 1400, 750);
     stackpane.getStyleClass().add("primary-window-background");
-    stackpane.getChildren().add(new MenuView("Main Menu", buildTestMenu(),400,600,50).asParent());
+
+    SceneManager sceneManager = new SceneManager(scene);
+    GameSession gameSession = new GameSession();
+
+    stackpane.getChildren().add(new MenuView("Main Menu", buildTestMenu(gameSession, sceneManager),400,600,50).asParent());
     stackpane.setAlignment(Pos.CENTER);
 
-    Scene scene = new Scene(stackpane, 1400, 750);
+    initializeGameSession(gameSession);
+
     scene.getStylesheets().add(
         getClass().getResource("/assets/style/styles.css").toExternalForm());
     primaryStage.setScene(scene);
@@ -62,6 +73,31 @@ public class BoardGameApplication extends Application {
    */
   public static void main(String[] args) {
     launch(args);
+  }
+
+  private void initializeGameSession(GameSession gameSession) {
+    Player player1 = new Player(1, "Dennis", 24);
+    Player player2 = new Player(2, "Sasha", 27);
+    gameSession.addPlayer(player1);
+    gameSession.addPlayer(player2);
+    try {
+      gameSession.setBoardGame(buildBoardGame(gameSession.getPlayers()));
+    } catch (Exception e) {
+      log.error(e.getMessage());
+    }
+  }
+
+  private BoardGame buildBoardGame(List<Player> players) throws Exception {
+    LadderBoardGame ladderBoardGame = new LadderBoardGame(getBoard(), players);
+    return ladderBoardGame;
+  }
+
+  private Board getBoard() throws Exception {
+    BoardFactory factory = new BoardFactory();
+    GsonFileReader reader = new GsonFileReader();
+    Board board = factory.buildBoardFromJson(reader.readJson(
+        "src/main/resources/assets/boards/laddergameboards/laddergame_classic.json"));
+    return board;
   }
 
   private BoardGameView createBoardGameView() throws Exception {
@@ -160,10 +196,11 @@ public class BoardGameApplication extends Application {
 //    return  scene;
 //  }
 
-  private List<MenuOption> buildTestMenu() {
+  private static List<MenuOption> buildTestMenu(GameSession gameSession, SceneManager sceneManager) {
     List<MenuOption> menuOptions = new ArrayList<>();
     menuOptions.add(new MenuOption("Start", new PrintLineCommand("Start"), true));
-    menuOptions.add(new MenuOption("Swap to Board View", new ChangeScreenCommand(), false));
+    menuOptions.add(new MenuOption(
+        "Swap to Board View", new StartGameCommand(gameSession, sceneManager), true));
     menuOptions.add(new MenuOption("Settings", new PrintLineCommand("Settings"), true));
     menuOptions.add(new MenuOption("Players", new PrintLineCommand("Players"), true));
     menuOptions.add(new MenuOption("Exit", new PrintLineCommand("Exit"), true));

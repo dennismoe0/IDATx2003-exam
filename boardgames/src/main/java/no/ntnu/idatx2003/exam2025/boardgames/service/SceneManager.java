@@ -1,8 +1,8 @@
 package no.ntnu.idatx2003.exam2025.boardgames.service;
 
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 /**
  * Manager used to change scenes/navigate the program.
@@ -24,8 +24,8 @@ public class SceneManager {
    *
    * @param root the root node for the scene to be swapped to.
    */
-  public void changeRoot(Node root) {
-    scene.setRoot(root.getParent());
+  public void changeRoot(Parent root) {
+    scene.setRoot(root);
   }
 
   public void getRoot(){
