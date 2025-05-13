@@ -23,13 +23,13 @@ public class DieView extends StackPane {
    */
   public DieView(Die die, double widthHeight) {
     super();
-    dieView = new Rectangle(widthHeight, widthHeight, Color.BLUE);
+    dieView = new Rectangle(widthHeight, widthHeight);
     dieView.setArcHeight(widthHeight / ARC_WIDTH);
     dieView.setArcWidth(widthHeight / ARC_WIDTH);
     this.die = die;
     resultText.textProperty().bind(this.die.rollProperty().asString());
-    resultText.setFill(Color.WHITE);
     this.getChildren().add(dieView);
     this.getChildren().add(resultText);
+    dieView.getStyleClass().add("die-view");
   }
 }

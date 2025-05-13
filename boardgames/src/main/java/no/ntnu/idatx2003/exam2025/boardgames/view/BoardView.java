@@ -2,8 +2,12 @@ package no.ntnu.idatx2003.exam2025.boardgames.view;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Rectangle;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
 import no.ntnu.idatx2003.exam2025.boardgames.service.TileViewRegister;
@@ -12,9 +16,12 @@ import no.ntnu.idatx2003.exam2025.boardgames.service.TileViewRegister;
  * View class for Boards. Uses GridPane as a base.
  */
 public class BoardView {
+  private final StackPane root;
   private final GridPane grid;
   private final Board board;
   private final TileViewRegister tileViewRegister;
+  private final float viewWidth = 600;
+  private Rectangle backBoard;
   //need to add a way for tracking the movement of game pieces in here, or displaying them in any case.
 
   /**
@@ -25,8 +32,14 @@ public class BoardView {
   public BoardView(Board board) {
     this.board = board;
     grid = new GridPane();
+    root = new StackPane();
+    backBoard = new Rectangle();
+    root.getChildren().add(backBoard);
     tileViewRegister = new TileViewRegister();
     buildBoardView();
+    setConstraints();
+    grid.getStyleClass().add("board-view");
+    backBoard.getStyleClass().add("board-back-view");
   }
 
   /**
@@ -35,7 +48,7 @@ public class BoardView {
    * @return returns a Node object as a parent.
    */
   public Parent asParent() {
-    return grid;
+    return root;
   }
 
   private void buildBoardView() {
@@ -43,7 +56,7 @@ public class BoardView {
     List<Tile> tiles = board.getTilesAsList();
     TileView view;
     String tileType;
-    double tileSize = 600.0 / board.getColumns();
+    double tileSize = (viewWidth / board.getColumns());
 
     for (Tile tile : tiles) {
       try {
@@ -59,9 +72,18 @@ public class BoardView {
   }
 
   private void setConstraints() {
-    grid.setPrefSize(600, 600);
-    grid.setHgap(5);
-    grid.setVgap(5);
+    float gridSize = viewWidth - 50;
+    grid.setMaxHeight(gridSize);
+    grid.setMaxWidth(gridSize);
+
+    backBoard.heightProperty().bind(root.heightProperty());
+    backBoard.widthProperty().bind(root.widthProperty());
+
+    root.setMaxHeight(viewWidth);
+    root.setMaxWidth(viewWidth);
+    root.setPrefSize(viewWidth, viewWidth);
+    root.getChildren().add(grid);
+    StackPane.setAlignment(grid, Pos.CENTER);
   }
 
   private void assembleBoard(List<TileView> tileViews) {

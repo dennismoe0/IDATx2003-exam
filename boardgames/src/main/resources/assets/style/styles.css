@@ -1,15 +1,51 @@
 .ts-empty {
-    -fx-background-color: gray;
+    -fx-background-color: #fbfbfb;
 }
 .ts-ladder {
-    -fx-background-color: green;
+    -fx-background-color: #67c18d;
 }
 .ts-snake {
-    -fx-background-color: red;
+    -fx-background-color: #bc5655;
 }
 .ts-win {
-  -fx-background-color: yellow;
+    -fx-background-color: yellow;
 }
 .ts-start {
     -fx-background-color: blue;
+}
+
+.die-view {
+    -fx-fill: #fbfbfb;
+    -fx-stroke: #686868;
+}
+
+.tile-view {
+    -fx-stroke: red;
+    -fx-stroke-type: centered;
+    -fx-stroke-width: 2;
+}
+
+.board-view {
+    -fx-hgap: 2;
+    -fx-vgap: 2;
+}
+
+.board-back-view {
+    -fx-arc-height: 30;
+    -fx-arc-width: 30;
+    -fx-fill: #d9d9d9;
+}
+
+.title-bar Label{
+    -fx-text-fill: white;
+    -fx-font-family: "Impact";
+    -fx-font-size: 30;
+}
+.board-game-view {
+    -fx-background-color: #2890d6;
+}
+.board-game-sidebar {
+    -fx-arc-height: 30;
+    -fx-arc-width: 30;
+    -fx-fill: #d9d9d9;
 }
