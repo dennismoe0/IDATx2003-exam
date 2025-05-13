@@ -59,6 +59,7 @@ public class MenuView {
     root.getChildren().add(backgroundPane);
     root.getChildren().add(view);
 
+    //refactor to make this section cleaner
     Region topSpacer = new Region();
     Region leftSpacer = new Region();
     Region bottomSpacer = new Region();
@@ -84,7 +85,7 @@ public class MenuView {
 
   private void createAndConfigureMenu() {
     menu.getChildren().add(title);
-    Rectangle spacer = new Rectangle(width-(2*borderWidth), 10);
+    Rectangle spacer = new Rectangle(width - (2 * borderWidth), 10);
     spacer.getStyleClass().add("menu-spacer-bar");
     menu.getChildren().add(spacer);
     menu.getChildren().add(new ViewSpacer(width, 7f));
