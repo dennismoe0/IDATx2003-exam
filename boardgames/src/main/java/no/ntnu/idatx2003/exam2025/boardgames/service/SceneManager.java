@@ -1,6 +1,5 @@
 package no.ntnu.idatx2003.exam2025.boardgames.service;
 
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
@@ -9,7 +8,7 @@ import javafx.scene.Scene;
  */
 public class SceneManager {
   private Scene scene;
-  private Node activeRoot;
+  private Parent activeRoot;
 
   public SceneManager(Scene scene) {
     this.scene = scene;
@@ -26,9 +25,13 @@ public class SceneManager {
    */
   public void changeRoot(Parent root) {
     scene.setRoot(root);
+    activeRoot = root;
   }
 
-  public void getRoot(){
-
+  public Parent getRoot(){
+    if(activeRoot == null){
+      throw new IllegalStateException("Root not set");
+    }
+    return activeRoot;
   }
 }
