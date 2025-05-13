@@ -40,7 +40,6 @@ public class MenuView {
     createView();
     createAndConfigureMenu();
     view.setCenter(menu);
-
   }
 
   /**

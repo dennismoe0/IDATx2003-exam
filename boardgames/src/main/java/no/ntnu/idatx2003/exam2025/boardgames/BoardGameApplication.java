@@ -6,10 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDao;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
@@ -25,6 +23,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.service.DatabaseManager;
 import no.ntnu.idatx2003.exam2025.boardgames.service.StatsManager;
 import no.ntnu.idatx2003.exam2025.boardgames.util.GsonFileReader;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
+import no.ntnu.idatx2003.exam2025.boardgames.util.command.ChangeScreenCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.PrintLineCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.view.BoardGameView;
 import no.ntnu.idatx2003.exam2025.boardgames.view.BoardView;
@@ -164,6 +163,7 @@ public class BoardGameApplication extends Application {
   private List<MenuOption> buildTestMenu() {
     List<MenuOption> menuOptions = new ArrayList<>();
     menuOptions.add(new MenuOption("Start", new PrintLineCommand("Start"), true));
+    menuOptions.add(new MenuOption("Swap to Board View", new ChangeScreenCommand(), false));
     menuOptions.add(new MenuOption("Settings", new PrintLineCommand("Settings"), true));
     menuOptions.add(new MenuOption("Players", new PrintLineCommand("Players"), true));
     menuOptions.add(new MenuOption("Exit", new PrintLineCommand("Exit"), true));
