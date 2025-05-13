@@ -14,8 +14,12 @@ public class MenuOption extends Button {
    * @param text   the text to be displayed as the menu option.
    * @param command the command to be performed when the menu option is clicked.
    */
-  public MenuOption(String text, Command command) {
-    super(text);
+  public MenuOption(String text, Command command, boolean uppercase) {
+    if (uppercase) {
+      text = text.toUpperCase();
+    }
+    super.setText(text);
     setOnAction(e -> command.execute());
+    this.getStyleClass().add("menu-option");
   }
 }

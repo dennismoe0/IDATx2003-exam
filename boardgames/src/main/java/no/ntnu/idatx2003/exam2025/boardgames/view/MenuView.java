@@ -77,11 +77,13 @@ public class MenuView {
     view.setRight(rightSpacer);
     view.setMaxSize(width, height);
 
+    title.getStyleClass().add("menu-title");
 
     menu = new VBox();
   }
 
   private void createAndConfigureMenu() {
+    menu.getChildren().add(title);
     for (MenuOption option : options) {
       menu.getChildren().add(option);
     }

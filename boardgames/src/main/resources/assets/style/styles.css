@@ -55,5 +55,21 @@
     -fx-fill: #e89345;
 }
 .primary-window-background {
-    -fx-background-color: #2890d6;
+    -fx-background-color: #d9d9d9;
+}
+.menu-title {
+    -fx-text-fill: #464646;
+    -fx-font-family: "Impact";
+    -fx-font-size: 35;;
+}
+.menu-option {
+    -fx-font-size: 20;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+    -fx-text-fill: #464646;
+}
+.menu-option:hover {
+    -fx-text-fill: #f7f8fa;
 }

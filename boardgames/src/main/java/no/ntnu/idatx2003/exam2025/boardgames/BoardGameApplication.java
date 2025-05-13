@@ -163,10 +163,10 @@ public class BoardGameApplication extends Application {
 
   private List<MenuOption> buildTestMenu() {
     List<MenuOption> menuOptions = new ArrayList<>();
-    menuOptions.add(new MenuOption("Start", new PrintLineCommand("Start")));
-    menuOptions.add(new MenuOption("Settings", new PrintLineCommand("Settings")));
-    menuOptions.add(new MenuOption("Players", new PrintLineCommand("Players")));
-    menuOptions.add(new MenuOption("Exit", new PrintLineCommand("Exit")));
+    menuOptions.add(new MenuOption("Start", new PrintLineCommand("Start"), true));
+    menuOptions.add(new MenuOption("Settings", new PrintLineCommand("Settings"), true));
+    menuOptions.add(new MenuOption("Players", new PrintLineCommand("Players"), true));
+    menuOptions.add(new MenuOption("Exit", new PrintLineCommand("Exit"), true));
     return menuOptions;
   }
 }
