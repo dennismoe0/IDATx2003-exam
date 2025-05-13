@@ -9,12 +9,16 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDao;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
+import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.GameStatsDao;
+import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.SnakesAndLaddersStatsDaoImpl;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardFactory;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
+import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.SnakesAndLaddersStats;
 import no.ntnu.idatx2003.exam2025.boardgames.service.DatabaseManager;
+import no.ntnu.idatx2003.exam2025.boardgames.service.StatsManager;
 import no.ntnu.idatx2003.exam2025.boardgames.util.GsonFileReader;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.PrintLineCommand;
@@ -34,7 +38,7 @@ public class BoardGameApplication extends Application {
   // the database connection for stats
   @Override
   public void start(Stage primaryStage) throws Exception {
-    DatabaseManager.initializeDatabase();
+    //DatabaseManager.initializeDatabase();
 
     Scene scene = new Scene(createBoardGameView().asParent(), 1400, 750);
     scene.getStylesheets().add(
