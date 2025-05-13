@@ -49,3 +49,11 @@
     -fx-arc-width: 30;
     -fx-fill: #d9d9d9;
 }
+.main-menu-background {
+    -fx-arc-height: 30;
+    -fx-arc-width: 30;
+    -fx-fill: #e89345;
+}
+.primary-window-background {
+    -fx-background-color: #2890d6;
+}

@@ -5,7 +5,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDao;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
@@ -40,7 +44,12 @@ public class BoardGameApplication extends Application {
   public void start(Stage primaryStage) throws Exception {
     //DatabaseManager.initializeDatabase();
 
-    Scene scene = new Scene(createBoardGameView().asParent(), 1400, 750);
+    StackPane stackpane = new StackPane();
+    stackpane.getStyleClass().add("primary-window-background");
+    stackpane.getChildren().add(new MenuView("Main Menu", buildTestMenu(),400,600,50).asParent());
+    stackpane.setAlignment(Pos.CENTER);
+
+    Scene scene = new Scene(stackpane, 1400, 750);
     scene.getStylesheets().add(
         getClass().getResource("/assets/style/styles.css").toExternalForm());
     primaryStage.setScene(scene);
