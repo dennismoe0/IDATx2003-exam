@@ -79,11 +79,16 @@ public class MenuView {
 
     title.getStyleClass().add("menu-title");
 
-    menu = new VBox();
+    menu = new VBox(2);
   }
 
   private void createAndConfigureMenu() {
     menu.getChildren().add(title);
+    Rectangle spacer = new Rectangle(width-(2*borderWidth), 10);
+    spacer.getStyleClass().add("menu-spacer-bar");
+    menu.getChildren().add(spacer);
+    menu.getChildren().add(new ViewSpacer(width, 7f));
+
     for (MenuOption option : options) {
       menu.getChildren().add(option);
     }
