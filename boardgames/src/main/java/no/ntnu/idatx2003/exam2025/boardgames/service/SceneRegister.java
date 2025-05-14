@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 import javafx.scene.Parent;
+import no.ntnu.idatx2003.exam2025.boardgames.util.ViewFactory;
 
 /**
  * Scene Register used as a way of managing Scene changes.
@@ -24,6 +25,10 @@ public class SceneRegister {
    * into the registry was suggested by ChatGPT.
    */
   private final Map<String, Supplier<Parent>> sceneMap = new HashMap<>();
+
+  public SceneRegister() {
+
+  }
 
   /**
    * Method for registering a new Scene with the Scene Registry.

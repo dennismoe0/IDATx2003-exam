@@ -48,6 +48,8 @@ public class BoardGameApplication extends Application {
   public void start(Stage primaryStage) throws Exception {
     //DatabaseManager.initializeDatabase();
 
+
+
     StackPane stackpane = new StackPane();
     Scene scene = new Scene(stackpane, 1400, 750);
     stackpane.getStyleClass().add("primary-window-background");
