@@ -54,17 +54,14 @@ public class BoardGameApplication extends Application {
     ViewFactory viewFactory = new ViewFactory();
 
     sceneRegister.register("main-menu", () ->
-        viewFactory.buildMainMenuView(gameSession, sceneManager));
-    sceneRegister.register("ladder-game", () -> viewFactory.buildLadderBoardGameView(gameSession.getBoardGame()));
-
+        viewFactory.buildMainMenuView(sceneRegister, sceneManager));
+    sceneRegister.register("ladder-game", () ->
+        viewFactory.buildLadderBoardGameView(gameSession.getBoardGame()));
 
     StackPane stackpane = new StackPane();
     Scene scene = new Scene(stackpane, 1400, 750);
     stackpane.getStyleClass().add("primary-window-background");
-
-
-
-    stackpane.getChildren().add(new MenuView("Main Menu", buildTestMenu(gameSession, sceneManager),400,600,50).asParent());
+    stackpane.getChildren().add(viewFactory.buildMainMenuView(sceneRegister, sceneManager));
     stackpane.setAlignment(Pos.CENTER);
 
     initializeGameSession(gameSession);
@@ -204,15 +201,4 @@ public class BoardGameApplication extends Application {
 //
 //    return  scene;
 //  }
-
-  private static List<MenuOption> buildTestMenu(GameSession gameSession, SceneManager sceneManager) {
-    List<MenuOption> menuOptions = new ArrayList<>();
-    menuOptions.add(new MenuOption("Start", new PrintLineCommand("Start"), true));
-    menuOptions.add(new MenuOption(
-        "Swap to Board View", new StartGameCommand(gameSession, sceneManager), true));
-    menuOptions.add(new MenuOption("Settings", new PrintLineCommand("Settings"), true));
-    menuOptions.add(new MenuOption("Players", new PrintLineCommand("Players"), true));
-    menuOptions.add(new MenuOption("Exit", new PrintLineCommand("Exit"), true));
-    return menuOptions;
-  }
 }
