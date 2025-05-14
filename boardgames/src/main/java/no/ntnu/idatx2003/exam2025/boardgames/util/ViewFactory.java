@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 
 
 public class ViewFactory {
-  private static final Logger logger = Log.get(BoardGameApplication.class);
+  private static final Logger logger = Log.get(ViewFactory.class);
   /**
    * Default method for making a LadderBoardGameView
    *

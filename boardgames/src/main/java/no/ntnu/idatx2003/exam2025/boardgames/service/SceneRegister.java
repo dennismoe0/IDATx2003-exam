@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 import javafx.scene.Parent;
-import no.ntnu.idatx2003.exam2025.boardgames.BoardGameApplication;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import org.slf4j.Logger;
 
@@ -13,7 +12,7 @@ import org.slf4j.Logger;
  * Made to allow for easy swapping from the "Swap Scene" command.
  */
 public class SceneRegister {
-  private static final Logger logger = Log.get(BoardGameApplication.class);
+  private static final Logger logger = Log.get(SceneRegister.class);
   /*
   scene list:
   - main menu

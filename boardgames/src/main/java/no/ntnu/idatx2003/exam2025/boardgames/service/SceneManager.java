@@ -3,11 +3,14 @@ package no.ntnu.idatx2003.exam2025.boardgames.service;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
+import org.slf4j.Logger;
 
 /**
  * Manager used to change scenes/navigate the program.
  */
 public class SceneManager {
+  private static final Logger logger = Log.get(SceneManager.class);
   private Scene scene;
   private Stage primaryStage;
   private Parent activeRoot;
