@@ -1,5 +1,6 @@
 package no.ntnu.idatx2003.exam2025.boardgames.view;
 
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -12,4 +13,26 @@ public class AddPlayerView {
   private static final float width = 780;
   private static final float height = 540;
   private VBox layout;
+  private TitledFieldView nameInput;
+  private TitledFieldView ageInput;
+
+  public AddPlayerView() {
+    root = new StackPane();
+    backdrop = new Rectangle(width, height);
+    layout = new VBox();
+    configureFields();
+    root.getChildren().addAll(backdrop, layout);
+  }
+
+  private void configureFields() {
+    title = new Label("Add Player");
+    nameInput = new TitledFieldView("Name", "Add the player name...", 200, 50);
+    ageInput = new TitledFieldView("Age", "Add the player age...", 45, 50);
+    layout.getChildren().addAll(title, nameInput.getRoot(), ageInput.getRoot());
+    root.setMaxSize(width, height);
+  }
+
+  public Parent getRoot() {
+    return root;
+  }
 }

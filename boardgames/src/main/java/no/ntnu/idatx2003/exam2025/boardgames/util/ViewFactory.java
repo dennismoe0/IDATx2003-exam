@@ -10,6 +10,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneRegister;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.ChangeScreenCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.PrintLineCommand;
+import no.ntnu.idatx2003.exam2025.boardgames.view.AddPlayerView;
 import no.ntnu.idatx2003.exam2025.boardgames.view.BoardGameView;
 import no.ntnu.idatx2003.exam2025.boardgames.view.MenuOption;
 import no.ntnu.idatx2003.exam2025.boardgames.view.MenuView;
@@ -43,6 +44,12 @@ public class ViewFactory {
     menuOptions.add(new MenuOption("Exit", new PrintLineCommand("Exit"), true));
     MenuView menu = new MenuView("Main Menu", menuOptions, 400,600,50);
     return menu.asParent();
+  }
+
+  public Parent buildAddPlayerView() {
+    logger.info("Building Add Player view");
+    AddPlayerView view = new AddPlayerView();
+    return view.getRoot();
   }
 }
 
