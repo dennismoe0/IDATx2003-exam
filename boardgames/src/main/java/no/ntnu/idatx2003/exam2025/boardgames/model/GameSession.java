@@ -37,6 +37,8 @@ public class GameSession {
     this.boardGame = boardGame;
   }
 
-
+  public List<Player> getPlayers() {
+    return players;
+  }
 
 }

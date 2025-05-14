@@ -5,23 +5,33 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDao;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.GameStatsDao;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.SnakesAndLaddersStatsDaoImpl;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
+import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardFactory;
+import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.BoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.SnakesAndLaddersStats;
 import no.ntnu.idatx2003.exam2025.boardgames.service.DatabaseManager;
+import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
+import no.ntnu.idatx2003.exam2025.boardgames.service.SceneRegister;
 import no.ntnu.idatx2003.exam2025.boardgames.service.StatsManager;
 import no.ntnu.idatx2003.exam2025.boardgames.util.GsonFileReader;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
+import no.ntnu.idatx2003.exam2025.boardgames.util.ViewFactory;
+import no.ntnu.idatx2003.exam2025.boardgames.util.command.ChangeScreenCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.PrintLineCommand;
+import no.ntnu.idatx2003.exam2025.boardgames.util.command.StartGameCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.view.BoardGameView;
 import no.ntnu.idatx2003.exam2025.boardgames.view.BoardView;
 import no.ntnu.idatx2003.exam2025.boardgames.view.MenuOption;
@@ -39,11 +49,27 @@ public class BoardGameApplication extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
     //DatabaseManager.initializeDatabase();
+    log.info("Program Launched");
 
-    Scene scene = new Scene(createBoardGameView().asParent(), 1400, 750);
-    scene.getStylesheets().add(
-        getClass().getResource("/assets/style/styles.css").toExternalForm());
-    primaryStage.setScene(scene);
+    SceneManager sceneManager = new SceneManager(primaryStage);
+    GameSession gameSession = new GameSession();
+    SceneRegister sceneRegister = new SceneRegister();
+    ViewFactory viewFactory = new ViewFactory();
+
+    log.info("Registering Scenes");
+    sceneRegister.register("main-menu", () ->
+        viewFactory.buildMainMenuView(sceneRegister, sceneManager));
+    sceneRegister.register("ladder-game", () ->
+        viewFactory.buildLadderBoardGameView(gameSession.getBoardGame()));
+
+    log.info("Building Default Window");
+
+    initializeGameSession(gameSession);
+
+    log.info("Setting up GUI");
+    Parent initial = sceneRegister.get("main-menu");
+    sceneManager.initialize(initial);
+    log.info("Launching GUI");
     primaryStage.show();
   }
 
@@ -54,6 +80,34 @@ public class BoardGameApplication extends Application {
    */
   public static void main(String[] args) {
     launch(args);
+  }
+
+  private void initializeGameSession(GameSession gameSession) {
+    log.info("Initializing GameSession");
+    Player player1 = new Player(1, "Dennis", 24);
+    Player player2 = new Player(2, "Sasha", 27);
+    gameSession.addPlayer(player1);
+    gameSession.addPlayer(player2);
+    try {
+      gameSession.setBoardGame(buildBoardGame(gameSession.getPlayers()));
+    } catch (Exception e) {
+      log.error(e.getMessage());
+    }
+  }
+
+  private BoardGame buildBoardGame(List<Player> players) throws Exception {
+    log.info("Building BoardGame");
+    LadderBoardGame ladderBoardGame = new LadderBoardGame(getBoard(), players);
+    return ladderBoardGame;
+  }
+
+  private Board getBoard() throws Exception {
+    log.info("Building Board");
+    BoardFactory factory = new BoardFactory();
+    GsonFileReader reader = new GsonFileReader();
+    Board board = factory.buildBoardFromJson(reader.readJson(
+        "src/main/resources/assets/boards/laddergameboards/laddergame_classic.json"));
+    return board;
   }
 
   private BoardGameView createBoardGameView() throws Exception {
@@ -151,13 +205,4 @@ public class BoardGameApplication extends Application {
 //
 //    return  scene;
 //  }
-
-  private List<MenuOption> buildTestMenu() {
-    List<MenuOption> menuOptions = new ArrayList<>();
-    menuOptions.add(new MenuOption("Start", new PrintLineCommand("Start")));
-    menuOptions.add(new MenuOption("Settings", new PrintLineCommand("Settings")));
-    menuOptions.add(new MenuOption("Players", new PrintLineCommand("Players")));
-    menuOptions.add(new MenuOption("Exit", new PrintLineCommand("Exit")));
-    return menuOptions;
-  }
 }
