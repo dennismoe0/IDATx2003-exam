@@ -1,5 +1,6 @@
 package no.ntnu.idatx2003.exam2025.boardgames.view;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -25,10 +26,10 @@ public class TitledFieldView {
   private void configureField() {
     label = new Label(title);
     field = new TextField();
-    field.setMaxWidth(width);
-    field.setMaxHeight(height);
     field.setPromptText(placeHolder);
     root.getChildren().addAll(label, field);
+    root.setMaxSize(width, height);
+    root.setAlignment(Pos.CENTER);
   }
 
   public VBox getRoot() {
