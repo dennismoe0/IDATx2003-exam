@@ -1,5 +1,6 @@
 package no.ntnu.idatx2003.exam2025.boardgames.util;
 
+import javafx.scene.Parent;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.BoardGame;
@@ -22,11 +23,11 @@ public class ViewFactory {
    * @param boardGame the game to be built.
    * @return returns a BoardGameView object.
    */
-  public BoardGameView buildLadderBoardGameView(BoardGame boardGame) {
-    return new BoardGameView("LadderBoardGame", (LadderBoardGame) boardGame);
+  public Parent buildLadderBoardGameView(BoardGame boardGame) {
+    return new BoardGameView("LadderBoardGame", (LadderBoardGame) boardGame).asParent();
   }
 
-  public MenuView buildMainMenuView(GameSession gameSession, SceneManager sceneManager) {
+  public Parent buildMainMenuView(GameSession gameSession, SceneManager sceneManager) {
     List<MenuOption> menuOptions = new ArrayList<>();
     menuOptions.add(new MenuOption("Start", new PrintLineCommand("Start"), true));
     menuOptions.add(new MenuOption(
@@ -34,7 +35,8 @@ public class ViewFactory {
     menuOptions.add(new MenuOption("Settings", new PrintLineCommand("Settings"), true));
     menuOptions.add(new MenuOption("Players", new PrintLineCommand("Players"), true));
     menuOptions.add(new MenuOption("Exit", new PrintLineCommand("Exit"), true));
-    return new MenuView("Main-Menu", menuOptions, 400,600,50);
+    MenuView menu = new MenuView("Main-Menu", menuOptions, 400,600,50);
+    return menu.asParent();
   }
 }
 

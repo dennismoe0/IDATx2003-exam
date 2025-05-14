@@ -2,15 +2,21 @@ package no.ntnu.idatx2003.exam2025.boardgames.service;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
  * Manager used to change scenes/navigate the program.
  */
 public class SceneManager {
   private Scene scene;
+  private Stage primaryStage;
   private Parent activeRoot;
 
-  public SceneManager(Scene scene) {
+  public SceneManager(Stage primaryStage) {
+    this.primaryStage = primaryStage;
+  }
+
+  public void setScene(Scene scene) {
     this.scene = scene;
   }
 

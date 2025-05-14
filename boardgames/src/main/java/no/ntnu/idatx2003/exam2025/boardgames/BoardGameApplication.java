@@ -23,6 +23,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.SnakesAndLaddersStats;
 import no.ntnu.idatx2003.exam2025.boardgames.service.DatabaseManager;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
+import no.ntnu.idatx2003.exam2025.boardgames.service.SceneRegister;
 import no.ntnu.idatx2003.exam2025.boardgames.service.StatsManager;
 import no.ntnu.idatx2003.exam2025.boardgames.util.GsonFileReader;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
@@ -47,15 +48,21 @@ public class BoardGameApplication extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
     //DatabaseManager.initializeDatabase();
+    SceneManager sceneManager = new SceneManager(primaryStage);
+    GameSession gameSession = new GameSession();
+    SceneRegister sceneRegister = new SceneRegister();
+    ViewFactory viewFactory = new ViewFactory();
 
+    sceneRegister.register("main-menu", () ->
+        viewFactory.buildMainMenuView(gameSession, sceneManager));
+    sceneRegister.register("ladder-game", () -> viewFactory.buildLadderBoardGameView(gameSession.getBoardGame()));
 
 
     StackPane stackpane = new StackPane();
     Scene scene = new Scene(stackpane, 1400, 750);
     stackpane.getStyleClass().add("primary-window-background");
 
-    SceneManager sceneManager = new SceneManager(scene);
-    GameSession gameSession = new GameSession();
+
 
     stackpane.getChildren().add(new MenuView("Main Menu", buildTestMenu(gameSession, sceneManager),400,600,50).asParent());
     stackpane.setAlignment(Pos.CENTER);
