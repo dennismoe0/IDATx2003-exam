@@ -1,7 +1,9 @@
 package no.ntnu.idatx2003.exam2025.boardgames.service;
 
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ public class SceneManager {
   private Scene scene;
   private Stage primaryStage;
   private Parent activeRoot;
+  private boolean initialized;
 
   public SceneManager(Stage primaryStage) {
     this.primaryStage = primaryStage;
@@ -22,6 +25,22 @@ public class SceneManager {
   public void setScene(Scene scene) {
     logger.info("Setting scene to " + scene);
     this.scene = scene;
+  }
+
+  public void initialize(Parent root) {
+    if (!initialized) {
+      StackPane stackpane = new StackPane();
+      stackpane.getStyleClass().add("primary-window-background");
+      stackpane.getChildren().add(root);
+      stackpane.setAlignment(Pos.CENTER);
+
+      scene = new Scene(stackpane, 1400, 750);
+      scene.getStylesheets().add(
+          getClass().getResource("/assets/style/styles.css").toExternalForm());
+      primaryStage.setScene(scene);
+    } else {
+      return;
+    }
   }
 
   public Scene getScene() {

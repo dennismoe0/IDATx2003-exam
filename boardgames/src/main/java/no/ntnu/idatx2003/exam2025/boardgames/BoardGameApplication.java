@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -62,18 +63,12 @@ public class BoardGameApplication extends Application {
         viewFactory.buildLadderBoardGameView(gameSession.getBoardGame()));
 
     log.info("Building Default Window");
-    StackPane stackpane = new StackPane();
 
-    stackpane.getStyleClass().add("primary-window-background");
-    stackpane.getChildren().add(viewFactory.buildMainMenuView(sceneRegister, sceneManager));
-    stackpane.setAlignment(Pos.CENTER);
     initializeGameSession(gameSession);
 
     log.info("Setting up GUI");
-    Scene scene = new Scene(stackpane, 1400, 750);
-    scene.getStylesheets().add(
-        getClass().getResource("/assets/style/styles.css").toExternalForm());
-    primaryStage.setScene(scene);
+    Parent initial = sceneRegister.get("main-menu");
+    sceneManager.initialize(initial);
     log.info("Launching GUI");
     primaryStage.show();
   }
