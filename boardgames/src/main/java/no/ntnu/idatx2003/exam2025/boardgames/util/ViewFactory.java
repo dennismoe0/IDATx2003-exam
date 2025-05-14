@@ -28,7 +28,8 @@ public class ViewFactory {
    */
   public Parent buildLadderBoardGameView(BoardGame boardGame) {
     logger.info("Building ladder board game");
-    return new BoardGameView("LadderBoardGame", (LadderBoardGame) boardGame).asParent();
+    BoardGameView boardGameView = new BoardGameView("LadderBoardGame", (LadderBoardGame) boardGame);
+    return boardGameView.asParent();
   }
 
   public Parent buildMainMenuView(SceneRegister sceneRegister, SceneManager sceneManager) {

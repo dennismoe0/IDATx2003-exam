@@ -29,6 +29,7 @@ public class SceneManager {
 
   public void initialize(Parent root) {
     if (!initialized) {
+      logger.info("Initializing scene");
       StackPane stackpane = new StackPane();
       stackpane.getStyleClass().add("primary-window-background");
       stackpane.getChildren().add(root);
