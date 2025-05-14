@@ -30,12 +30,20 @@ public class SceneManager {
    * @param root the root node for the scene to be swapped to.
    */
   public void changeRoot(Parent root) {
+    if (scene == null) {
+      scene = primaryStage.getScene();
+    }
     scene.setRoot(root);
     activeRoot = root;
   }
 
-  public Parent getRoot(){
-    if(activeRoot == null){
+  /**
+   * Method for getting the current root of the scene.
+   *
+   * @return Returns a node object as a Parent.
+   */
+  public Parent getRoot() {
+    if (activeRoot == null) {
       throw new IllegalStateException("Root not set");
     }
     return activeRoot;
