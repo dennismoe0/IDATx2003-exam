@@ -35,7 +35,7 @@ public class SceneRegister {
    * @param supplier A factory capable of building the intended scene.
    */
   public void register(String key, Supplier<Parent> supplier) {
-    logger.info("Registering " + key + " with " + supplier.get());
+    logger.info("Registering " + key + " with " + supplier.toString());
     sceneMap.put(key, supplier);
   }
 
