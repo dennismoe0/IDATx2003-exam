@@ -48,16 +48,20 @@ public class BoardGameApplication extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
     //DatabaseManager.initializeDatabase();
+    log.info("Program Launched");
+
     SceneManager sceneManager = new SceneManager(primaryStage);
     GameSession gameSession = new GameSession();
     SceneRegister sceneRegister = new SceneRegister();
     ViewFactory viewFactory = new ViewFactory();
 
+    log.info("Registering Scenes");
     sceneRegister.register("main-menu", () ->
         viewFactory.buildMainMenuView(sceneRegister, sceneManager));
     sceneRegister.register("ladder-game", () ->
         viewFactory.buildLadderBoardGameView(gameSession.getBoardGame()));
 
+    log.info("Building Default Window");
     StackPane stackpane = new StackPane();
 
     stackpane.getStyleClass().add("primary-window-background");
@@ -65,10 +69,12 @@ public class BoardGameApplication extends Application {
     stackpane.setAlignment(Pos.CENTER);
     initializeGameSession(gameSession);
 
+    log.info("Setting up GUI");
     Scene scene = new Scene(stackpane, 1400, 750);
     scene.getStylesheets().add(
         getClass().getResource("/assets/style/styles.css").toExternalForm());
     primaryStage.setScene(scene);
+    log.info("Launching GUI");
     primaryStage.show();
   }
 
@@ -82,6 +88,7 @@ public class BoardGameApplication extends Application {
   }
 
   private void initializeGameSession(GameSession gameSession) {
+    log.info("Initializing GameSession");
     Player player1 = new Player(1, "Dennis", 24);
     Player player2 = new Player(2, "Sasha", 27);
     gameSession.addPlayer(player1);
@@ -94,11 +101,13 @@ public class BoardGameApplication extends Application {
   }
 
   private BoardGame buildBoardGame(List<Player> players) throws Exception {
+    log.info("Building BoardGame");
     LadderBoardGame ladderBoardGame = new LadderBoardGame(getBoard(), players);
     return ladderBoardGame;
   }
 
   private Board getBoard() throws Exception {
+    log.info("Building Board");
     BoardFactory factory = new BoardFactory();
     GsonFileReader reader = new GsonFileReader();
     Board board = factory.buildBoardFromJson(reader.readJson(
