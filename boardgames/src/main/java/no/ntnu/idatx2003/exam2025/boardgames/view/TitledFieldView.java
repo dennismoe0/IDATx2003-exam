@@ -30,4 +30,8 @@ public class TitledFieldView {
     field.setPromptText(placeHolder);
     root.getChildren().addAll(label, field);
   }
+
+  public VBox getRoot() {
+    return root;
+  }
 }
