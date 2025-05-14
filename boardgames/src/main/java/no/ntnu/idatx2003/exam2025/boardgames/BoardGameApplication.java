@@ -59,13 +59,13 @@ public class BoardGameApplication extends Application {
         viewFactory.buildLadderBoardGameView(gameSession.getBoardGame()));
 
     StackPane stackpane = new StackPane();
-    Scene scene = new Scene(stackpane, 1400, 750);
+
     stackpane.getStyleClass().add("primary-window-background");
     stackpane.getChildren().add(viewFactory.buildMainMenuView(sceneRegister, sceneManager));
     stackpane.setAlignment(Pos.CENTER);
-
     initializeGameSession(gameSession);
 
+    Scene scene = new Scene(stackpane, 1400, 750);
     scene.getStylesheets().add(
         getClass().getResource("/assets/style/styles.css").toExternalForm());
     primaryStage.setScene(scene);
