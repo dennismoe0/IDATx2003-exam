@@ -19,7 +19,7 @@ public class TitledFieldView {
     this.placeHolder = placeHolder;
     this.width = width;
     this.height = height;
-    root = new VBox();
+    root = new VBox(1);
     configureField();
   }
 

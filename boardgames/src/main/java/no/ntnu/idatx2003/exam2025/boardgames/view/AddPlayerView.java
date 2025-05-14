@@ -20,7 +20,7 @@ public class AddPlayerView {
   public AddPlayerView() {
     root = new StackPane();
     backdrop = new Rectangle(width, height);
-    layout = new VBox();
+    layout = new VBox(7);
     configureFields();
     root.getChildren().addAll(backdrop, layout);
   }
