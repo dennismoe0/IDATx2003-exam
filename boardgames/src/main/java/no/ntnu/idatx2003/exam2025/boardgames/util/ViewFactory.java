@@ -1,24 +1,25 @@
 package no.ntnu.idatx2003.exam2025.boardgames.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.Parent;
-import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
-import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
+import no.ntnu.idatx2003.exam2025.boardgames.BoardGameApplication;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.BoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneRegister;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.ChangeScreenCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.PrintLineCommand;
-import no.ntnu.idatx2003.exam2025.boardgames.util.command.StartGameCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.view.BoardGameView;
 import no.ntnu.idatx2003.exam2025.boardgames.view.MenuOption;
 import no.ntnu.idatx2003.exam2025.boardgames.view.MenuView;
+import org.slf4j.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
+
+
 
 public class ViewFactory {
-
+  private static final Logger logger = Log.get(BoardGameApplication.class);
   /**
    * Default method for making a LadderBoardGameView
    *
@@ -26,10 +27,12 @@ public class ViewFactory {
    * @return returns a BoardGameView object.
    */
   public Parent buildLadderBoardGameView(BoardGame boardGame) {
+    logger.info("Building ladder board game");
     return new BoardGameView("LadderBoardGame", (LadderBoardGame) boardGame).asParent();
   }
 
   public Parent buildMainMenuView(SceneRegister sceneRegister, SceneManager sceneManager) {
+    logger.info("Building main menu");
     List<MenuOption> menuOptions = new ArrayList<>();
     menuOptions.add(new MenuOption("Start", new PrintLineCommand("Start"), true));
     menuOptions.add(new MenuOption(

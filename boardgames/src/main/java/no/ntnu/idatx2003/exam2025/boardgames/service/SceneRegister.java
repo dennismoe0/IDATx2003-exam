@@ -4,13 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 import javafx.scene.Parent;
-import no.ntnu.idatx2003.exam2025.boardgames.util.ViewFactory;
+import no.ntnu.idatx2003.exam2025.boardgames.BoardGameApplication;
+import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
+import org.slf4j.Logger;
 
 /**
  * Scene Register used as a way of managing Scene changes.
  * Made to allow for easy swapping from the "Swap Scene" command.
  */
 public class SceneRegister {
+  private static final Logger logger = Log.get(BoardGameApplication.class);
   /*
   scene list:
   - main menu
@@ -26,10 +29,6 @@ public class SceneRegister {
    */
   private final Map<String, Supplier<Parent>> sceneMap = new HashMap<>();
 
-  public SceneRegister() {
-
-  }
-
   /**
    * Method for registering a new Scene with the Scene Registry.
    *
@@ -37,6 +36,7 @@ public class SceneRegister {
    * @param supplier A factory capable of building the intended scene.
    */
   public void register(String key, Supplier<Parent> supplier) {
+    logger.info("Registering " + key + " with " + supplier.get());
     sceneMap.put(key, supplier);
   }
 
@@ -47,6 +47,7 @@ public class SceneRegister {
    * @return returns a Parent node object constructed by the called factory.
    */
   public Parent get(String key) {
+    logger.info("Getting key: [" + key + "] from SceneRegister");
     if (!sceneMap.containsKey(key)) {
       throw new IllegalArgumentException("Key " + key + " not found");
     }
