@@ -20,6 +20,7 @@ public class SceneManager {
   }
 
   public void setScene(Scene scene) {
+    logger.info("Setting scene to " + scene);
     this.scene = scene;
   }
 
@@ -33,7 +34,9 @@ public class SceneManager {
    * @param root the root node for the scene to be swapped to.
    */
   public void changeRoot(Parent root) {
+    logger.info("Changing root to " + root);
     if (scene == null) {
+      logger.info("No Scene object set, getting from Primary Stage.");
       scene = primaryStage.getScene();
     }
     scene.setRoot(root);
