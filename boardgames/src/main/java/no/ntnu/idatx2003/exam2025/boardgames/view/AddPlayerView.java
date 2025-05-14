@@ -22,6 +22,7 @@ public class AddPlayerView {
     backdrop = new Rectangle(width, height);
     layout = new VBox(7);
     configureFields();
+    assignStyling();
     root.getChildren().addAll(backdrop, layout);
   }
 
@@ -32,6 +33,11 @@ public class AddPlayerView {
     layout.getChildren().addAll(title, nameInput.getRoot(), ageInput.getRoot());
     root.setMaxSize(width, height);
     layout.setAlignment(Pos.CENTER);
+  }
+
+  private void assignStyling() {
+    title.getStyleClass().add("menu-title");
+    backdrop.getStyleClass().add("menu-background");
   }
 
   public Parent getRoot() {

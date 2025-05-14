@@ -21,6 +21,7 @@ public class TitledFieldView {
     this.height = height;
     root = new VBox(1);
     configureField();
+    assignStyling();
   }
 
   private void configureField() {
@@ -30,6 +31,10 @@ public class TitledFieldView {
     root.getChildren().addAll(label, field);
     root.setMaxSize(width, height);
     root.setAlignment(Pos.CENTER);
+  }
+
+  private void assignStyling() {
+    label.getStyleClass().add("h2");
   }
 
   public VBox getRoot() {
