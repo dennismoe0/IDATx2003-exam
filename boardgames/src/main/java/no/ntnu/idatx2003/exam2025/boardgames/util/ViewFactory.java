@@ -37,7 +37,7 @@ public class ViewFactory {
     List<MenuOption> menuOptions = new ArrayList<>();
     menuOptions.add(new MenuOption("Start", new PrintLineCommand("Start"), true));
     menuOptions.add(new MenuOption(
-        "Swap to Board View", new ChangeScreenCommand(sceneRegister, sceneManager, "main-menu"), true));
+        "Swap to Board View", new ChangeScreenCommand(sceneRegister, sceneManager, "ladder-game"), true));
     menuOptions.add(new MenuOption("Settings", new PrintLineCommand("Settings"), true));
     menuOptions.add(new MenuOption("Players", new PrintLineCommand("Players"), true));
     menuOptions.add(new MenuOption("Exit", new PrintLineCommand("Exit"), true));
