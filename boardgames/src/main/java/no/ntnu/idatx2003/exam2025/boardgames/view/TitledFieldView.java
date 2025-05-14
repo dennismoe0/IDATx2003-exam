@@ -25,8 +25,8 @@ public class TitledFieldView {
   private void configureField() {
     label = new Label(title);
     field = new TextField();
-    field.setPrefWidth(width);
-    field.setPrefHeight(height);
+    field.setMaxWidth(width);
+    field.setMaxHeight(height);
     field.setPromptText(placeHolder);
     root.getChildren().addAll(label, field);
   }
