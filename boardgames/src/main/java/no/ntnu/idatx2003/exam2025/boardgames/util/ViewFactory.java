@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Parent;
 import no.ntnu.idatx2003.exam2025.boardgames.BoardGameApplication;
+import no.ntnu.idatx2003.exam2025.boardgames.controller.AddPlayerViewController;
+import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.BoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
@@ -46,8 +48,9 @@ public class ViewFactory {
     return menu.asParent();
   }
 
-  public Parent buildAddPlayerView() {
+  public Parent buildAddPlayerView(GameSession gameSession) {
     logger.info("Building Add Player view");
+    AddPlayerViewController addPlayerViewController = new AddPlayerViewController(gameSession);
     AddPlayerView view = new AddPlayerView();
     return view.getRoot();
   }
