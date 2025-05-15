@@ -40,4 +40,8 @@ public class TitledFieldView {
   public VBox getRoot() {
     return root;
   }
+
+  public String getFieldText() {
+    return field.getText();
+  }
 }
