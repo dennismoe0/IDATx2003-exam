@@ -51,7 +51,7 @@ public class ViewFactory {
   public Parent buildAddPlayerView(GameSession gameSession) {
     logger.info("Building Add Player view");
     AddPlayerViewController addPlayerViewController = new AddPlayerViewController(gameSession);
-    AddPlayerView view = new AddPlayerView();
+    AddPlayerView view = new AddPlayerView(addPlayerViewController);
     return view.getRoot();
   }
 }
