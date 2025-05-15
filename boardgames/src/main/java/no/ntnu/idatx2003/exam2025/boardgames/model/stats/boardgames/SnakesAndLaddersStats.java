@@ -63,24 +63,39 @@ public class SnakesAndLaddersStats implements BoardGameStats {
     return totalDiceRolls;
   }
 
+  /**
+   * Increments the number of wins and games played.
+   */
   public void incrementWins() {
     wins++;
     gamesPlayed++;
   }
 
+  /**
+   * Increments the number of losses and games played.
+   */
   public void incrementLosses() {
     losses++;
     gamesPlayed++;
   }
 
+  /**
+   * Increments the number of games played.
+   */
   public void incrementGamesPlayed() {
     gamesPlayed++;
   }
 
+  /**
+   * Increments the number of ladders used.
+   */
   public void incrementLaddersUsed() {
     laddersUsed++;
   }
 
+  /**
+   * Increments the number of snakes used.
+   */
   public void incrementSnakesUsed() {
     snakesUsed++;
   }

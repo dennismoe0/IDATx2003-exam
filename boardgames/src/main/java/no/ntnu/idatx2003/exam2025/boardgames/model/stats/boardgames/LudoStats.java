@@ -2,7 +2,13 @@ package no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames;
 
 import java.util.List;
 
+/**
+ * Statistics tracker for the Ludo board game, implementing BoardGameStats.
+ * Tracks wins, losses, games played, pieces completed, double six rolls, pieces
+ * knocked, total moves, and dice rolls.
+ */
 public class LudoStats implements BoardGameStats {
+
   private int totalDiceRolls;
   private int totalMoveCount;
   private int wins;
@@ -58,24 +64,39 @@ public class LudoStats implements BoardGameStats {
     return totalDiceRolls;
   }
 
+  /**
+   * Increments the win count and the total number of games played.
+   */
   public void incrementWins() {
     wins++;
     gamesPlayed++;
   }
 
+  /**
+   * Increments the loss count and the total number of games played.
+   */
   public void incrementLosses() {
     losses++;
     gamesPlayed++;
   }
 
+  /**
+   * Increments the total number of games played.
+   */
   public void incrementGamesPlayed() {
     gamesPlayed++;
   }
 
+  /**
+   * Increments the count of pieces completed during the game.
+   */
   public void incrementPiecesCompleted() {
     piecesCompleted++;
   }
 
+  /**
+   * Increments the count of double six rolls during the game.
+   */
   public void incrementDoubleSixRolls() {
     doubleSixRolls++;
   }
