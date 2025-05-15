@@ -29,6 +29,7 @@ public class AddPlayerView {
     addButton = new Button("Add Player");
     configureFields();
     assignStyling();
+    configureButton();
     root.getChildren().addAll(backdrop, layout);
   }
 
@@ -42,7 +43,9 @@ public class AddPlayerView {
   }
 
   private void configureButton() {
-    addButton.setOnAction(event -> {});
+    addButton.setOnAction(event -> {
+      controller.AddPlayer(nameInput.getFieldText(), Integer.parseInt(ageInput.getFieldText()));
+    });
   }
 
   private void assignStyling() {
