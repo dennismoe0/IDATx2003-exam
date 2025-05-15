@@ -52,6 +52,10 @@ public class GameBuilderController {
     this.numberOfDice = numberOfDice;
   }
 
+  public void openAddPlayerView(){
+    ChangeScreenCommand command = new ChangeScreenCommand(sceneRegister, sceneManager, "add-player");
+  }
+
   private LadderBoardGame buildGame() {
     Board board = boardFactory.createDefaultLadderBoard();
     LadderBoardGame game = new LadderBoardGame(board, gameSession.getPlayers());

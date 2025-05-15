@@ -45,9 +45,9 @@ public class ViewFactory {
     return menu.asParent();
   }
 
-  public Parent buildAddPlayerView(GameSession gameSession) {
+  public Parent buildAddPlayerView(GameSession gameSession, SceneManager sceneManager) {
     logger.info("Building Add Player view");
-    AddPlayerViewController addPlayerViewController = new AddPlayerViewController(gameSession);
+    AddPlayerViewController addPlayerViewController = new AddPlayerViewController(gameSession, sceneManager);
     AddPlayerView view = new AddPlayerView(addPlayerViewController);
     return view.getRoot();
   }
