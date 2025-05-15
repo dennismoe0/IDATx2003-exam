@@ -5,7 +5,6 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardFactory;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
-import no.ntnu.idatx2003.exam2025.boardgames.service.PlayerManager;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneRegister;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.ChangeScreenCommand;
