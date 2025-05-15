@@ -53,7 +53,7 @@ public class SceneManager {
    *
    * @param root the root node for the scene to be swapped to.
    */
-  public void changeRoot(Parent root) {
+  public void setView(Parent root) {
     logger.info("Changing root to " + root);
     if (scene == null) {
       logger.info("No Scene object set, getting from Primary Stage.");
@@ -61,6 +61,10 @@ public class SceneManager {
     }
     scene.setRoot(root);
     activeRoot = root;
+  }
+
+  public void showOverlay (Parent overlay) {
+    logger.info("Showing overlay");
   }
 
   /**

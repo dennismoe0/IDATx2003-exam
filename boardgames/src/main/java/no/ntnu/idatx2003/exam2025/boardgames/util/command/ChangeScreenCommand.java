@@ -29,6 +29,6 @@ public class ChangeScreenCommand implements Command {
    * A method for executing the given command and changing screens.
    */
   public void execute() {
-    manager.changeRoot(register.get(sceneKey));
+    manager.setView(register.get(sceneKey));
   }
 }
