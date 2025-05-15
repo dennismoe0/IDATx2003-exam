@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Parent;
 import no.ntnu.idatx2003.exam2025.boardgames.BoardGameApplication;
+import no.ntnu.idatx2003.exam2025.boardgames.controller.AddPlayerViewController;
+import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.BoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneRegister;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.ChangeScreenCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.PrintLineCommand;
+import no.ntnu.idatx2003.exam2025.boardgames.view.AddPlayerView;
 import no.ntnu.idatx2003.exam2025.boardgames.view.BoardGameView;
 import no.ntnu.idatx2003.exam2025.boardgames.view.MenuOption;
 import no.ntnu.idatx2003.exam2025.boardgames.view.MenuView;
@@ -43,6 +46,13 @@ public class ViewFactory {
     menuOptions.add(new MenuOption("Exit", new PrintLineCommand("Exit"), true));
     MenuView menu = new MenuView("Main Menu", menuOptions, 400,600,50);
     return menu.asParent();
+  }
+
+  public Parent buildAddPlayerView(GameSession gameSession) {
+    logger.info("Building Add Player view");
+    AddPlayerViewController addPlayerViewController = new AddPlayerViewController(gameSession);
+    AddPlayerView view = new AddPlayerView(addPlayerViewController);
+    return view.getRoot();
   }
 }
 
