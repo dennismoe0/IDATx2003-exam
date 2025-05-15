@@ -1,6 +1,8 @@
 package no.ntnu.idatx2003.exam2025.boardgames.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,6 +10,8 @@ import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDao;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.GameStatsDao;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.stats.PlayerStats;
+import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.LudoStats;
+import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.SnakesAndLaddersStats;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 
 /**
@@ -40,7 +44,7 @@ public class StatsManager<T extends PlayerStats> {
    * @throws SQLException If an error occurs while saving the statistics.
    */
   public void save(Player player, T stats) throws SQLException {
-    Integer playerId = player.getPlayerId();
+    int playerId = player.getPlayerId();
 
     // Could make it automatically create a player, but this should be handled
     // through UI
@@ -76,4 +80,73 @@ public class StatsManager<T extends PlayerStats> {
       }
     }
   }
+
+  /**
+   * Loads all statistics object for the given player.
+   *
+   * @param player the player whose stats to load
+   * @return the stats object
+   * @throws SQLException if load fails
+   */
+  public T loadStats(Player player) throws SQLException {
+    int playerId = player.getPlayerId();
+    if (playerId <= 0) {
+      throw new IllegalArgumentException("Player ID does not exist or has not been persisted.");
+    }
+    return statsDao.load(playerId);
+  }
+
+  /**
+   * Loads all statistic values for the given player.
+   *
+   * @param player the player whose statistics to load
+   * @return a list of statistic values for the player
+   * @throws SQLException if loading statistics fails
+   */
+  public List<Integer> loadAllStats(Player player) throws SQLException {
+    return loadStats(player).getStatValues();
+  }
+
+  /**
+   * Loads a specific statistic value for the given player by index.
+   *
+   * @param player the player whose statistic to load
+   * @param index  the 1-based index of the statistic to retrieve
+   * @return the statistic value at the specified index
+   * @throws SQLException             if loading statistics fails
+   * @throws IllegalArgumentException if the index is out of range
+   */
+  public int loadStat(Player player, int index) throws SQLException {
+    List<Integer> values = loadAllStats(player);
+    if (index < 1 || index > values.size()) {
+      throw new IllegalArgumentException("Stat index out of range: " + index);
+    }
+    return values.get(index - 1);
+  }
+
+  /**
+   * Loads the statistics for the given player and returns them as a map of
+   * statistic names to values.
+   * For ease of display, removes manual work in the view-classes hopefully.
+   *
+   * @param player the player whose statistics to load
+   * @return a LinkedHashMap mapping statistic names to their corresponding values
+   * @throws SQLException          if loading statistics fails
+   * @throws IllegalStateException if the number of statistic names and values do
+   *                               not match
+   */
+  public LinkedHashMap<String, Integer> loadStatsAsMap(Player player) throws SQLException {
+    PlayerStats stats = loadStats(player);
+    List<String> names = stats.getStatNames();
+    List<Integer> vals = stats.getStatValues();
+    if (names.size() != vals.size()) {
+      throw new IllegalStateException("Names and values size mismatch");
+    }
+    LinkedHashMap<String, Integer> map = new LinkedHashMap<>();
+    for (int i = 0; i < names.size(); i++) {
+      map.put(names.get(i), vals.get(i));
+    }
+    return map;
+  }
+
 }
