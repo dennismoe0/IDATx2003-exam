@@ -1,6 +1,7 @@
 package no.ntnu.idatx2003.exam2025.boardgames.dao.player;
 
 import java.sql.SQLException;
+import java.util.List;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 
 /**
@@ -37,4 +38,20 @@ public interface PlayerDao {
    *                      be deleted.
    */
   void delete(int playerId) throws SQLException;
+
+  /**
+   * Retrieves a list of all player names from the database.
+   *
+   * @return A list of player names.
+   * @throws SQLException If a database access error occurs.
+   */
+  List<String> getAllPlayerNames() throws SQLException;
+
+  /**
+   * Retrieves a list of all player IDs from the database.
+   *
+   * @return A list of player IDs.
+   * @throws SQLException If a database access error occurs.
+   */
+  List<Integer> getAllPlayerIds() throws SQLException;
 }

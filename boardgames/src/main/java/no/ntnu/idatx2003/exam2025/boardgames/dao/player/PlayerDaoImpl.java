@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 
 /**
@@ -66,5 +69,31 @@ public class PlayerDaoImpl implements PlayerDao {
       stmt.setInt(1, playerId);
       stmt.executeUpdate();
     }
+  }
+
+  @Override
+  public List<String> getAllPlayerNames() throws SQLException {
+    List<String> names = new ArrayList<>();
+    String sql = "SELECT player_name FROM players";
+    try (PreparedStatement stmt = connection.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery()) {
+      while (rs.next()) {
+        names.add(rs.getString("player_name"));
+      }
+    }
+    return names;
+  }
+
+  @Override
+  public List<Integer> getAllPlayerIds() throws SQLException {
+    List<Integer> ids = new ArrayList<>();
+    String sql = "SELECT player_id FROM players";
+    try (PreparedStatement stmt = connection.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery()) {
+      while (rs.next()) {
+        ids.add(rs.getInt("player_id"));
+      }
+    }
+    return ids;
   }
 }
