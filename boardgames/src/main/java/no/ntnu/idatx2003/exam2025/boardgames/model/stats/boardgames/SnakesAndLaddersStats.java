@@ -1,5 +1,7 @@
 package no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames;
 
+import java.util.List;
+
 /**
  * Statistics tracker for the Snakes and Ladders board game.
  * Keeps track of dice rolls, moves, wins, losses, games played, ladders,
@@ -14,6 +16,32 @@ public class SnakesAndLaddersStats implements BoardGameStats {
   private int laddersUsed;
   private int snakesUsed;
   private int highestDiceRoll;
+
+  @Override
+  public List<String> getStatNames() {
+    return List.of(
+        "wins",
+        "losses",
+        "gamesPlayed",
+        "laddersUsed",
+        "snakesUsed",
+        "highestDiceRoll",
+        "totalDiceRolls",
+        "totalMoves");
+  }
+
+  @Override
+  public List<Integer> getStatValues() {
+    return List.of(
+        wins,
+        losses,
+        gamesPlayed,
+        laddersUsed,
+        snakesUsed,
+        highestDiceRoll,
+        totalDiceRolls,
+        totalMoveCount);
+  }
 
   @Override
   public void incrementMove(int diceRoll) {

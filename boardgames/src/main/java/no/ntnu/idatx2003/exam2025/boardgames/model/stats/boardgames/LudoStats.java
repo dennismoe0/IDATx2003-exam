@@ -1,5 +1,7 @@
 package no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames;
 
+import java.util.List;
+
 public class LudoStats implements BoardGameStats {
   private int totalDiceRolls;
   private int totalMoveCount;
@@ -9,6 +11,32 @@ public class LudoStats implements BoardGameStats {
   private int piecesCompleted;
   private int doubleSixRolls;
   private int piecesKnocked;
+
+  @Override
+  public List<String> getStatNames() {
+    return List.of(
+        "wins",
+        "losses",
+        "gamesPlayed",
+        "piecesCompleted",
+        "doubleSixRolls",
+        "piecesKnocked",
+        "totalMoves",
+        "totalDiceRolls");
+  }
+
+  @Override
+  public List<Integer> getStatValues() {
+    return List.of(
+        wins,
+        losses,
+        gamesPlayed,
+        piecesCompleted,
+        doubleSixRolls,
+        piecesKnocked,
+        totalMoveCount,
+        totalDiceRolls);
+  }
 
   @Override
   public void incrementMove(int diceRoll) {
