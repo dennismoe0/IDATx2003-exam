@@ -1,7 +1,6 @@
 package no.ntnu.idatx2003.exam2025.boardgames.service;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -10,8 +9,6 @@ import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDao;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.GameStatsDao;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.stats.PlayerStats;
-import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.LudoStats;
-import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.SnakesAndLaddersStats;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 
 /**
@@ -72,6 +69,9 @@ public class StatsManager<T extends PlayerStats> {
         // Create a new stats instance and assign to player
         T stats = statsClass.getDeclaredConstructor().newInstance();
         player.setPlayerStats(stats);
+
+        // Saves
+        statsDao.save(playerId, stats);
 
         log.info(
             "Created player with ID {}: {} and assigned stats.", playerId, player.getPlayerName());
