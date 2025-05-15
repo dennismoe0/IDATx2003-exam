@@ -29,13 +29,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.service.StatsManager;
 import no.ntnu.idatx2003.exam2025.boardgames.util.GsonFileReader;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import no.ntnu.idatx2003.exam2025.boardgames.util.ViewFactory;
-import no.ntnu.idatx2003.exam2025.boardgames.util.command.ChangeScreenCommand;
-import no.ntnu.idatx2003.exam2025.boardgames.util.command.PrintLineCommand;
-import no.ntnu.idatx2003.exam2025.boardgames.util.command.StartGameCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.view.BoardGameView;
-import no.ntnu.idatx2003.exam2025.boardgames.view.BoardView;
-import no.ntnu.idatx2003.exam2025.boardgames.view.MenuOption;
-import no.ntnu.idatx2003.exam2025.boardgames.view.MenuView;
 import org.slf4j.Logger;
 
 /**
@@ -48,7 +42,15 @@ public class BoardGameApplication extends Application {
   // the database connection for stats
   @Override
   public void start(Stage primaryStage) throws Exception {
-    //DatabaseManager.initializeDatabase();
+
+    Connection connection;
+    try {
+      connection = DatabaseManager.connect();
+      DatabaseManager.initializeDatabase(connection);
+    } catch (SQLException e) {
+      log.error(e.getMessage());
+    }
+
     log.info("Program Launched");
 
     SceneManager sceneManager = new SceneManager(primaryStage);
@@ -56,19 +58,21 @@ public class BoardGameApplication extends Application {
     SceneRegister sceneRegister = new SceneRegister();
     ViewFactory viewFactory = new ViewFactory();
 
+
     log.info("Registering Scenes");
     sceneRegister.register("main-menu", () ->
         viewFactory.buildMainMenuView(sceneRegister, sceneManager));
     sceneRegister.register("ladder-game", () ->
         viewFactory.buildLadderBoardGameView(gameSession.getBoardGame()));
     sceneRegister.register("add-player", () -> viewFactory.buildAddPlayerView(gameSession));
+    sceneRegister.register("build-game", () -> viewFactory.buildGameBuilderView());
 
     log.info("Building Default Window");
 
     initializeGameSession(gameSession);
 
     log.info("Setting up GUI");
-    Parent initial = sceneRegister.get("add-player");
+    Parent initial = sceneRegister.get("build-game");
     sceneManager.initialize(initial);
     log.info("Launching GUI");
     primaryStage.show();
