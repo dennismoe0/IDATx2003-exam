@@ -45,6 +45,8 @@ public class AddPlayerView {
   private void configureButton() {
     addButton.setOnAction(event -> {
       controller.AddPlayer(nameInput.getFieldText(), Integer.parseInt(ageInput.getFieldText()));
+      nameInput.clearField();
+      ageInput.clearField();
     });
   }
 

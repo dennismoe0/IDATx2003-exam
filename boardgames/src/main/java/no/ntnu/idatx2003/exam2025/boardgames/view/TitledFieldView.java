@@ -44,4 +44,11 @@ public class TitledFieldView {
   public String getFieldText() {
     return field.getText();
   }
+
+  /**
+   * Resets text field to placeholder text.
+   */
+  public void clearField() {
+    field.setText(placeHolder);
+  }
 }
