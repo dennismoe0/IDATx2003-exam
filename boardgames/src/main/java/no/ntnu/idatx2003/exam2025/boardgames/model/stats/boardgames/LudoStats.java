@@ -32,10 +32,12 @@ public class LudoStats implements BoardGameStats {
 
   public void incrementWins() {
     wins++;
+    gamesPlayed++;
   }
 
   public void incrementLosses() {
     losses++;
+    gamesPlayed++;
   }
 
   public void incrementGamesPlayed() {
