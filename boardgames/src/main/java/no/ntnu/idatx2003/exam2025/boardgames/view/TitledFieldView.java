@@ -49,6 +49,6 @@ public class TitledFieldView {
    * Resets text field to placeholder text.
    */
   public void clearField() {
-    field.setText(placeHolder);
+    field.clear();
   }
 }
