@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import no.ntnu.idatx2003.exam2025.boardgames.controller.AddPlayerViewController;
 
 public class AddPlayerView {
   private StackPane root;
@@ -18,8 +19,10 @@ public class AddPlayerView {
   private TitledFieldView nameInput;
   private TitledFieldView ageInput;
   private Button addButton;
+  private AddPlayerViewController controller;
 
-  public AddPlayerView() {
+  public AddPlayerView(AddPlayerViewController controller) {
+    this.controller = controller;
     root = new StackPane();
     backdrop = new Rectangle(width, height);
     layout = new VBox(7);
