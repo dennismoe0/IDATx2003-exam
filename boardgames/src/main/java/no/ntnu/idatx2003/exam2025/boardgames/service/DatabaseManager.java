@@ -80,7 +80,7 @@ public class DatabaseManager {
       stmt.execute(dropPlayersTable);
       log.debug("Attempted to drop player tables.");
     } catch (SQLException e) {
-      System.err.println("Database wiping failed: " + e.getMessage());
+      log.error("Database wiping failed: " + e.getMessage());
     }
   }
 
@@ -88,7 +88,6 @@ public class DatabaseManager {
    * Initializes the database and ensures required tables exist.
    */
   public static void initializeDatabase(Connection connection) {
-    // Ensure the 'database' directory exists
     new File("database").mkdirs();
 
     try (Statement stmt = connection.createStatement()) {
@@ -100,67 +99,56 @@ public class DatabaseManager {
             player_age INTEGER NOT NULL
           );
           """;
+      stmt.execute(createPlayersTable);
       log.debug("Created Players table.");
 
       // Snakes and Ladders stats table
       String createSnakesAndLaddersStatsTable = """
-            CREATE TABLE IF NOT EXISTS snakes_and_ladders_stats (
-            stats_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            player_id INTEGER NOT NULL UNIQUE,
-            wins INTEGER DEFAULT 0,
-            losses INTEGER DEFAULT 0,
-            games_played INTEGER DEFAULT 0,
-            ladders_used INTEGER DEFAULT 0,
-            snakes_used INTEGER DEFAULT 0,
+          CREATE TABLE IF NOT EXISTS snakes_and_ladders_stats (
+            stats_id       INTEGER PRIMARY KEY AUTOINCREMENT,
+            player_id      INTEGER NOT NULL UNIQUE,
+            wins           INTEGER DEFAULT 0,
+            losses         INTEGER DEFAULT 0,
+            games_played   INTEGER DEFAULT 0,
+            ladders_used   INTEGER DEFAULT 0,
+            snakes_used    INTEGER DEFAULT 0,
             highest_dice_roll INTEGER DEFAULT 0,
             total_dice_rolls INTEGER DEFAULT 0,
-            sum_of_all_dice_rolls INTEGER DEFAULT 0,
-            total_moves INTEGER DEFAULT 0,
+            total_moves    INTEGER DEFAULT 0,
             FOREIGN KEY (player_id) REFERENCES players(player_id) ON DELETE CASCADE
           );
-              """;
-      log.debug("Created Snakes & Ladders stat table.");
+          """;
+      stmt.execute(createSnakesAndLaddersStatsTable);
+      log.debug("Created Snakes & Ladders stats table.");
 
       // Ludo stats table
       String createLudoStatsTable = """
-                CREATE TABLE IF NOT EXISTS ludo_stats (
-                stats_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                player_id INTEGER NOT NULL UNIQUE,
-                wins INTEGER DEFAULT 0,
-                losses INTEGER DEFAULT 0,
-                games_played INTEGER DEFAULT 0,
-                pieces_completed INTEGER DEFAULT 0,
-                double_six_rolls INTEGER DEFAULT 0,
-                pieces_knocked INTEGER DEFAULT 0,
-                total_moves INTEGER DEFAULT 0,
-                total_dice_rolls INTEGER DEFAULT 0,
-                FOREIGN KEY (player_id) REFERENCES players(player_id) ON DELETE CASCADE
-              );
+          CREATE TABLE IF NOT EXISTS ludo_stats (
+            stats_id       INTEGER PRIMARY KEY AUTOINCREMENT,
+            player_id      INTEGER NOT NULL UNIQUE,
+            wins           INTEGER DEFAULT 0,
+            losses         INTEGER DEFAULT 0,
+            games_played   INTEGER DEFAULT 0,
+            pieces_completed INTEGER DEFAULT 0,
+            double_six_rolls INTEGER DEFAULT 0,
+            pieces_knocked INTEGER DEFAULT 0,
+            total_moves    INTEGER DEFAULT 0,
+            total_dice_rolls INTEGER DEFAULT 0,
+            FOREIGN KEY (player_id) REFERENCES players(player_id) ON DELETE CASCADE
+          );
           """;
-
-      log.debug("Created Ludo Stat table.");
-
-      // Execute table creation
-      try {
-        stmt.execute(createPlayersTable);
-        stmt.execute(createSnakesAndLaddersStatsTable);
-        stmt.execute(createLudoStatsTable);
-      } catch (SQLException e) {
-        log.error("Failed to create tables: {}", e.getMessage());
-        throw new RuntimeException("Table creation failed", e);
-      }
-      log.debug("Successfully created all tables.");
+      stmt.execute(createLudoStatsTable);
+      log.debug("Created Ludo stats table.");
 
       // Create indexes for faster lookups
-      stmt.execute("CREATE INDEX IF NOT EXISTS idx_snl_player_id "
-          + "ON snakes_and_ladders_stats(player_id)");
-      stmt.execute("CREATE INDEX IF NOT EXISTS idx_ludo_player_id ON ludo_stats(player_id)");
-
-      log.debug("Indexes creates");
+      stmt.execute("CREATE INDEX IF NOT EXISTS idx_snl_player_id ON snakes_and_ladders_stats(player_id);");
+      stmt.execute("CREATE INDEX IF NOT EXISTS idx_ludo_player_id ON ludo_stats(player_id);");
+      log.debug("Created indexes.");
 
       log.debug("Database initialized successfully.");
     } catch (SQLException e) {
-      System.err.println("Database initialization failed: " + e.getMessage());
+      log.error("Database initialization failed: {}", e.getMessage());
+      throw new RuntimeException("Table creation failed", e);
     }
   }
 
