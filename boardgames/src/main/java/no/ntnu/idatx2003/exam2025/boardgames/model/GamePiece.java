@@ -133,6 +133,8 @@ public class GamePiece {
     log.info(
         "GamePiece {} finished moving. Final tile: {}",
         gamePieceId, currentTile.getId());
+
+    movementStrategy.onTurnEnd(this);
   }
 
   @Override
