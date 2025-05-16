@@ -25,6 +25,7 @@ public final class LadderBoardGame extends BoardGame {
   private final SnakesAndLaddersStats stats;
   private LadderGameMoveHistory moveHistory = new LadderGameMoveHistory();
   private static final Logger log = Log.get(LadderBoardGame.class);
+  private int lastTile;
 
   /**
    * The default constructor for the Ladder Game class.
@@ -36,6 +37,7 @@ public final class LadderBoardGame extends BoardGame {
     this.players = new ArrayList<>(players);
     this.stats = new SnakesAndLaddersStats(); // Fixed stat connection
     super.setBoard(board); // Board setup is loaded
+    lastTile = board.getBoardSize();
     setUp(this.players); // Gamepieces are made
   }
 
@@ -113,8 +115,8 @@ public final class LadderBoardGame extends BoardGame {
     log.info("Incremented movecount for player {}: {}.", currentPlayer.getPlayerId(), currentPlayer.getPlayerName());
 
     // Check if the player has won
-    int winTile = 90; // Example win condition
-    if (playerPiece.getCurrentTile() == getBoard().getTile(winTile)) {
+    // Example win condition
+    if (playerPiece.getCurrentTile() == getBoard().getTile(lastTile)) {
       gameIsOver = true;
       log.info("Player {} has won the game!", currentPlayer.getPlayerName());
 
