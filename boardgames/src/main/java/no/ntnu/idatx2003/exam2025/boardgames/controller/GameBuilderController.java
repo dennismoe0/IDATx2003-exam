@@ -8,6 +8,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneRegister;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.ChangeScreenCommand;
+import no.ntnu.idatx2003.exam2025.boardgames.util.command.OpenOverlayCommand;
 
 public class GameBuilderController {
   private GameSession gameSession;
@@ -23,6 +24,8 @@ public class GameBuilderController {
   public GameBuilderController(GameSession gameSession, SceneRegister sceneRegister, SceneManager sceneManager) {
     this.gameSession = gameSession;
     boardFactory = new BoardFactory();
+    this.sceneRegister = sceneRegister;
+    this.sceneManager = sceneManager;
     changeScreenCommand = new ChangeScreenCommand(
         sceneRegister, sceneManager, "ladder-game");
   }
@@ -52,8 +55,9 @@ public class GameBuilderController {
     this.numberOfDice = numberOfDice;
   }
 
-  public void openAddPlayerView(){
-    ChangeScreenCommand command = new ChangeScreenCommand(sceneRegister, sceneManager, "add-player");
+  public void openAddPlayerView() {
+    OpenOverlayCommand command = new OpenOverlayCommand(sceneRegister, sceneManager, "add-player");
+    command.execute();
   }
 
   private LadderBoardGame buildGame() {
