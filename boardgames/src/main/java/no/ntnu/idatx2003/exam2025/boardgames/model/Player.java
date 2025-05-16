@@ -25,7 +25,7 @@ public class Player {
    * @param playerId   Unique ID to distinguish each player.
    * @param playerName Non-unique String to visually represent player in-game.
    */
-  public Player(int playerId, String playerName, int playerAge) {
+  public Player(int playerId, String playerName, int playerAge, Color color) {
     this.playerId = playerId;
     this.playerStats = null; // Injected later
     this.playerName = playerName;
