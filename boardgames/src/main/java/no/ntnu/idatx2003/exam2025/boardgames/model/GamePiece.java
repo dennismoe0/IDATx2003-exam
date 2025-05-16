@@ -137,6 +137,14 @@ public class GamePiece {
     movementStrategy.onTurnEnd(this);
   }
 
+  public MovementStrategy getMovementStrategy() {
+    return this.movementStrategy;
+  }
+
+  public void setMovementStrategy(MovementStrategy movementStrategy) {
+    this.movementStrategy = movementStrategy;
+  }
+
   @Override
   public String toString() {
     return "GamePiece{"

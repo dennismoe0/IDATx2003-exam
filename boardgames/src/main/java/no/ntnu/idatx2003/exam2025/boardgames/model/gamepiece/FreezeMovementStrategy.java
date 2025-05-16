@@ -7,17 +7,14 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
  */
 public class FreezeMovementStrategy implements MovementStrategy {
   private int remainingRounds;
-  private MovementStrategy initialMovementStrategy;
 
   /**
    * Default constructor for FreezeMovementStrategy
    *
    * @param remainingRounds and int representing how many rounds a piece will be frozen for.
-   * @param initialMovementStrategy the strategy the piece had before being frozen.
    */
-  public FreezeMovementStrategy(int remainingRounds, MovementStrategy initialMovementStrategy) {
+  public FreezeMovementStrategy(int remainingRounds) {
     this.remainingRounds = remainingRounds;
-    this.initialMovementStrategy = initialMovementStrategy;
   }
 
   /**
@@ -39,8 +36,8 @@ public class FreezeMovementStrategy implements MovementStrategy {
   @Override
   public void onTurnEnd(GamePiece gamePiece) {
     remainingRounds--;
-    if (remainingRounds == 0) {
-
+    if (remainingRounds <= 0) {
+      gamePiece.setMovementStrategy(new BasicMovementStrategy());
     }
   }
 
