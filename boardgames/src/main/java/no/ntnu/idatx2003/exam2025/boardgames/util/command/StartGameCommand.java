@@ -22,7 +22,7 @@ public class StartGameCommand implements Command {
   public void execute() {
     if (gameSession.getBoardGame() instanceof LadderBoardGame) {
       System.out.println("Start game command firing!");
-      sceneManager.setView(viewFactory.buildLadderBoardGameView(gameSession.getBoardGame()));
+      sceneManager.changeRoot(viewFactory.buildLadderBoardGameView(gameSession.getBoardGame()));
     }
 
   }

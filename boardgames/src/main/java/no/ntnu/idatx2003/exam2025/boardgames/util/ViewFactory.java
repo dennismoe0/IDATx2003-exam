@@ -12,7 +12,10 @@ import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneRegister;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.ChangeScreenCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.PrintLineCommand;
-import no.ntnu.idatx2003.exam2025.boardgames.view.*;
+import no.ntnu.idatx2003.exam2025.boardgames.view.AddPlayerView;
+import no.ntnu.idatx2003.exam2025.boardgames.view.BoardGameView;
+import no.ntnu.idatx2003.exam2025.boardgames.view.MenuOption;
+import no.ntnu.idatx2003.exam2025.boardgames.view.MenuView;
 import org.slf4j.Logger;
 
 
@@ -45,16 +48,11 @@ public class ViewFactory {
     return menu.asParent();
   }
 
-  public Parent buildAddPlayerView(GameSession gameSession, SceneManager sceneManager) {
+  public Parent buildAddPlayerView(GameSession gameSession) {
     logger.info("Building Add Player view");
-    AddPlayerViewController addPlayerViewController = new AddPlayerViewController(gameSession, sceneManager);
+    AddPlayerViewController addPlayerViewController = new AddPlayerViewController(gameSession);
     AddPlayerView view = new AddPlayerView(addPlayerViewController);
     return view.getRoot();
-  }
-
-  public Parent buildGameBuilderView() {
-    GameBuilderView gbView = new GameBuilderView();
-    return gbView.getRoot();
   }
 }
 

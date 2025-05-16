@@ -47,7 +47,6 @@ public class AddPlayerView {
       controller.AddPlayer(nameInput.getFieldText(), Integer.parseInt(ageInput.getFieldText()));
       nameInput.clearField();
       ageInput.clearField();
-      controller.closeWindow(getRoot());
     });
   }
 
