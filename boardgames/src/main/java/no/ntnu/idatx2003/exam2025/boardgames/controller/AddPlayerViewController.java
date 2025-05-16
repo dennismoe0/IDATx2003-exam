@@ -5,7 +5,6 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
 import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
-import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDao;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
 import java.sql.SQLException;
 
@@ -22,7 +21,8 @@ public class AddPlayerViewController {
    *
    * @param gameSession the current Game Session.
    */
-  public AddPlayerViewController(GameSession gameSession, SceneManager sceneManager, PlayerDaoImpl playerDao) {
+  public AddPlayerViewController(
+      GameSession gameSession, SceneManager sceneManager, PlayerDaoImpl playerDao) {
     this.gameSession = gameSession;
     this.sceneManager = sceneManager;
     this.playerDao = playerDao;

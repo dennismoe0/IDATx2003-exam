@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
-
-import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.LudoStatsDaoImpl;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 
@@ -21,7 +19,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
  */
 public class PlayerDaoImpl implements PlayerDao {
   private final Connection connection;
-  private static final Logger log = Log.get(LudoStatsDaoImpl.class);
+  private static final Logger log = Log.get(PlayerDaoImpl.class);
 
   public PlayerDaoImpl(Connection connection) {
     this.connection = connection;
@@ -137,5 +135,36 @@ public class PlayerDaoImpl implements PlayerDao {
       throw new SQLException("Unexpected error retrieving all player IDs", e);
     }
     return ids;
+  }
+
+  /**
+   * Retrieves all players from the database.
+   *
+   * @return a list of all Player objects in the database
+   * @throws SQLException if a database access error occurs
+   */
+  public List<Player> getAllPlayers() throws SQLException {
+    List<Player> players = new ArrayList<>();
+    String sql = "SELECT * FROM players";
+    try (PreparedStatement stmt = connection.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery()) {
+      log.debug("Attempting to retrieve all players from the database.");
+      while (rs.next()) {
+        Player player = new Player(
+            rs.getInt("player_id"),
+            null, // PlayerStats can be set later
+            rs.getString("player_name"),
+            rs.getInt("player_age"));
+        players.add(player);
+      }
+      log.info("Successfully retrieved {} players from the database.", players.size());
+    } catch (SQLException e) {
+      log.error("Error retrieving all players: {}", e.getMessage());
+      throw e;
+    } catch (Exception e) {
+      log.error("Unexpected error retrieving all players: {}", e.getMessage());
+      throw new SQLException("Unexpected error retrieving all players", e);
+    }
+    return players;
   }
 }
