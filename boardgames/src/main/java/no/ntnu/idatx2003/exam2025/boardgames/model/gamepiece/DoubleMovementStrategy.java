@@ -6,6 +6,8 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
  * Movement strategy for moving the player twice as far.
  */
 public class DoubleMovementStrategy implements MovementStrategy {
+  private int duration = 2;
+
   /**
    * Movement function for computing how the piece moves.
    *
@@ -24,6 +26,9 @@ public class DoubleMovementStrategy implements MovementStrategy {
    */
   @Override
   public void onTurnEnd(GamePiece gamePiece) {
-    gamePiece.setMovementStrategy(new BasicMovementStrategy());
+    duration--;
+    if (duration == 0) {
+      gamePiece.setMovementStrategy(new BasicMovementStrategy());
+    }
   }
 }

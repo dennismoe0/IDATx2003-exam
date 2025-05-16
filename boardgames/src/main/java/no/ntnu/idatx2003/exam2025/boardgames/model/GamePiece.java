@@ -89,12 +89,12 @@ public class GamePiece {
    */
   public void move(int steps) {
 
-    steps = movementStrategy.computeMovement(steps);
+    int computedMove = movementStrategy.computeMovement(steps);
 
     if (currentTile == null) {
       if (startingTile != null) {
         currentTile = startingTile;
-        steps--;
+        computedMove--;
         log.info("GamePiece {} initialized to starting tile {}", gamePieceId, startingTile.getId());
       } else {
         throw new IllegalStateException("Gamepiece has no starting tile");
@@ -103,13 +103,14 @@ public class GamePiece {
 
     log.info(
         "GamePiece {} attempting to move {} steps from tile {}",
-        gamePieceId, steps, currentTile);
+        gamePieceId, computedMove, currentTile);
 
     Tile targetTile = currentTile;
-    for (int i = 0; i < steps; i++) {
+    for (int i = 0; i < computedMove; i++) {
       if (targetTile.getNextTile() == null) {
         log.error("Tile {} has no next tile. Cannot move further.", targetTile.getId());
-        throw new IllegalArgumentException("Cannot move to a non-existent tile");
+        break;
+        //throw new IllegalArgumentException("Cannot move to a non-existent tile");
       }
       targetTile = targetTile.getNextTile();
       log.info(
@@ -130,11 +131,11 @@ public class GamePiece {
       currentTile.getTileStrategy().applyEffect(this);
     }
 
+    movementStrategy.onTurnEnd(this);
+
     log.info(
         "GamePiece {} finished moving. Final tile: {}",
         gamePieceId, currentTile.getId());
-
-    movementStrategy.onTurnEnd(this);
   }
 
   public MovementStrategy getMovementStrategy() {
