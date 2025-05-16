@@ -12,7 +12,14 @@ public interface MovementStrategy {
    *
    * @param roll      the number the player rolled on the dice.
    * @param gamePiece the gamepiece to be moved/have it's movement applied.
-   * @return
+   * @return returns an integer as the number of spaces the player should move.
    */
   int computeMovement(int roll, GamePiece gamePiece);
+
+  /**
+   * Utility method for movement strategies (in case they're turn based!)
+   *
+   * @param gamePiece the game piece to be affected, if necessary.
+   */
+  void onTurnEnd(GamePiece gamePiece);
 }
