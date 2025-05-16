@@ -2,10 +2,8 @@ package no.ntnu.idatx2003.exam2025.boardgames.service;
 
 import java.util.HashMap;
 import java.util.Map;
-import no.ntnu.idatx2003.exam2025.boardgames.model.tile.EmptyTileStrategy;
-import no.ntnu.idatx2003.exam2025.boardgames.model.tile.LadderTileStrategy;
-import no.ntnu.idatx2003.exam2025.boardgames.model.tile.SnakeTileStrategy;
-import no.ntnu.idatx2003.exam2025.boardgames.model.tile.TileStrategy;
+
+import no.ntnu.idatx2003.exam2025.boardgames.model.tile.*;
 
 /**
  * Uses AI.
@@ -18,6 +16,8 @@ public class TileViewRegister {
     register(EmptyTileStrategy.class, "ts-empty");
     register(LadderTileStrategy.class, "ts-ladder");
     register(SnakeTileStrategy.class, "ts-snake");
+    register(DoubleMovementTileStrategy.class, "ts-double-movement");
+    register(FreezeTileStrategy.class, "ts-freeze");
   }
 
   public void register(Class<? extends TileStrategy> strategy, String name) {

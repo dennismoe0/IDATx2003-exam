@@ -1,0 +1,70 @@
+{
+  "name": "Special Snakes 'n Ladders (30)",
+  "board-size": 30,
+  "description": "The classic board game, Snakes and Ladders, with a twist!",
+  "rows": 6,
+  "columns": 5,
+  "tiles": [
+    {
+      "id": 2,
+      "tile-type": "ladder",
+      "exit-tile": 16
+    },
+    {
+      "id": 5,
+      "tile-type": "ladder",
+      "exit-tile": 12
+    },
+    {
+      "id": 6,
+      "tile-type": "freeze",
+      "duration": 2
+    },
+    {
+      "id": 7,
+      "tile-type": "double"
+    },
+    {
+      "id": 9,
+      "tile-type": "snake",
+      "exit-tile": 1
+    },
+    {
+      "id": 14,
+      "tile-type": "double"
+    },
+    {
+      "id": 17,
+      "tile-type": "ladder",
+      "exit-tile": 26
+    },
+    {
+      "id": 18,
+      "tile-type": "freeze",
+      "duration": 2
+    },
+    {
+      "id": 20,
+      "tile-type": "double"
+    },
+    {
+      "id": 22,
+      "tile-type": "ladder",
+      "exit-tile": 27
+    },
+    {
+      "id": 24,
+      "tile-type": "double"
+    },
+    {
+      "id": 28,
+      "tile-type": "snake",
+      "exit-tile": 13
+    },
+    {
+      "id": 29,
+      "tile-type": "freeze",
+      "duration": 2
+    }
+  ]
+}

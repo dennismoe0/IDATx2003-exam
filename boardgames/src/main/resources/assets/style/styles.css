@@ -13,6 +13,12 @@
 .ts-start {
     -fx-background-color: blue;
 }
+.ts-freeze {
+    -fx-background-color: #a6dfe3;
+}
+.ts-double-movement {
+    -fx-background-color: #ffc99b;
+}
 
 .die-view {
     -fx-fill: #fbfbfb;

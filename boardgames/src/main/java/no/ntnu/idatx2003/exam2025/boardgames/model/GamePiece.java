@@ -1,5 +1,7 @@
 package no.ntnu.idatx2003.exam2025.boardgames.model;
 
+import no.ntnu.idatx2003.exam2025.boardgames.model.gamepiece.BasicMovementStrategy;
+import no.ntnu.idatx2003.exam2025.boardgames.model.gamepiece.MovementStrategy;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import org.slf4j.Logger;
 public class GamePiece {
 
   private static final Logger log = Log.get(GamePiece.class);
+  private MovementStrategy movementStrategy;
 
   private static int idCounter = 0;
 
@@ -26,6 +29,7 @@ public class GamePiece {
    * @param startingTile The tile where the game piece starts.
    */
   public GamePiece(Tile startingTile) {
+    movementStrategy = new BasicMovementStrategy();
     this.startingTile = startingTile;
     this.gamePieceId = idCounter++;
     currentTile = null;
@@ -85,10 +89,12 @@ public class GamePiece {
    */
   public void move(int steps) {
 
+    int computedMove = movementStrategy.computeMovement(steps);
+
     if (currentTile == null) {
       if (startingTile != null) {
         currentTile = startingTile;
-        steps--;
+        computedMove--;
         log.info("GamePiece {} initialized to starting tile {}", gamePieceId, startingTile.getId());
       } else {
         throw new IllegalStateException("Gamepiece has no starting tile");
@@ -97,13 +103,14 @@ public class GamePiece {
 
     log.info(
         "GamePiece {} attempting to move {} steps from tile {}",
-        gamePieceId, steps, currentTile);
+        gamePieceId, computedMove, currentTile);
 
     Tile targetTile = currentTile;
-    for (int i = 0; i < steps; i++) {
+    for (int i = 0; i < computedMove; i++) {
       if (targetTile.getNextTile() == null) {
         log.error("Tile {} has no next tile. Cannot move further.", targetTile.getId());
-        throw new IllegalArgumentException("Cannot move to a non-existent tile");
+        break;
+        //throw new IllegalArgumentException("Cannot move to a non-existent tile");
       }
       targetTile = targetTile.getNextTile();
       log.info(
@@ -124,9 +131,19 @@ public class GamePiece {
       currentTile.getTileStrategy().applyEffect(this);
     }
 
+    movementStrategy.onTurnEnd(this);
+
     log.info(
         "GamePiece {} finished moving. Final tile: {}",
         gamePieceId, currentTile.getId());
+  }
+
+  public MovementStrategy getMovementStrategy() {
+    return this.movementStrategy;
+  }
+
+  public void setMovementStrategy(MovementStrategy movementStrategy) {
+    this.movementStrategy = movementStrategy;
   }
 
   @Override
