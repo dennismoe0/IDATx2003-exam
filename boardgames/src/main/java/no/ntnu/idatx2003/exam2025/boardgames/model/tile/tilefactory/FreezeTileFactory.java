@@ -5,6 +5,9 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.FreezeTileStrategy;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
 
+/**
+ * Factory for making Freeze Tiles from Json objects.
+ */
 public class FreezeTileFactory implements TileFactory {
 
   /**

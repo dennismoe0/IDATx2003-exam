@@ -3,6 +3,7 @@ package no.ntnu.idatx2003.exam2025.boardgames.model.tile;
 
 import java.util.HashMap;
 import java.util.Map;
+import no.ntnu.idatx2003.exam2025.boardgames.model.tile.tilefactory.FreezeTileFactory;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.tilefactory.LadderTileFactory;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.tilefactory.SnakeTileFactory;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.tilefactory.TileFactory;
@@ -20,6 +21,7 @@ public class TileRegistry {
   public TileRegistry() {
     register("snake", new SnakeTileFactory());
     register("ladder", new LadderTileFactory());
+    register("freeze", new FreezeTileFactory());
   }
 
   /**
