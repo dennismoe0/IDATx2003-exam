@@ -44,7 +44,6 @@ public class GamePiece {
     this.player = player;
     this.color = player.getPlayerColor();
     this.gamePieceId = idCounter++;
-    this.currentTile.set(startingTile);
     log.debug("GamePiece {} created", gamePieceId);
   }
 
@@ -129,7 +128,7 @@ public class GamePiece {
 
     int computedMove = movementStrategy.computeMovement(steps);
 
-    if (currentTile == null) {
+    if (currentTile.get() == null) {
       if (startingTile != null) {
         setCurrentTile(startingTile);
         computedMove--;
