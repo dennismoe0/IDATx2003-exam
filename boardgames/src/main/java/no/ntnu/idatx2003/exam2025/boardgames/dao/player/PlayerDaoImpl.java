@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
-
-import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.LudoStatsDaoImpl;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 
@@ -21,7 +19,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
  */
 public class PlayerDaoImpl implements PlayerDao {
   private final Connection connection;
-  private static final Logger log = Log.get(LudoStatsDaoImpl.class);
+  private static final Logger log = Log.get(PlayerDaoImpl.class);
 
   public PlayerDaoImpl(Connection connection) {
     this.connection = connection;
