@@ -50,6 +50,8 @@ jacoco.exec
 *.db
 *.sqlite
 *.db-journal
+*.db-shm
+*.db-wal
 
 # Ignore generated Javadoc files
 docs/
