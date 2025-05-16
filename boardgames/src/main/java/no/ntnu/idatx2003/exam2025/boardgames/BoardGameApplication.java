@@ -56,6 +56,28 @@ public class BoardGameApplication extends Application {
 
     PlayerDaoImpl playerDao = new PlayerDaoImpl(connection);
 
+    // Temporary for testing
+    if (playerDao.getAllPlayers().isEmpty()) {
+      Player player1 = new Player(0, "Dennis", 24);
+      Player player2 = new Player(0, "Sasha", 27);
+      int id1 = playerDao.create(player1);
+      int id2 = playerDao.create(player2);
+      player1.setPlayerId(id1);
+      player2.setPlayerId(id2);
+
+      // Add 10 more players with Latin names (Copilot generated test people)
+      String[] latinNames = {
+          "Marcus", "Lucius", "Gaius", "Tiberius", "Aurelia",
+          "Claudia", "Octavia", "Cornelia", "Flavia", "Julia"
+      };
+      int[] ages = { 30, 28, 35, 22, 26, 31, 29, 33, 27, 25 };
+      for (int i = 0; i < latinNames.length; i++) {
+        Player latinPlayer = new Player(0, latinNames[i], ages[i]);
+        int latinId = playerDao.create(latinPlayer);
+        latinPlayer.setPlayerId(latinId);
+      }
+    }
+
     SceneManager sceneManager = new SceneManager(primaryStage);
     GameSession gameSession = new GameSession();
     SceneRegister sceneRegister = new SceneRegister();
