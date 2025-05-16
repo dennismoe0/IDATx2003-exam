@@ -8,6 +8,11 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.AddPlayerViewController;
+import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
+import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
+import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDao;
+import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
+import java.sql.SQLException;
 
 public class AddPlayerView {
   private StackPane root;
@@ -37,17 +42,27 @@ public class AddPlayerView {
     title = new Label("Add Player");
     nameInput = new TitledFieldView("Name", "Add the player name...", 200, 50);
     ageInput = new TitledFieldView("Age", "Add the player age...", 200, 50);
-    layout.getChildren().addAll(title, nameInput.getRoot(), ageInput.getRoot(),addButton);
+    layout.getChildren().addAll(title, nameInput.getRoot(), ageInput.getRoot(), addButton);
     root.setMaxSize(width, height);
     layout.setAlignment(Pos.CENTER);
   }
 
   private void configureButton() {
     addButton.setOnAction(event -> {
-      controller.AddPlayer(nameInput.getFieldText(), Integer.parseInt(ageInput.getFieldText()));
-      nameInput.clearField();
-      ageInput.clearField();
-      controller.closeWindow(getRoot());
+
+      String name = nameInput.getFieldText();
+      String ageText = ageInput.getFieldText();
+
+      String error = controller.createAndAddPlayer(name, ageText);
+
+      if (error == null) {
+        AlertUtil.showInfo("Player created", "Player " + name + " created successfully.");
+        nameInput.clearField();
+        ageInput.clearField();
+
+      } else {
+        AlertUtil.showError("Invalid input", error);
+      }
     });
   }
 
