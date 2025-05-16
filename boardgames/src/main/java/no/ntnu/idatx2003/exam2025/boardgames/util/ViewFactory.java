@@ -1,7 +1,9 @@
 package no.ntnu.idatx2003.exam2025.boardgames.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javafx.scene.Parent;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.AddPlayerViewController;
@@ -12,6 +14,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.BoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneRegister;
+import no.ntnu.idatx2003.exam2025.boardgames.service.StatsManager;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.ChangeScreenCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.PrintLineCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.view.*;
@@ -62,9 +65,8 @@ public class ViewFactory {
     return gbView.getRoot();
   }
 
-  // mock for code "compliance"
-  public Parent buildPlayerListView(PlayerDaoImpl playerDao) {
-    PlayerListViewController controller = new PlayerListViewController(playerDao);
+  public Parent buildPlayerListView(PlayerDaoImpl playerDao, Map<String, StatsManager<?>> statsManagers) {
+    PlayerListViewController controller = new PlayerListViewController(playerDao, statsManagers);
     PlayerListView view = new PlayerListView(controller);
     return view.getRoot();
   }
