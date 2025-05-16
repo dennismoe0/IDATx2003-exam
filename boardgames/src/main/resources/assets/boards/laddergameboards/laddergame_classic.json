@@ -2,7 +2,7 @@
     "name": "Snakes 'n Ladders (90)",
     "board-size": 90,
     "description": "The classic board game, Snakes and Ladders",
-    "rows": 9,
+    "rows": 10,
     "columns": 9,
     "tiles": [
         {
