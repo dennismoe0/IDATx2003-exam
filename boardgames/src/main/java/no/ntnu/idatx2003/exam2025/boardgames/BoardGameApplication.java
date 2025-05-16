@@ -65,14 +65,15 @@ public class BoardGameApplication extends Application {
     sceneRegister.register("main-menu", () -> viewFactory.buildMainMenuView(sceneRegister, sceneManager));
     sceneRegister.register("ladder-game", () -> viewFactory.buildLadderBoardGameView(gameSession.getBoardGame()));
     sceneRegister.register("add-player", () -> viewFactory.buildAddPlayerView(gameSession, sceneManager, playerDao));
-    sceneRegister.register("build-game", () -> viewFactory.buildGameBuilderView());
+    sceneRegister.register("build-game",
+        () -> viewFactory.buildGameBuilderView(gameSession, sceneManager, sceneRegister));
 
     log.info("Building Default Window");
 
     initializeGameSession(gameSession);
 
     log.info("Setting up GUI");
-    Parent initial = sceneRegister.get("add-player");
+    Parent initial = sceneRegister.get("ladder-game");
     sceneManager.initialize(initial);
     log.info("Launching GUI");
     primaryStage.show();

@@ -53,26 +53,25 @@ public final class LadderBoardGame extends BoardGame {
     dice = new Dice();
     dice.addDice(new Die(6));
 
-    List<GamePiece> pieces = new ArrayList<>();
+
     for (Player player : players) {
-      pieces.clear();
+      List<GamePiece> pieces = new ArrayList<>();
       Tile startingTile = getBoard().getTile(1);
       if (startingTile == null) {
-        throw new IllegalArgumentException("Strting tile (tile 1) does not exist.");
+        throw new IllegalArgumentException("Starting tile (tile 1) does not exist.");
       }
       pieces.add(new GamePiece(startingTile)); // Null as placeholder
       super.addPlayerPieces(player, pieces);
     }
     playerIndex = 0;
-    currentPlayer = players.get(playerIndex);
+    //currentPlayer = players.get(playerIndex);
   }
 
   @Override
   public void takeTurn() {
     // Get the current player for this turn
     currentPlayer = getNextPlayer();
-    log.info(
-        "Starting turn for player index: {}, player: {}",
+    log.info("Starting turn for player index: {}, player: {}",
         playerIndex, currentPlayer.getPlayerName());
 
     // Roll the dice once
@@ -97,8 +96,7 @@ public final class LadderBoardGame extends BoardGame {
     moveHistory.addMessage(new LadderGameMessage(currentPlayer, startTile, endTile, diceRoll));
 
     // Log the player's move
-    log.info(
-        "Player {} moved. Current tile: {}",
+    log.info("Player {} moved. Current tile: {}",
         currentPlayer.getPlayerName(), playerPiece.getCurrentTile());
 
     // Update stats for the current player

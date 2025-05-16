@@ -88,6 +88,7 @@ public class GamePiece {
     if (currentTile == null) {
       if (startingTile != null) {
         currentTile = startingTile;
+        steps--;
         log.info("GamePiece {} initialized to starting tile {}", gamePieceId, startingTile.getId());
       } else {
         throw new IllegalStateException("Gamepiece has no starting tile");
