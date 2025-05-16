@@ -6,6 +6,10 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import java.util.List;
 import java.sql.SQLException;
 
+/**
+ * Controller class for managing the player list view.
+ * Handles retrieval and deletion of players using the PlayerDaoImpl.
+ */
 public class PlayerListViewController {
 
   private final PlayerDaoImpl playerDao;
@@ -31,5 +35,15 @@ public class PlayerListViewController {
    */
   public List<Player> getAllPlayers() throws SQLException {
     return playerDao.getAllPlayers();
+  }
+
+  /**
+   * Deletes a player from the database by their player ID.
+   *
+   * @param playerId the ID of the player to delete
+   * @throws SQLException if a database access error occurs
+   */
+  public void deletePlayer(int playerId) throws SQLException {
+    playerDao.delete(playerId);
   }
 }
