@@ -3,7 +3,10 @@ package no.ntnu.idatx2003.exam2025.boardgames;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -13,6 +16,7 @@ import javafx.stage.Stage;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDao;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.GameStatsDao;
+import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.LudoStatsDaoImpl;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.SnakesAndLaddersStatsDaoImpl;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
@@ -21,6 +25,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardFactory;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.BoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
+import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.LudoStats;
 import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.SnakesAndLaddersStats;
 import no.ntnu.idatx2003.exam2025.boardgames.service.DatabaseManager;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
@@ -83,6 +88,18 @@ public class BoardGameApplication extends Application {
     SceneRegister sceneRegister = new SceneRegister();
     ViewFactory viewFactory = new ViewFactory();
 
+    // stats
+    StatsManager<SnakesAndLaddersStats> snakesStatsManager = new StatsManager<>(
+        playerDao,
+        new SnakesAndLaddersStatsDaoImpl(connection));
+    StatsManager<LudoStats> ludoStatsManager = new StatsManager<>(
+        playerDao, new LudoStatsDaoImpl(connection));
+
+    // Create the map
+    Map<String, StatsManager<?>> statsManagers = new HashMap<>();
+    statsManagers.put("Snakes and Ladders", snakesStatsManager);
+    statsManagers.put("Ludo", ludoStatsManager);
+
     log.info("Registering Scenes");
     sceneRegister.register("main-menu", () -> viewFactory.buildMainMenuView(sceneRegister, sceneManager));
     sceneRegister.register("ladder-game", () -> viewFactory.buildLadderBoardGameView(gameSession.getBoardGame()));
@@ -91,7 +108,8 @@ public class BoardGameApplication extends Application {
         () -> viewFactory.buildGameBuilderView(gameSession, sceneManager, sceneRegister));
 
     // Needs to be filled out
-    sceneRegister.register("player-list", () -> viewFactory.buildPlayerListView(playerDao));
+
+    sceneRegister.register("player-list", () -> viewFactory.buildPlayerListView(playerDao, statsManagers));
 
     log.info("Building Default Window");
 
