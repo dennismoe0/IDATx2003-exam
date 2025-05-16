@@ -5,11 +5,13 @@ import javafx.scene.layout.VBox;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.PlayerListViewController;
@@ -20,6 +22,7 @@ public class PlayerListView {
   private final VBox playerListVBox;
   private final ScrollPane scrollPane;
   private final PlayerListViewController controller;
+  private ComboBox<String> gameComboBox;
 
   // Have some boxes next to player names that can be
   // checked to "add to game" / pool of active players
@@ -31,6 +34,15 @@ public class PlayerListView {
     scrollPane = new ScrollPane(playerListVBox);
     scrollPane.setFitToWidth(true);
     scrollPane.setPrefViewportHeight(400);
+
+    gameComboBox = new ComboBox<>();
+    gameComboBox.getItems().addAll(controller.getSupportedGames());
+    if (!gameComboBox.getItems().isEmpty()) {
+      gameComboBox.setValue(gameComboBox.getItems().get(0));
+    }
+
+    VBox container = new VBox(10, gameComboBox, playerListVBox);
+    scrollPane.setContent(container);
 
     loadPlayers();
   }
@@ -83,8 +95,22 @@ public class PlayerListView {
         CheckBox selectBox = new CheckBox();
         selectBox.setMinWidth(60);
 
+        Button showStatsButton = new Button("Show statistics");
+        showStatsButton.setMinWidth(120);
+        showStatsButton.setOnAction(e -> {
+          try {
+            String selectedGame = gameComboBox.getValue();
+            LinkedHashMap<String, Integer> stats = controller.getPlayerStatsMap(
+                player, selectedGame);
+            PlayerStatisticsView statsView = new PlayerStatisticsView(player, stats, selectedGame);
+            statsView.showOverlay(playerListVBox.getScene().getWindow());
+          } catch (SQLException ex) {
+            AlertUtil.showError("Failed to load statistics", ex.getMessage());
+          }
+        });
+
         // The order here matches the header!
-        row.getChildren().addAll(nameLabel, ageLabel, idLabel, deleteButton, selectBox);
+        row.getChildren().addAll(nameLabel, ageLabel, idLabel, deleteButton, selectBox, showStatsButton);
         playerListVBox.getChildren().add(row);
       }
       if (players.isEmpty()) {
