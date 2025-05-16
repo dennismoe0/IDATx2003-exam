@@ -111,7 +111,7 @@ public class BoardGameApplication extends Application {
     BoardFactory factory = new BoardFactory();
     GsonFileReader reader = new GsonFileReader();
     Board board = factory.buildBoardFromJson(reader.readJson(
-        "src/main/resources/assets/boards/laddergameboards/laddergame_classic.json"));
+        "src/main/resources/assets/boards/laddergameboards/laddergame_special30.json"));
     return board;
   }
 
