@@ -6,6 +6,7 @@ import java.util.List;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
@@ -15,14 +16,15 @@ import no.ntnu.idatx2003.exam2025.boardgames.service.TileViewRegister;
 /**
  * View class for Boards. Uses GridPane as a base.
  */
-public class BoardView {
+public class BoardView extends Pane {
   private final StackPane root;
   private final GridPane grid;
   private final Board board;
   private final TileViewRegister tileViewRegister;
   private final float viewWidth = 600;
   private Rectangle backBoard;
-  //need to add a way for tracking the movement of game pieces in here, or displaying them in any case.
+  // need to add a way for tracking the movement of game pieces in here, or
+  // displaying them in any case.
 
   /**
    * The default constructor, requires a Board object.
@@ -67,6 +69,8 @@ public class BoardView {
       }
       view = new TileView(tile, ((int) tileSize), tileType);
       tileViews.add(view);
+      int tileId = tile.getId();
+      tileViewRegister.registerTileView(tileId, view);
     }
     assembleBoard(tileViews);
   }
@@ -112,5 +116,13 @@ public class BoardView {
       }
       index++;
     }
+  }
+
+  public TileViewRegister getTileViewRegister() {
+    return tileViewRegister;
+  }
+
+  public void addGamePieceView(GamePieceView pieceView) {
+    root.getChildren().add(pieceView);
   }
 }

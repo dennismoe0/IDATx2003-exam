@@ -69,6 +69,8 @@ public class BoardGameApplication extends Application {
       int id2 = playerDao.create(player2);
       player1.setPlayerId(id1);
       player2.setPlayerId(id2);
+      player1.setPlayerColor(javafx.scene.paint.Color.BLUE);
+      player2.setPlayerColor(javafx.scene.paint.Color.GREEN);
 
       // Add 10 more players with Latin names (Copilot generated test people)
       String[] latinNames = {
@@ -100,6 +102,8 @@ public class BoardGameApplication extends Application {
     statsManagers.put("Snakes and Ladders", snakesStatsManager);
     statsManagers.put("Ludo", ludoStatsManager);
 
+    initializeGameSession(gameSession);
+
     log.info("Registering Scenes");
     sceneRegister.register("main-menu", () -> viewFactory.buildMainMenuView(sceneRegister, sceneManager));
     sceneRegister.register("ladder-game", () -> viewFactory.buildLadderBoardGameView(gameSession.getBoardGame()));
@@ -113,10 +117,8 @@ public class BoardGameApplication extends Application {
 
     log.info("Building Default Window");
 
-    initializeGameSession(gameSession);
-
     log.info("Setting up GUI");
-    Parent initial = sceneRegister.get("player-list");
+    Parent initial = sceneRegister.get("ladder-game");
     log.info("Initial scene: " + initial);
     sceneManager.initialize(initial);
     log.info("Launching GUI");
