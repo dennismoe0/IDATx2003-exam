@@ -1,5 +1,7 @@
 package no.ntnu.idatx2003.exam2025.boardgames.model;
 
+import no.ntnu.idatx2003.exam2025.boardgames.model.gamepiece.BasicMovementStrategy;
+import no.ntnu.idatx2003.exam2025.boardgames.model.gamepiece.MovementStrategy;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import org.slf4j.Logger;
 public class GamePiece {
 
   private static final Logger log = Log.get(GamePiece.class);
+  private MovementStrategy movementStrategy;
 
   private static int idCounter = 0;
 
@@ -26,6 +29,7 @@ public class GamePiece {
    * @param startingTile The tile where the game piece starts.
    */
   public GamePiece(Tile startingTile) {
+    movementStrategy = new BasicMovementStrategy();
     this.startingTile = startingTile;
     this.gamePieceId = idCounter++;
     currentTile = null;
@@ -84,6 +88,8 @@ public class GamePiece {
    * @throws IllegalArgumentException If the target tile does not exist.
    */
   public void move(int steps) {
+
+    steps = movementStrategy.computeMovement(steps);
 
     if (currentTile == null) {
       if (startingTile != null) {
