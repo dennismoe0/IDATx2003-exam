@@ -16,6 +16,7 @@ public class SceneManager {
   private Scene scene;
   private Stage primaryStage;
   private Parent activeRoot;
+  private StackPane rootPane;
   private boolean initialized;
 
   public SceneManager(Stage primaryStage) {
@@ -30,12 +31,12 @@ public class SceneManager {
   public void initialize(Parent root) {
     if (!initialized) {
       logger.info("Initializing scene");
-      StackPane stackpane = new StackPane();
-      stackpane.getStyleClass().add("primary-window-background");
-      stackpane.getChildren().add(root);
-      stackpane.setAlignment(Pos.CENTER);
+      rootPane = new StackPane();
+      rootPane.getStyleClass().add("primary-window-background");
+      rootPane.getChildren().add(root);
+      rootPane.setAlignment(Pos.CENTER);
 
-      scene = new Scene(stackpane, 1400, 750);
+      scene = new Scene(rootPane, 1400, 750);
       scene.getStylesheets().add(
           getClass().getResource("/assets/style/styles.css").toExternalForm());
       primaryStage.setScene(scene);
@@ -53,14 +54,27 @@ public class SceneManager {
    *
    * @param root the root node for the scene to be swapped to.
    */
-  public void changeRoot(Parent root) {
-    logger.info("Changing root to " + root);
+  public void setView(Parent root) {
+    logger.info("Changing view to " + root);
     if (scene == null) {
       logger.info("No Scene object set, getting from Primary Stage.");
-      scene = primaryStage.getScene();
+      initialize(root);
     }
-    scene.setRoot(root);
+    if (!rootPane.getChildren().isEmpty()) {
+      rootPane.getChildren().clear();
+    }
+    rootPane.getChildren().add(root);
     activeRoot = root;
+  }
+
+  public void showOverlay (Parent overlay) {
+    logger.info("Showing overlay");
+    rootPane.getChildren().add(overlay);
+  }
+
+  public void closeOverlay (Parent overlay) {
+    logger.info("Closing overlay");
+    rootPane.getChildren().remove(overlay);
   }
 
   /**
