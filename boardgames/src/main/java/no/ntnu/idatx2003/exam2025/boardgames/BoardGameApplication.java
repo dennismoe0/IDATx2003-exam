@@ -65,7 +65,7 @@ public class BoardGameApplication extends Application {
     sceneRegister.register("ladder-game", () ->
         viewFactory.buildLadderBoardGameView(gameSession.getBoardGame()));
     sceneRegister.register("add-player", () -> viewFactory.buildAddPlayerView(gameSession, sceneManager));
-    sceneRegister.register("build-game", () -> viewFactory.buildGameBuilderView());
+    sceneRegister.register("build-game", () -> viewFactory.buildGameBuilderView(gameSession, sceneManager, sceneRegister));
 
     log.info("Building Default Window");
 

@@ -9,11 +9,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import no.ntnu.idatx2003.exam2025.boardgames.controller.GameBuilderController;
 
 /**
  * View for displaying options for populating and starting a game session.
  */
 public class GameBuilderView {
+  private final GameBuilderController controller;
   //player list
   //game chooser (drop down menu?)
   //player picker/color picker/icon picker?
@@ -44,7 +46,8 @@ public class GameBuilderView {
   private ComboBox<String> gameMenu;
   private ComboBox<String> boardMenu;
 
-  public GameBuilderView() {
+  public GameBuilderView(GameBuilderController controller) {
+    this.controller = controller;
     root = new StackPane();
     background = new Rectangle(width, height);
     boardColumn = new VBox(5);
@@ -62,6 +65,7 @@ public class GameBuilderView {
     boardHeader = new Label("Choose Board");
     configureView();
     configureText();
+    configureButtons();
     assignStyling();
   }
 
@@ -98,6 +102,12 @@ public class GameBuilderView {
     boardTitle.getStyleClass().add("menu-title");
     rulesTitle.getStyleClass().add("menu-title");
     playerTitle.getStyleClass().add("menu-title");
+  }
+
+  private void configureButtons() {
+    addNewPlayerButton.setOnAction(event -> {
+      controller.openAddPlayerView();
+    });
   }
 
   public Parent getRoot() {
