@@ -9,7 +9,7 @@ public class FreezeMovementStrategy implements MovementStrategy {
   private int remainingRounds;
 
   /**
-   * Default constructor for FreezeMovementStrategy
+   * Default constructor for FreezeMovementStrategy.
    *
    * @param remainingRounds and int representing how many rounds a piece will be frozen for.
    */
