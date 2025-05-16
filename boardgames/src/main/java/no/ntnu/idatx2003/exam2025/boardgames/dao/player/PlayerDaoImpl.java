@@ -7,7 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+
+import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.LudoStatsDaoImpl;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
+import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 
 /**
  * Implementation of the PlayerDao interface for managing Player entities in the
@@ -17,6 +21,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
  */
 public class PlayerDaoImpl implements PlayerDao {
   private final Connection connection;
+  private static final Logger log = Log.get(LudoStatsDaoImpl.class);
 
   public PlayerDaoImpl(Connection connection) {
     this.connection = connection;
@@ -40,24 +45,38 @@ public class PlayerDaoImpl implements PlayerDao {
           return rs.getInt(1); // Return the generated player_id
         }
       }
+      // Unsure if getPlayerId works here without setting it for the object
+      log.debug("Persisted player {} with the ID: {}", player.getPlayerName(), player.getPlayerId());
     }
     throw new SQLException("Failed to create player, no ID obtained.");
   }
 
+  // Retrieves/loads a player from the database as a new player object.
   @Override
   public Player findById(int playerId) throws SQLException {
     String sql = "SELECT * FROM players WHERE player_id = ?";
     try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+      log.debug("Attempting to retrieve player by ID {}", playerId);
+
       stmt.setInt(1, playerId);
       try (ResultSet rs = stmt.executeQuery()) {
         if (rs.next()) {
-          return new Player(
+          Player player = new Player(
               rs.getInt("player_id"),
               null, // PlayerStats can be set later
               rs.getString("player_name"),
               rs.getInt("player_age"));
+          log.info("Successfully retrieved player with ID {}: {}", playerId, player.getPlayerName());
+          return player;
         }
       }
+      log.debug("Player with ID {} not found.", playerId);
+    } catch (SQLException e) {
+      log.error("Error retrieving player by ID {}: {}", playerId, e.getMessage());
+      throw e;
+    } catch (Exception e) {
+      log.error("Unexpected error retrieving player by ID {}: {}", playerId, e.getMessage());
+      throw new SQLException("Unexpected error retrieving player", e);
     }
     return null;
   }
@@ -67,7 +86,18 @@ public class PlayerDaoImpl implements PlayerDao {
     String sql = "DELETE FROM players WHERE player_id = ?";
     try (PreparedStatement stmt = connection.prepareStatement(sql)) {
       stmt.setInt(1, playerId);
-      stmt.executeUpdate();
+      int affectedRows = stmt.executeUpdate();
+      if (affectedRows == 0) {
+        log.warn("No player found with ID {} to delete.", playerId);
+      } else {
+        log.info("Successfully deleted player with ID {}", playerId);
+      }
+    } catch (SQLException e) {
+      log.error("Error deleting player with ID {}: {}", playerId, e.getMessage());
+      throw e;
+    } catch (Exception e) {
+      log.error("Unexpected error deleting player with ID {}: {}", playerId, e.getMessage());
+      throw new SQLException("Unexpected error deleting player", e);
     }
   }
 
@@ -80,6 +110,12 @@ public class PlayerDaoImpl implements PlayerDao {
       while (rs.next()) {
         names.add(rs.getString("player_name"));
       }
+    } catch (SQLException e) {
+      log.error("Error retrieving all player names: {}", e.getMessage());
+      throw e;
+    } catch (Exception e) {
+      log.error("Unexpected error retrieving all player names: {}", e.getMessage());
+      throw new SQLException("Unexpected error retrieving all player names", e);
     }
     return names;
   }
@@ -93,6 +129,12 @@ public class PlayerDaoImpl implements PlayerDao {
       while (rs.next()) {
         ids.add(rs.getInt("player_id"));
       }
+    } catch (SQLException e) {
+      log.error("Error retrieving all player IDs: {}", e.getMessage());
+      throw e;
+    } catch (Exception e) {
+      log.error("Unexpected error retrieving all player IDs: {}", e.getMessage());
+      throw new SQLException("Unexpected error retrieving all player IDs", e);
     }
     return ids;
   }
