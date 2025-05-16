@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.Parent;
-import no.ntnu.idatx2003.exam2025.boardgames.BoardGameApplication;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.AddPlayerViewController;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.GameBuilderController;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.PlayerListViewController;
