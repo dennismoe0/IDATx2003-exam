@@ -72,7 +72,7 @@ public class BoardGameApplication extends Application {
     initializeGameSession(gameSession);
 
     log.info("Setting up GUI");
-    Parent initial = sceneRegister.get("build-game");
+    Parent initial = sceneRegister.get("ladder-game");
     sceneManager.initialize(initial);
     log.info("Launching GUI");
     primaryStage.show();
