@@ -6,6 +6,10 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import org.slf4j.Logger;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.paint.Color;
+
 /**
  * Basic piece that can move around the game board.
  * Would need to be refactored if we want pieces to be special (Chess)
@@ -15,24 +19,32 @@ public class GamePiece {
   private static final Logger log = Log.get(GamePiece.class);
   private MovementStrategy movementStrategy;
 
+  // Observer value implementation
+  private final ObjectProperty<Tile> currentTile = new SimpleObjectProperty<>();
+
+  private Color color;
+
   private static int idCounter = 0;
 
   private final int gamePieceId;
   private Tile previousTile;
-  private Tile currentTile;
   private Tile startingTile;
+  private final Player player;
 
   /**
    * Constructs a new GamePiece with the specified starting tile.
    * Non-persisting id to make unique session-based pieces.
    *
    * @param startingTile The tile where the game piece starts.
+   * @param player       connected to the piece
    */
-  public GamePiece(Tile startingTile) {
+  public GamePiece(Tile startingTile, Player player) {
     movementStrategy = new BasicMovementStrategy();
     this.startingTile = startingTile;
+    this.player = player;
+    this.color = player.getPlayerColor();
     this.gamePieceId = idCounter++;
-    currentTile = null;
+    this.currentTile.set(startingTile);
     log.debug("GamePiece {} created", gamePieceId);
   }
 
@@ -45,11 +57,37 @@ public class GamePiece {
     idCounter = 0;
   }
 
+  public Color getColor() {
+    return color;
+  }
+
+  /**
+   * Sets the color of the game piece.
+   *
+   * @param color The new color to set for the game piece.
+   */
+  public void setColor(Color color) {
+    this.color = color;
+  }
+
+  public Player getPlayer() {
+    return player;
+  }
+
   public int getGamePieceId() {
     return gamePieceId;
   }
 
   public Tile getCurrentTile() {
+    return currentTile.get();
+  }
+
+  /**
+   * Returns the property representing the current tile of the game piece.
+   *
+   * @return the ObjectProperty for the current tile
+   */
+  public ObjectProperty<Tile> currentTileProperty() {
     return currentTile;
   }
 
@@ -59,7 +97,7 @@ public class GamePiece {
    * @param tile The new tile to set as the current position of the game piece.
    */
   public void setCurrentTile(Tile tile) {
-    currentTile = tile;
+    currentTile.set(tile);
     log.info("Set position of Game Piece {} to tile {}", gamePieceId, currentTile);
   }
 
@@ -93,7 +131,7 @@ public class GamePiece {
 
     if (currentTile == null) {
       if (startingTile != null) {
-        currentTile = startingTile;
+        setCurrentTile(startingTile);
         computedMove--;
         log.info("GamePiece {} initialized to starting tile {}", gamePieceId, startingTile.getId());
       } else {
@@ -105,12 +143,12 @@ public class GamePiece {
         "GamePiece {} attempting to move {} steps from tile {}",
         gamePieceId, computedMove, currentTile);
 
-    Tile targetTile = currentTile;
+    Tile targetTile = currentTile.get();
     for (int i = 0; i < computedMove; i++) {
       if (targetTile.getNextTile() == null) {
         log.error("Tile {} has no next tile. Cannot move further.", targetTile.getId());
         break;
-        //throw new IllegalArgumentException("Cannot move to a non-existent tile");
+        // throw new IllegalArgumentException("Cannot move to a non-existent tile");
       }
       targetTile = targetTile.getNextTile();
       log.info(
@@ -118,24 +156,24 @@ public class GamePiece {
           gamePieceId, targetTile.getId());
     }
 
-    previousTile = currentTile;
-    currentTile = targetTile;
+    previousTile = currentTile.get();
+    setCurrentTile(targetTile);
 
     // Apply effects
-    if (currentTile.getTileStrategy() != null) {
-      String strategyName = currentTile.getTileStrategy().getClass().getSimpleName();
+    if (currentTile.get().getTileStrategy() != null) {
+      String strategyName = currentTile.get().getTileStrategy().getClass().getSimpleName();
       log.info(
           "GamePiece {} landed on tile {} with strategy. Applying effect {}.",
-          gamePieceId, currentTile.getId(),
+          gamePieceId, currentTile.get().getId(),
           strategyName);
-      currentTile.getTileStrategy().applyEffect(this);
+      currentTile.get().getTileStrategy().applyEffect(this);
     }
 
     movementStrategy.onTurnEnd(this);
 
     log.info(
         "GamePiece {} finished moving. Final tile: {}",
-        gamePieceId, currentTile.getId());
+        gamePieceId, currentTile.get().getId());
   }
 
   public MovementStrategy getMovementStrategy() {
@@ -154,7 +192,7 @@ public class GamePiece {
         +
         ", previousTile=" + (previousTile != null ? previousTile.getId() : "null")
         +
-        ", currentTile=" + (currentTile != null ? currentTile.getId() : "null")
+        ", currentTile=" + (currentTile != null ? currentTile.get().getId() : "null")
         +
         ", startingTile=" + (startingTile != null ? startingTile.getId() : "null")
         +
