@@ -3,8 +3,11 @@ package no.ntnu.idatx2003.exam2025.boardgames.model.tile;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import no.ntnu.idatx2003.exam2025.boardgames.model.tile.tilefactory.*;
+import no.ntnu.idatx2003.exam2025.boardgames.model.tile.tilefactory.DoubleMovementTileFactory;
+import no.ntnu.idatx2003.exam2025.boardgames.model.tile.tilefactory.FreezeTileFactory;
+import no.ntnu.idatx2003.exam2025.boardgames.model.tile.tilefactory.LadderTileFactory;
+import no.ntnu.idatx2003.exam2025.boardgames.model.tile.tilefactory.SnakeTileFactory;
+import no.ntnu.idatx2003.exam2025.boardgames.model.tile.tilefactory.TileFactory;
 
 /**
  * Class used to keep track of what tiles can be used in the program.
