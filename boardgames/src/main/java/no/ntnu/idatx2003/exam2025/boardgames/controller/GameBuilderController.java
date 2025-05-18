@@ -3,6 +3,7 @@ package no.ntnu.idatx2003.exam2025.boardgames.controller;
 import java.util.List;
 import java.util.Objects;
 
+import com.google.gson.JsonObject;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
@@ -131,9 +132,8 @@ public class GameBuilderController {
   }
 
   private LadderBoardGame buildGame() {
-
-    Board board = boardFactory.createDefaultLadderBoard();
-    return new LadderBoardGame(board, gameSession.getPlayers());
+    //Board boardObject = boardFactory.buildBoardFromJson();
+    return new LadderBoardGame(boardObject, gameSession.getPlayers());
   }
 
   private void buildBoardInfoList(String game) {
