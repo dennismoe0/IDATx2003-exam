@@ -1,5 +1,6 @@
 package no.ntnu.idatx2003.exam2025.boardgames.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,6 +14,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneRegister;
 import no.ntnu.idatx2003.exam2025.boardgames.util.BoardInfoReader;
+import no.ntnu.idatx2003.exam2025.boardgames.util.GsonFileReader;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.ChangeScreenCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.OpenOverlayCommand;
@@ -132,8 +134,17 @@ public class GameBuilderController {
   }
 
   private LadderBoardGame buildGame() {
-    //Board boardObject = boardFactory.buildBoardFromJson();
-    return new LadderBoardGame(boardObject, gameSession.getPlayers());
+    String url = board.getUrl();
+    GsonFileReader gson = new GsonFileReader();
+    JsonObject readBoard;
+    try {
+      readBoard = gson.readJson(url);
+      Board boardObject = boardFactory.buildBoardFromJson(readBoard);
+      return new LadderBoardGame(boardObject, gameSession.getPlayers());
+    } catch (IOException e) {
+      logger.error(e.getMessage());
+      return null;
+    }
   }
 
   private void buildBoardInfoList(String game) {
