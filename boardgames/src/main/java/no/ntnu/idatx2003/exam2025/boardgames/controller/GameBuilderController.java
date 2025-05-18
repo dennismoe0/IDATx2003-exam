@@ -26,7 +26,7 @@ public class GameBuilderController {
   private static final Logger logger = Log.get(GameBuilderController.class);
   private GameSession gameSession;
   private String game;
-  private String board;
+  private BoardInfo board;
   private int numberOfDice;
   private BoardFactory boardFactory;
   private SceneRegister sceneRegister;
@@ -70,10 +70,10 @@ public class GameBuilderController {
   /**
    * Selects the board by its name.
    *
-   * @param name the name of the board to select
+   * @param board the name of the board to select
    */
-  public void selectBoard(String name) {
-    board = name;
+  public void selectBoard(BoardInfo board) {
+    board = board;
   }
 
   /**

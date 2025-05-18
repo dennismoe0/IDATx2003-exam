@@ -119,7 +119,7 @@ public class GameBuilderView {
         default:
           controller.selectGame("ladder");
       }
-      controller.selectBoard("");
+      controller.selectBoard(null);
       updateBoardMenu();
     });
 
