@@ -164,6 +164,10 @@ public class GameBuilderView {
     addNewPlayerButton.setOnAction(event -> {
       controller.openAddPlayerView();
     });
+
+    startGameButton.setOnAction(event -> {
+      controller.startGame();
+    });
   }
 
   public Parent getRoot() {

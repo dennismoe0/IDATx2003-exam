@@ -76,7 +76,7 @@ public class GameBuilderController {
    * @param board the name of the board to select
    */
   public void selectBoard(BoardInfo board) {
-    board = board;
+    this.board = board;
   }
 
   /**
@@ -85,6 +85,10 @@ public class GameBuilderController {
   public void startGame() {
     if (game == null || board == null || gameSession.getPlayers().isEmpty()) {
       logger.info("Can't start game. Game, Board or Players are empty.");
+      logger.info("Game, {}. Board: {}", game, board.getName());
+      for (Player player : gameSession.getPlayers()) {
+        logger.info("Player: {}", player.toString());
+      }
       return;
     }
     gameSession.setBoardGame(buildGame());

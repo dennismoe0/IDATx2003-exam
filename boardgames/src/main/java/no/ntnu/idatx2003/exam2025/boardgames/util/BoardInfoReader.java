@@ -78,7 +78,7 @@ public class BoardInfoReader {
 
   private JsonArray readJson() {
     try {
-      return reader.readJson(fileUrl).getAsJsonArray();
+      return reader.readJsonToArray(fileUrl);
     } catch (IOException e) {
       return null;
     }
