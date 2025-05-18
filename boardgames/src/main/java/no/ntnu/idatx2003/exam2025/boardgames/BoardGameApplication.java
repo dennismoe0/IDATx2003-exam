@@ -116,7 +116,7 @@ public class BoardGameApplication extends Application {
     initializeGameSession(gameSession);
 
     log.info("Setting up GUI");
-    Parent initial = sceneRegister.get("player-list");
+    Parent initial = sceneRegister.get("build-game");
     log.info("Initial scene: " + initial);
     sceneManager.initialize(initial);
     log.info("Launching GUI");
