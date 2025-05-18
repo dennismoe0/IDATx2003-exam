@@ -23,6 +23,7 @@ public class PlayerListView {
   private final ScrollPane scrollPane;
   private final PlayerListViewController controller;
   private ComboBox<String> gameComboBox;
+  private Button refreshButton;
 
   // Have some boxes next to player names that can be
   // checked to "add to game" / pool of active players
@@ -30,6 +31,7 @@ public class PlayerListView {
   // if unchecked = delete that Player object instance
   public PlayerListView(PlayerListViewController controller) {
     this.controller = controller;
+    refreshButton = new Button("Refresh List");
     playerListVBox = new VBox(5);
     scrollPane = new ScrollPane(playerListVBox);
     scrollPane.setFitToWidth(true);
@@ -40,11 +42,16 @@ public class PlayerListView {
     if (!gameComboBox.getItems().isEmpty()) {
       gameComboBox.setValue(gameComboBox.getItems().get(0));
     }
+    configureButton();
 
-    VBox container = new VBox(10, gameComboBox, playerListVBox);
+    VBox container = new VBox(10, gameComboBox, playerListVBox, refreshButton);
     scrollPane.setContent(container);
 
     loadPlayers();
+  }
+
+  private void configureButton() {
+    refreshButton.setOnAction(event -> loadPlayers());
   }
 
   private void loadPlayers() {
