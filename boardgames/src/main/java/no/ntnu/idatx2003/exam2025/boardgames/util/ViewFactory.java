@@ -48,7 +48,8 @@ public class ViewFactory {
   public Parent buildMainMenuView(SceneRegister sceneRegister, SceneManager sceneManager) {
     logger.info("Building main menu");
     List<MenuOption> menuOptions = new ArrayList<>();
-    menuOptions.add(new MenuOption("Start", new PrintLineCommand("Start"), true));
+    menuOptions.add(new MenuOption("Start",
+        new ChangeScreenCommand(sceneRegister, sceneManager, "build-game"), true));
     menuOptions.add(new MenuOption(
         "Swap to Board View", new ChangeScreenCommand(
             sceneRegister, sceneManager, "ladder-game"),
