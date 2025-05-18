@@ -113,7 +113,8 @@ public class BoardGameApplication extends Application {
 
     log.info("Building Default Window");
 
-    initializeGameSession(gameSession);
+    //Temporary intitialization for testing purposes.
+    //initializeGameSession(gameSession);
 
     log.info("Setting up GUI");
     Parent initial = sceneRegister.get("main-menu");
