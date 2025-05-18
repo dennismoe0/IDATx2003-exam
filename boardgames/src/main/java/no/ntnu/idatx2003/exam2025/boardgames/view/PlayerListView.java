@@ -94,6 +94,13 @@ public class PlayerListView {
 
         CheckBox selectBox = new CheckBox();
         selectBox.setMinWidth(60);
+        selectBox.setOnAction(e -> {
+          if (selectBox.isSelected()) {
+            controller.addPlayerToGameSession(player);
+          }else if (!selectBox.isSelected()) {
+            controller.removePlayerFromGameSession(player);
+          }
+        });
 
         Button showStatsButton = new Button("Show statistics");
         showStatsButton.setMinWidth(120);

@@ -50,8 +50,11 @@ public class GameBuilderView {
   private ComboBox<String> gameMenu;
   private ComboBox<BoardInfo> boardMenu;
 
-  public GameBuilderView(GameBuilderController controller) {
+  private PlayerListView playerListView;
+
+  public GameBuilderView(GameBuilderController controller, PlayerListView playerListView) {
     this.controller = controller;
+    this.playerListView = playerListView;
     root = new StackPane();
     background = new Rectangle(width, height);
     boardColumn = new VBox(5);
@@ -86,7 +89,7 @@ public class GameBuilderView {
     rulesColumn.setAlignment(Pos.TOP_CENTER);
     playerColumn.setAlignment(Pos.TOP_CENTER);
 
-    playerColumn.getChildren().addAll(playerTitle, addNewPlayerButton);
+    playerColumn.getChildren().addAll(playerTitle, playerListView.getRoot(), addNewPlayerButton);
     boardColumn.getChildren().addAll(boardTitle, gameHeader,
         gameMenu, boardHeader, boardMenu, startGameButton);
     rulesColumn.getChildren().add(rulesTitle);

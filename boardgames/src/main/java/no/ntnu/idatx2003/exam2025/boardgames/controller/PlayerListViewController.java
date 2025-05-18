@@ -1,6 +1,7 @@
 package no.ntnu.idatx2003.exam2025.boardgames.controller;
 
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
+import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class PlayerListViewController {
 
   private final PlayerDaoImpl playerDao;
   private final Map<String, StatsManager<?>> statsManagers;
+  private final GameSession gameSession;
   // needs reference to the DAO for loading saved players.
   // needs methods for populating the list view I guess?
   // private final PlayerDaoImpl playerDAO;
@@ -30,9 +32,10 @@ public class PlayerListViewController {
    * @param playerDao the PlayerDaoImpl used to access player data
    */
   public PlayerListViewController(
-      PlayerDaoImpl playerDao, Map<String, StatsManager<?>> statsManagers) {
+      PlayerDaoImpl playerDao, Map<String, StatsManager<?>> statsManagers, GameSession gameSession) {
     this.playerDao = playerDao;
     this.statsManagers = statsManagers;
+    this.gameSession = gameSession;
   }
 
   /**
@@ -53,6 +56,14 @@ public class PlayerListViewController {
    */
   public void deletePlayer(int playerId) throws SQLException {
     playerDao.delete(playerId);
+  }
+
+  public void addPlayerToGameSession(Player player) {
+    gameSession.addPlayer(player);
+  }
+
+  public void removePlayerFromGameSession(Player player) {
+    gameSession.removePlayer(player);
   }
 
   /**
