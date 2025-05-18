@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Classic Board - 90",
+    "game": "ladder",
+    "url": "src/main/resources/assets/boards/laddergameboards/laddergame_classic.json"
+  },
+  {
+    "name": "Special Board - 30",
+    "game": "ladder",
+    "url": "src/main/resources/assets/boards/laddergameboards/laddergame_special30.json"
+  }
+]

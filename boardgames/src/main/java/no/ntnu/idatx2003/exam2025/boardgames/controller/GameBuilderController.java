@@ -4,11 +4,15 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardFactory;
+import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardInfo;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneRegister;
+import no.ntnu.idatx2003.exam2025.boardgames.util.BoardInfoReader;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.ChangeScreenCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.OpenOverlayCommand;
+
+import java.util.List;
 
 /**
  * Controller responsible for building and managing the setup of a board game
@@ -25,6 +29,8 @@ public class GameBuilderController {
   private SceneRegister sceneRegister;
   private SceneManager sceneManager;
   private ChangeScreenCommand changeScreenCommand;
+  private BoardInfoReader boardInfoReader;
+  private List<BoardInfo> boardInfoList;
 
   /**
    * Constructs a GameBuilderController with the given game session, scene
@@ -44,6 +50,8 @@ public class GameBuilderController {
     this.sceneManager = sceneManager;
     changeScreenCommand = new ChangeScreenCommand(
         sceneRegister, sceneManager, "ladder-game");
+    boardInfoReader = new BoardInfoReader(
+        "src/main/resources/assets/boards/laddergameboards/BoardList.json");
   }
 
   /**
@@ -53,6 +61,7 @@ public class GameBuilderController {
    */
   public void selectGame(String name) {
     game = name;
+    buildBoardInfoList(game);
   }
 
   /**
@@ -102,9 +111,24 @@ public class GameBuilderController {
     command.execute();
   }
 
+  /**
+   * A method for retrieving boards for the currently selected boardgames, to be displayed.
+   *
+   * @return returns a list of BoardInfo objects.
+   */
+  public List<BoardInfo> getBoardInfoList() {
+    if (game == null) {
+      return null;
+    }
+    return boardInfoList;
+  }
+
   private LadderBoardGame buildGame() {
     Board board = boardFactory.createDefaultLadderBoard();
-    LadderBoardGame game = new LadderBoardGame(board, gameSession.getPlayers());
-    return game;
+    return new LadderBoardGame(board, gameSession.getPlayers());
+  }
+
+  private void buildBoardInfoList(String game) {
+    boardInfoList = boardInfoReader.getBoards(game);
   }
 }
