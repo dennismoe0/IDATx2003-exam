@@ -104,8 +104,8 @@ public class GameBuilderView {
   }
 
   private void configureMenus() {
-    gameMenu.setPlaceholder(new Label("Choose a game"));
-    boardMenu.setPlaceholder(new Label("Choose a board"));
+    gameMenu.setPromptText("Choose Game");
+    boardMenu.setPromptText("Choose a board");
 
     gameMenu.getItems().add("Snakes 'n Ladders");
     gameMenu.getItems().add("Ludo");
@@ -126,6 +126,7 @@ public class GameBuilderView {
         default:
           controller.selectGame("ladder");
       }
+      resetBoardMenu();
       controller.selectBoard(null);
       updateBoardMenu();
     });
@@ -138,7 +139,7 @@ public class GameBuilderView {
 
   private void updateBoardMenu() {
     List<BoardInfo> boardInfoList = controller.getBoardInfoList();
-    if (boardInfoList == null) {
+    if (boardInfoList.isEmpty()) {
       boardMenu.getItems().clear();
       return;
     }
@@ -158,6 +159,13 @@ public class GameBuilderView {
         return null;
       }
     });
+  }
+
+  private void resetBoardMenu() {
+    boardMenu.getSelectionModel().clearSelection();
+    boardMenu.setValue(null);
+    boardMenu.getItems().clear();
+    updateBoardMenu();
   }
 
   private void assignStyling() {
