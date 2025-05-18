@@ -1,5 +1,6 @@
 package no.ntnu.idatx2003.exam2025.boardgames.view;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -53,14 +54,15 @@ public class BoardGameView {
     rightMenuContainer.prefHeight(500);
     rightMenuContainer.prefWidth(300);
     rightMenuContainer.setMaxHeight(600);
-    rightMenu.setPrefWidth(200);
+    rightMenu.setPrefWidth(300);
     rightMenu.setMaxHeight(550);
-    rightMenu.setMaxWidth(200);
+    rightMenu.setMaxWidth(300);
 
     rightMenuBackground.heightProperty().bind(rightMenuContainer.heightProperty());
     rightMenuBackground.widthProperty().bind(rightMenuContainer.widthProperty());
     rightMenuContainer.getChildren().add(rightMenuBackground);
     rightMenuContainer.getChildren().add(rightMenu);
+    rightMenu.setPadding(new Insets(20));
 
     content.getChildren().add(boardView.asParent());
     content.getChildren().add(rightMenuContainer);

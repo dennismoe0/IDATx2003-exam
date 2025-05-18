@@ -1,5 +1,6 @@
 package no.ntnu.idatx2003.exam2025.boardgames.view;
 
+import javafx.animation.RotateTransition;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -8,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Die;
 
 import java.util.Stack;
@@ -38,6 +40,7 @@ public class DieView extends StackPane {
     //resultText.textProperty().bind(this.die.rollProperty().asString());
     this.die.rollProperty().addListener((observable, oldValue, newValue) -> {
       handleRoll(newValue.intValue());
+      playDiceRollAnimation();
     });
     this.getChildren().addAll(dieView, resultText, dotLayout);
     configureViews();
@@ -51,6 +54,13 @@ public class DieView extends StackPane {
     dieView.setArcWidth(sideLength / ARC_WIDTH);
     dotLayout.setMaxSize(sideLength, sideLength);
     buildDots();
+  }
+
+  private void playDiceRollAnimation() {
+    RotateTransition rotateTransition = new RotateTransition(Duration.seconds(0.2), this);
+    rotateTransition.setByAngle(360);
+    rotateTransition.setCycleCount(5);
+    rotateTransition.play();
   }
 
   private void buildDots() {

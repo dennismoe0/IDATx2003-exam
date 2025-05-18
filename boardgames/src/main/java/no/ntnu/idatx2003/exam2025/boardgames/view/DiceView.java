@@ -47,7 +47,7 @@ public class DiceView {
     List<Die> totalDice = dice.getDice();
 
     double numberOfDice = totalDice.size();
-    double diceWidth = (width / numberOfDice) - (gapSize / numberOfDice);
+    double diceWidth = ((width / numberOfDice) / 2) - (numberOfDice * gapSize);
     DieView dieView;
 
     for (Die die : totalDice) {
@@ -57,7 +57,6 @@ public class DiceView {
     }
     diceView.setOnMouseClicked(event -> {
       command.execute();
-      playRollDiceAnimation();
     });
     diceView.setVgap(10);
     diceView.setHgap(10);
@@ -66,14 +65,6 @@ public class DiceView {
     root.getStyleClass().add("dice-view");
   }
 
-  private void playRollDiceAnimation() {
-    for (DieView dieView : dieViews) {
-      RotateTransition rotateTransition = new RotateTransition(Duration.seconds(0.2), dieView);
-      rotateTransition.setByAngle(15);
-      rotateTransition.setCycleCount(5);
-      rotateTransition.play();
-    }
-  }
 
   public Parent getRoot() {
     return root;
