@@ -50,8 +50,11 @@ public class GameBuilderView {
   private ComboBox<String> gameMenu;
   private ComboBox<BoardInfo> boardMenu;
 
-  public GameBuilderView(GameBuilderController controller) {
+  private PlayerListView playerListView;
+
+  public GameBuilderView(GameBuilderController controller, PlayerListView playerListView) {
     this.controller = controller;
+    this.playerListView = playerListView;
     root = new StackPane();
     background = new Rectangle(width, height);
     boardColumn = new VBox(5);
@@ -75,7 +78,9 @@ public class GameBuilderView {
 
   private void configureView() {
     root.setMaxSize(width, height);
-    float columnWidth = width / 3;
+    //float columnWidth = width / 3;
+    //Temporarily removed rules column.
+    float columnWidth = width/2;
     boardColumn.setMaxWidth(columnWidth);
     rulesColumn.setMaxWidth(columnWidth);
     playerColumn.setMaxWidth(columnWidth);
@@ -86,19 +91,21 @@ public class GameBuilderView {
     rulesColumn.setAlignment(Pos.TOP_CENTER);
     playerColumn.setAlignment(Pos.TOP_CENTER);
 
-    playerColumn.getChildren().addAll(playerTitle, addNewPlayerButton);
+    playerColumn.getChildren().addAll(playerTitle, playerListView.getRoot(), addNewPlayerButton);
     boardColumn.getChildren().addAll(boardTitle, gameHeader,
         gameMenu, boardHeader, boardMenu, startGameButton);
     rulesColumn.getChildren().add(rulesTitle);
 
-    layout.getChildren().addAll(playerColumn, boardColumn, rulesColumn);
+    //layout.getChildren().addAll(playerColumn, boardColumn, rulesColumn);
+    // Temporarily removed rules column.
+    layout.getChildren().addAll(playerColumn, boardColumn);
     root.getChildren().add(background);
     root.getChildren().add(layout);
   }
 
   private void configureMenus() {
-    gameMenu.setPlaceholder(new Label("Choose a game"));
-    boardMenu.setPlaceholder(new Label("Choose a board"));
+    gameMenu.setPromptText("Choose Game");
+    boardMenu.setPromptText("Choose a board");
 
     gameMenu.getItems().add("Snakes 'n Ladders");
     gameMenu.getItems().add("Ludo");
@@ -119,6 +126,7 @@ public class GameBuilderView {
         default:
           controller.selectGame("ladder");
       }
+      resetBoardMenu();
       controller.selectBoard(null);
       updateBoardMenu();
     });
@@ -131,7 +139,7 @@ public class GameBuilderView {
 
   private void updateBoardMenu() {
     List<BoardInfo> boardInfoList = controller.getBoardInfoList();
-    if (boardInfoList == null) {
+    if (boardInfoList.isEmpty()) {
       boardMenu.getItems().clear();
       return;
     }
@@ -151,6 +159,13 @@ public class GameBuilderView {
         return null;
       }
     });
+  }
+
+  private void resetBoardMenu() {
+    boardMenu.getSelectionModel().clearSelection();
+    boardMenu.setValue(null);
+    boardMenu.getItems().clear();
+    updateBoardMenu();
   }
 
   private void assignStyling() {

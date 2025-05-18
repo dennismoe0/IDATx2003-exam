@@ -18,6 +18,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.util.GsonFileReader;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.ChangeScreenCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.OpenOverlayCommand;
+import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
 import org.slf4j.Logger;
 
 /**
@@ -84,11 +85,8 @@ public class GameBuilderController {
    */
   public void startGame() {
     if (game == null || board == null || gameSession.getPlayers().isEmpty()) {
-      logger.info("Can't start game. Game, Board or Players are empty.");
-      logger.info("Game, {}. Board: {}", game, board.getName());
-      for (Player player : gameSession.getPlayers()) {
-        logger.info("Player: {}", player.toString());
-      }
+      AlertUtil.showError("Missing Items",
+          "Please ensure you've selected your players, game, and board before starting the game.");
       return;
     }
     gameSession.setBoardGame(buildGame());
