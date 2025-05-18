@@ -9,7 +9,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import javafx.util.StringConverter;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.GameBuilderController;
+import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardInfo;
+
+import java.util.List;
 
 /**
  * View for displaying options for populating and starting a game session.
@@ -44,7 +48,7 @@ public class GameBuilderView {
   private Button addNewPlayerButton;
 
   private ComboBox<String> gameMenu;
-  private ComboBox<String> boardMenu;
+  private ComboBox<BoardInfo> boardMenu;
 
   public GameBuilderView(GameBuilderController controller) {
     this.controller = controller;
@@ -64,7 +68,7 @@ public class GameBuilderView {
     gameHeader = new Label("Choose Game");
     boardHeader = new Label("Choose Board");
     configureView();
-    configureText();
+    configureMenus();
     configureButtons();
     assignStyling();
   }
@@ -92,9 +96,61 @@ public class GameBuilderView {
     root.getChildren().add(layout);
   }
 
-  private void configureText() {
+  private void configureMenus() {
     gameMenu.setPlaceholder(new Label("Choose a game"));
     boardMenu.setPlaceholder(new Label("Choose a board"));
+
+    gameMenu.getItems().add("Snakes 'n Ladders");
+    gameMenu.getItems().add("Ludo");
+    gameMenu.getItems().add("Den Forsvunne Diamanten");
+
+    gameMenu.setOnAction((event) -> {
+      int selectedIndex = gameMenu.getSelectionModel().getSelectedIndex();
+      switch (selectedIndex) {
+        case 0:
+          controller.selectGame("ladder");
+          break;
+        case 1:
+          controller.selectGame("ludo");
+          break;
+        case 2:
+          controller.selectGame("diamanten");
+          break;
+        default:
+          controller.selectGame("ladder");
+      }
+      controller.selectBoard("");
+      updateBoardMenu();
+    });
+
+    boardMenu.setOnAction((event) -> {
+      BoardInfo selected = boardMenu.getSelectionModel().getSelectedItem();
+      controller.selectBoard(selected);
+    });
+  }
+
+  private void updateBoardMenu() {
+    List<BoardInfo> boardInfoList = controller.getBoardInfoList();
+    if (boardInfoList == null) {
+      boardMenu.getItems().clear();
+      return;
+    }
+
+    boardMenu.getItems().clear();
+    boardMenu.getItems().addAll(boardInfoList);
+
+    // Solution suggested by ChatGPT
+    boardMenu.setConverter(new StringConverter<BoardInfo>() {
+      @Override
+      public String toString(BoardInfo object) {
+        return object.getName();
+      }
+
+      @Override
+      public BoardInfo fromString(String string) {
+        return null;
+      }
+    });
   }
 
   private void assignStyling() {

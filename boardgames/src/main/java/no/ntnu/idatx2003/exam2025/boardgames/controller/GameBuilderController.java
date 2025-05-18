@@ -1,5 +1,8 @@
 package no.ntnu.idatx2003.exam2025.boardgames.controller;
 
+import java.util.List;
+import java.util.Objects;
+
 import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
@@ -9,10 +12,10 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneRegister;
 import no.ntnu.idatx2003.exam2025.boardgames.util.BoardInfoReader;
+import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.ChangeScreenCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.OpenOverlayCommand;
-
-import java.util.List;
+import org.slf4j.Logger;
 
 /**
  * Controller responsible for building and managing the setup of a board game
@@ -20,7 +23,7 @@ import java.util.List;
  * including selecting games, boards, players, and starting the game.
  */
 public class GameBuilderController {
-
+  private static final Logger logger = Log.get(GameBuilderController.class);
   private GameSession gameSession;
   private String game;
   private String board;
@@ -77,6 +80,10 @@ public class GameBuilderController {
    * Starts the game by building the selected game and changing the screen.
    */
   public void startGame() {
+    if (game == null || board == null || gameSession.getPlayers().isEmpty()) {
+      logger.info("Can't start game. Game, Board or Players are empty.");
+      return;
+    }
     gameSession.setBoardGame(buildGame());
     changeScreenCommand.execute();
   }
@@ -124,6 +131,7 @@ public class GameBuilderController {
   }
 
   private LadderBoardGame buildGame() {
+
     Board board = boardFactory.createDefaultLadderBoard();
     return new LadderBoardGame(board, gameSession.getPlayers());
   }
