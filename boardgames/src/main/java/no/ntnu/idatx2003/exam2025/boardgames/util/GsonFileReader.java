@@ -30,4 +30,16 @@ public class GsonFileReader implements JsonFileReader {
     reader.close();
     return JsonParser.parseString(jsonString).getAsJsonObject();
   }
+
+  public JsonArray readJsonToArray(String path) throws IOException {
+    BufferedReader reader = new BufferedReader(new FileReader(path));
+    StringBuilder json = new StringBuilder();
+    String line;
+    while ((line = reader.readLine()) != null) {
+      json.append(line);
+    }
+    String jsonString = json.toString();
+    reader.close();
+    return JsonParser.parseString(jsonString).getAsJsonArray();
+  }
 }
