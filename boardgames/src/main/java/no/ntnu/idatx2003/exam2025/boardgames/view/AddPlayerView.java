@@ -24,14 +24,21 @@ public class AddPlayerView {
   private TitledFieldView nameInput;
   private TitledFieldView ageInput;
   private Button addButton;
+  private Button closeButton;
   private AddPlayerViewController controller;
 
+  /**
+   * Primary view for Adding new Players to the game.
+   *
+   * @param controller the controller that controls the view.
+   */
   public AddPlayerView(AddPlayerViewController controller) {
     this.controller = controller;
     root = new StackPane();
     backdrop = new Rectangle(width, height);
     layout = new VBox(7);
     addButton = new Button("Add Player");
+    closeButton = new Button("Close Window");
     configureFields();
     assignStyling();
     configureButton();
@@ -42,7 +49,8 @@ public class AddPlayerView {
     title = new Label("Add Player");
     nameInput = new TitledFieldView("Name", "Add the player name...", 200, 50);
     ageInput = new TitledFieldView("Age", "Add the player age...", 200, 50);
-    layout.getChildren().addAll(title, nameInput.getRoot(), ageInput.getRoot(), addButton);
+    layout.getChildren().addAll(
+        title, nameInput.getRoot(), ageInput.getRoot(), addButton, closeButton);
     root.setMaxSize(width, height);
     layout.setAlignment(Pos.CENTER);
   }
@@ -63,6 +71,10 @@ public class AddPlayerView {
       } else {
         AlertUtil.showError("Invalid input", error);
       }
+    });
+
+    closeButton.setOnAction(event -> {
+      controller.closeWindow(this.getRoot());
     });
   }
 
