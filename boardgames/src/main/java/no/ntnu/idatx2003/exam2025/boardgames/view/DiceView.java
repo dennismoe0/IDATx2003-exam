@@ -2,9 +2,12 @@ package no.ntnu.idatx2003.exam2025.boardgames.view;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.animation.RotateTransition;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.util.Duration;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.DiceController;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Dice;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Die;
@@ -54,12 +57,22 @@ public class DiceView {
     }
     diceView.setOnMouseClicked(event -> {
       command.execute();
+      playRollDiceAnimation();
     });
     diceView.setVgap(10);
     diceView.setHgap(10);
     root.setCenter(diceView);
 
     root.getStyleClass().add("dice-view");
+  }
+
+  private void playRollDiceAnimation() {
+    for (DieView dieView : dieViews) {
+      RotateTransition rotateTransition = new RotateTransition(Duration.seconds(0.2), dieView);
+      rotateTransition.setByAngle(15);
+      rotateTransition.setCycleCount(5);
+      rotateTransition.play();
+    }
   }
 
   public Parent getRoot() {
