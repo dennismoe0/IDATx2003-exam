@@ -5,7 +5,7 @@ package no.ntnu.idatx2003.exam2025.boardgames.model.board;
  */
 public class BoardInfo {
   private String name;
-  private String tag;
+  private String game;
   private String url;
 
   public void setName(String name) {
@@ -16,12 +16,12 @@ public class BoardInfo {
     return name;
   }
 
-  public void setTag(String tag) {
-    this.tag = tag;
+  public void setGame(String game) {
+    this.game = game;
   }
 
-  public String getTag() {
-    return tag;
+  public String getGame() {
+    return game;
   }
 
   public void setUrl(String url) {

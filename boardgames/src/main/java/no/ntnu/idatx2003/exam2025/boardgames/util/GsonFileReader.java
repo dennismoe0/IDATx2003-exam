@@ -1,5 +1,6 @@
 package no.ntnu.idatx2003.exam2025.boardgames.util;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.BufferedReader;
