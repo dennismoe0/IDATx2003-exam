@@ -138,8 +138,19 @@ public class BoardGameApplication extends Application {
     log.info("Initializing GameSession");
     Player player1 = new Player(1, "Dennis", 24);
     Player player2 = new Player(2, "Sasha", 27);
+    Player player3 = new Player(3, "Testing3", 28);
+    Player player4 = new Player(4, "Testing4", 30);
+    Player player5 = new Player(5, "Testing5", 31);
+    Player player6 = new Player(6, "Testing6", 32);
+    Player player7 = new Player(7, "Testing7", 33);
     gameSession.addPlayer(player1);
     gameSession.addPlayer(player2);
+    gameSession.addPlayer(player3);
+    gameSession.addPlayer(player4);
+    gameSession.addPlayer(player5);
+    gameSession.addPlayer(player6);
+    gameSession.addPlayer(player7);
+
     try {
       gameSession.setBoardGame(buildBoardGame(gameSession.getPlayers()));
     } catch (Exception e) {
@@ -158,7 +169,7 @@ public class BoardGameApplication extends Application {
     BoardFactory factory = new BoardFactory();
     GsonFileReader reader = new GsonFileReader();
     Board board = factory.buildBoardFromJson(reader.readJson(
-        "src/main/resources/assets/boards/laddergameboards/laddergame_special30.json"));
+        "src/main/resources/assets/boards/laddergameboards/laddergame_classic.json"));
     return board;
   }
 
@@ -173,6 +184,10 @@ public class BoardGameApplication extends Application {
     players.add(player1);
     Player player2 = new Player(2, "Sasha", 27);
     players.add(player2);
+    Player player3 = new Player(3, "Testing2", 28);
+    players.add(player3);
+    Player player4 = new Player(4, "Testing4", 30);
+    players.add(player4);
 
     LadderBoardGame ladderBoardGame = new LadderBoardGame(board, players);
     return new BoardGameView("Snake's n Ladders", ladderBoardGame);
