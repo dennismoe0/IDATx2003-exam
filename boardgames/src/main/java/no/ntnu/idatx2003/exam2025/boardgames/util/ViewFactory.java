@@ -16,7 +16,12 @@ import no.ntnu.idatx2003.exam2025.boardgames.service.SceneRegister;
 import no.ntnu.idatx2003.exam2025.boardgames.service.StatsManager;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.ChangeScreenCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.PrintLineCommand;
-import no.ntnu.idatx2003.exam2025.boardgames.view.*;
+import no.ntnu.idatx2003.exam2025.boardgames.view.AddPlayerView;
+import no.ntnu.idatx2003.exam2025.boardgames.view.BoardGameView;
+import no.ntnu.idatx2003.exam2025.boardgames.view.GameBuilderView;
+import no.ntnu.idatx2003.exam2025.boardgames.view.MenuOption;
+import no.ntnu.idatx2003.exam2025.boardgames.view.MenuView;
+import no.ntnu.idatx2003.exam2025.boardgames.view.PlayerListView;
 import org.slf4j.Logger;
 
 /**
@@ -116,7 +121,8 @@ public class ViewFactory {
   public Parent buildPlayerListView(
       PlayerDaoImpl playerDao,
       Map<String, StatsManager<?>> statsManagers, GameSession gameSession) {
-    PlayerListViewController controller = new PlayerListViewController(playerDao, statsManagers, gameSession);
+    PlayerListViewController controller = new PlayerListViewController(
+        playerDao, statsManagers, gameSession);
     PlayerListView view = new PlayerListView(controller);
     return view.getRoot();
   }
