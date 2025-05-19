@@ -123,9 +123,6 @@ public final class LadderBoardGame extends BoardGame {
     // Check if the player has won
     // Example win condition
     if (playerPiece.getCurrentTile() == getBoard().getTile(lastTile)) {
-      setWinner(currentPlayer);
-      gameIsOver();
-
       log.info("Player {} has won the game!", currentPlayer.getPlayerName());
 
       // Increment win stats
@@ -144,6 +141,8 @@ public final class LadderBoardGame extends BoardGame {
               player.getPlayerId(), player.getPlayerName());
         }
       }
+      setWinner(currentPlayer);
+      gameIsOver();
     }
   }
 

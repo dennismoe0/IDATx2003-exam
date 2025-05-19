@@ -57,9 +57,11 @@ public class DieView extends StackPane {
   }
 
   private void playDiceRollAnimation() {
+    this.setRotate(0);
     RotateTransition rotateTransition = new RotateTransition(Duration.seconds(0.2), this);
     rotateTransition.setByAngle(360);
     rotateTransition.setCycleCount(5);
+    rotateTransition.setOnFinished(event -> this.setRotate(0));
     rotateTransition.play();
   }
 

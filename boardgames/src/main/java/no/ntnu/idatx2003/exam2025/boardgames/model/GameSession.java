@@ -58,7 +58,7 @@ public class GameSession {
   }
 
   private void endGame() {
-    logger.info("ending game " + boardGame.getName());
+    logger.info("Game Over. Player {} is the winner!", boardGame.getWinner().getPlayerName());
   }
 
 }

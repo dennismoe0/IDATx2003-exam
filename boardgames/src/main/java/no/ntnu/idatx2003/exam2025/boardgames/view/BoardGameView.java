@@ -11,6 +11,7 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
+import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
 
 /**
  * Class for displaying the current board game.
@@ -42,6 +43,11 @@ public class BoardGameView {
     createPanes();
     this.title = new Label(title);
     this.ladderBoardGame = boardGame;
+    this.ladderBoardGame.getGameOverProperty().addListener(observable -> {
+      AlertUtil.showInfo("Game Over!",
+          ladderBoardGame.getWinner().getPlayerName() + " has won the game!");
+    });
+
     createViews();
     configurePanes();
   }

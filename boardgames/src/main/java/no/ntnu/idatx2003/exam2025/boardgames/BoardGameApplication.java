@@ -103,7 +103,8 @@ public class BoardGameApplication extends Application {
     statsManagers.put("Snakes and Ladders", snakesStatsManager);
     statsManagers.put("Ludo", ludoStatsManager);
 
-    initializeGameSession(gameSession);
+    //initializeGameSession(gameSession);
+
 
     log.info("Registering Scenes");
     sceneRegister.register("main-menu", () -> viewFactory.buildMainMenuView(sceneRegister, sceneManager));
