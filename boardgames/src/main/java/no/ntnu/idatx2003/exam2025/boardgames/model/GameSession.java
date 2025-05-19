@@ -40,6 +40,11 @@ public class GameSession {
     return boardGame;
   }
 
+  /**
+   * Sets the board game.
+   *
+   * @param boardGame the board game to be tracked.
+   */
   public void setBoardGame(BoardGame boardGame) {
     logger.info("setting board game " + boardGame.getName());
     this.boardGame = boardGame;
