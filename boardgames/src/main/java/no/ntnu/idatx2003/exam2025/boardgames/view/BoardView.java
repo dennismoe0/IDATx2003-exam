@@ -130,7 +130,7 @@ public class BoardView extends Pane {
   private void applyExitTileStyles() {
     for (Tile tile : board.getTilesAsList()) {
       if (tile.getTileStrategy() != null) {
-        // ladder exit
+        // ladder exit, "importing" directly in the code here
         if (tile.getTileStrategy() instanceof no.ntnu.idatx2003.exam2025.boardgames.model.tile.LadderTileStrategy) {
           no.ntnu.idatx2003.exam2025.boardgames.model.tile.LadderTileStrategy lts = (no.ntnu.idatx2003.exam2025.boardgames.model.tile.LadderTileStrategy) tile
               .getTileStrategy();
