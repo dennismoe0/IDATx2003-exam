@@ -9,7 +9,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import javafx.util.StringConverter;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.GameBuilderController;
+import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardInfo;
+
+import java.util.List;
 
 /**
  * View for displaying options for populating and starting a game session.
@@ -44,10 +48,13 @@ public class GameBuilderView {
   private Button addNewPlayerButton;
 
   private ComboBox<String> gameMenu;
-  private ComboBox<String> boardMenu;
+  private ComboBox<BoardInfo> boardMenu;
 
-  public GameBuilderView(GameBuilderController controller) {
+  private PlayerListView playerListView;
+
+  public GameBuilderView(GameBuilderController controller, PlayerListView playerListView) {
     this.controller = controller;
+    this.playerListView = playerListView;
     root = new StackPane();
     background = new Rectangle(width, height);
     boardColumn = new VBox(5);
@@ -64,14 +71,16 @@ public class GameBuilderView {
     gameHeader = new Label("Choose Game");
     boardHeader = new Label("Choose Board");
     configureView();
-    configureText();
+    configureMenus();
     configureButtons();
     assignStyling();
   }
 
   private void configureView() {
     root.setMaxSize(width, height);
-    float columnWidth = width / 3;
+    //float columnWidth = width / 3;
+    //Temporarily removed rules column.
+    float columnWidth = width/2;
     boardColumn.setMaxWidth(columnWidth);
     rulesColumn.setMaxWidth(columnWidth);
     playerColumn.setMaxWidth(columnWidth);
@@ -82,19 +91,81 @@ public class GameBuilderView {
     rulesColumn.setAlignment(Pos.TOP_CENTER);
     playerColumn.setAlignment(Pos.TOP_CENTER);
 
-    playerColumn.getChildren().addAll(playerTitle, addNewPlayerButton);
+    playerColumn.getChildren().addAll(playerTitle, playerListView.getRoot(), addNewPlayerButton);
     boardColumn.getChildren().addAll(boardTitle, gameHeader,
         gameMenu, boardHeader, boardMenu, startGameButton);
     rulesColumn.getChildren().add(rulesTitle);
 
-    layout.getChildren().addAll(playerColumn, boardColumn, rulesColumn);
+    //layout.getChildren().addAll(playerColumn, boardColumn, rulesColumn);
+    // Temporarily removed rules column.
+    layout.getChildren().addAll(playerColumn, boardColumn);
     root.getChildren().add(background);
     root.getChildren().add(layout);
   }
 
-  private void configureText() {
-    gameMenu.setPlaceholder(new Label("Choose a game"));
-    boardMenu.setPlaceholder(new Label("Choose a board"));
+  private void configureMenus() {
+    gameMenu.setPromptText("Choose Game");
+    boardMenu.setPromptText("Choose a board");
+
+    gameMenu.getItems().add("Snakes 'n Ladders");
+    gameMenu.getItems().add("Ludo");
+    gameMenu.getItems().add("Den Forsvunne Diamanten");
+
+    gameMenu.setOnAction((event) -> {
+      int selectedIndex = gameMenu.getSelectionModel().getSelectedIndex();
+      switch (selectedIndex) {
+        case 0:
+          controller.selectGame("ladder");
+          break;
+        case 1:
+          controller.selectGame("ludo");
+          break;
+        case 2:
+          controller.selectGame("diamanten");
+          break;
+        default:
+          controller.selectGame("ladder");
+      }
+      resetBoardMenu();
+      controller.selectBoard(null);
+      updateBoardMenu();
+    });
+
+    boardMenu.setOnAction((event) -> {
+      BoardInfo selected = boardMenu.getSelectionModel().getSelectedItem();
+      controller.selectBoard(selected);
+    });
+  }
+
+  private void updateBoardMenu() {
+    List<BoardInfo> boardInfoList = controller.getBoardInfoList();
+    if (boardInfoList.isEmpty()) {
+      boardMenu.getItems().clear();
+      return;
+    }
+
+    boardMenu.getItems().clear();
+    boardMenu.getItems().addAll(boardInfoList);
+
+    // Solution suggested by ChatGPT
+    boardMenu.setConverter(new StringConverter<BoardInfo>() {
+      @Override
+      public String toString(BoardInfo object) {
+        return object.getName();
+      }
+
+      @Override
+      public BoardInfo fromString(String string) {
+        return null;
+      }
+    });
+  }
+
+  private void resetBoardMenu() {
+    boardMenu.getSelectionModel().clearSelection();
+    boardMenu.setValue(null);
+    boardMenu.getItems().clear();
+    updateBoardMenu();
   }
 
   private void assignStyling() {
@@ -107,6 +178,10 @@ public class GameBuilderView {
   private void configureButtons() {
     addNewPlayerButton.setOnAction(event -> {
       controller.openAddPlayerView();
+    });
+
+    startGameButton.setOnAction(event -> {
+      controller.startGame();
     });
   }
 

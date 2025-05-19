@@ -2,9 +2,12 @@ package no.ntnu.idatx2003.exam2025.boardgames.view;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.animation.RotateTransition;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.util.Duration;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.DiceController;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Dice;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Die;
@@ -44,7 +47,7 @@ public class DiceView {
     List<Die> totalDice = dice.getDice();
 
     double numberOfDice = totalDice.size();
-    double diceWidth = (width / numberOfDice) - (gapSize / numberOfDice);
+    double diceWidth = ((width / numberOfDice) / 2) - (numberOfDice * gapSize);
     DieView dieView;
 
     for (Die die : totalDice) {
@@ -61,6 +64,7 @@ public class DiceView {
 
     root.getStyleClass().add("dice-view");
   }
+
 
   public Parent getRoot() {
     return root;

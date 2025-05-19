@@ -54,6 +54,7 @@ public final class LadderBoardGame extends BoardGame {
     gameIsOver = false;
     dice = new Dice();
     dice.addDice(new Die(6));
+    dice.addDice(new Die(6));
 
     for (Player player : players) {
       if (!(player.getPlayerStats() instanceof SnakesAndLaddersStats)) {

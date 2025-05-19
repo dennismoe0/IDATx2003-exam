@@ -48,7 +48,8 @@ public class ViewFactory {
   public Parent buildMainMenuView(SceneRegister sceneRegister, SceneManager sceneManager) {
     logger.info("Building main menu");
     List<MenuOption> menuOptions = new ArrayList<>();
-    menuOptions.add(new MenuOption("Start", new PrintLineCommand("Start"), true));
+    menuOptions.add(new MenuOption("Start",
+        new ChangeScreenCommand(sceneRegister, sceneManager, "build-game"), true));
     menuOptions.add(new MenuOption(
         "Swap to Board View", new ChangeScreenCommand(
             sceneRegister, sceneManager, "ladder-game"),
@@ -87,10 +88,21 @@ public class ViewFactory {
    * @param sceneRegister the scene register
    * @return the root node of the game builder view
    */
+
   public Parent buildGameBuilderView(
-      GameSession gameSession, SceneManager sceneManager, SceneRegister sceneRegister) {
+      GameSession gameSession,
+      SceneManager sceneManager,
+      SceneRegister sceneRegister,
+      PlayerDaoImpl playerDao,
+      Map<String, StatsManager<?>> statsManagers) {
+    PlayerListView playerListView = new PlayerListView(
+        new PlayerListViewController(playerDao, statsManagers, gameSession));
     GameBuilderView gbView = new GameBuilderView(
-        new GameBuilderController(gameSession, sceneRegister, sceneManager));
+        new GameBuilderController(
+            gameSession,
+            sceneRegister,
+            sceneManager),
+            playerListView);
     return gbView.getRoot();
   }
 
@@ -103,8 +115,8 @@ public class ViewFactory {
    */
   public Parent buildPlayerListView(
       PlayerDaoImpl playerDao,
-      Map<String, StatsManager<?>> statsManagers) {
-    PlayerListViewController controller = new PlayerListViewController(playerDao, statsManagers);
+      Map<String, StatsManager<?>> statsManagers, GameSession gameSession) {
+    PlayerListViewController controller = new PlayerListViewController(playerDao, statsManagers, gameSession);
     PlayerListView view = new PlayerListView(controller);
     return view.getRoot();
   }

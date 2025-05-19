@@ -1,14 +1,25 @@
 package no.ntnu.idatx2003.exam2025.boardgames.controller;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
+
+import com.google.gson.JsonObject;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardFactory;
+import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardInfo;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneRegister;
+import no.ntnu.idatx2003.exam2025.boardgames.util.BoardInfoReader;
+import no.ntnu.idatx2003.exam2025.boardgames.util.GsonFileReader;
+import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.ChangeScreenCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.OpenOverlayCommand;
+import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
+import org.slf4j.Logger;
 
 /**
  * Controller responsible for building and managing the setup of a board game
@@ -16,15 +27,17 @@ import no.ntnu.idatx2003.exam2025.boardgames.util.command.OpenOverlayCommand;
  * including selecting games, boards, players, and starting the game.
  */
 public class GameBuilderController {
-
+  private static final Logger logger = Log.get(GameBuilderController.class);
   private GameSession gameSession;
   private String game;
-  private String board;
+  private BoardInfo board;
   private int numberOfDice;
   private BoardFactory boardFactory;
   private SceneRegister sceneRegister;
   private SceneManager sceneManager;
   private ChangeScreenCommand changeScreenCommand;
+  private BoardInfoReader boardInfoReader;
+  private List<BoardInfo> boardInfoList;
 
   /**
    * Constructs a GameBuilderController with the given game session, scene
@@ -44,6 +57,8 @@ public class GameBuilderController {
     this.sceneManager = sceneManager;
     changeScreenCommand = new ChangeScreenCommand(
         sceneRegister, sceneManager, "ladder-game");
+    boardInfoReader = new BoardInfoReader(
+        "src/main/resources/assets/boards/laddergameboards/BoardList.json");
   }
 
   /**
@@ -53,21 +68,27 @@ public class GameBuilderController {
    */
   public void selectGame(String name) {
     game = name;
+    buildBoardInfoList(game);
   }
 
   /**
    * Selects the board by its name.
    *
-   * @param name the name of the board to select
+   * @param board the name of the board to select
    */
-  public void selectBoard(String name) {
-    board = name;
+  public void selectBoard(BoardInfo board) {
+    this.board = board;
   }
 
   /**
    * Starts the game by building the selected game and changing the screen.
    */
   public void startGame() {
+    if (game == null || board == null || gameSession.getPlayers().isEmpty()) {
+      AlertUtil.showError("Missing Items",
+          "Please ensure you've selected your players, game, and board before starting the game.");
+      return;
+    }
     gameSession.setBoardGame(buildGame());
     changeScreenCommand.execute();
   }
@@ -102,9 +123,33 @@ public class GameBuilderController {
     command.execute();
   }
 
+  /**
+   * A method for retrieving boards for the currently selected boardgames, to be displayed.
+   *
+   * @return returns a list of BoardInfo objects.
+   */
+  public List<BoardInfo> getBoardInfoList() {
+    if (game == null) {
+      return null;
+    }
+    return boardInfoList;
+  }
+
   private LadderBoardGame buildGame() {
-    Board board = boardFactory.createDefaultLadderBoard();
-    LadderBoardGame game = new LadderBoardGame(board, gameSession.getPlayers());
-    return game;
+    String url = board.getUrl();
+    GsonFileReader gson = new GsonFileReader();
+    JsonObject readBoard;
+    try {
+      readBoard = gson.readJson(url);
+      Board boardObject = boardFactory.buildBoardFromJson(readBoard);
+      return new LadderBoardGame(boardObject, gameSession.getPlayers());
+    } catch (IOException e) {
+      logger.error(e.getMessage());
+      return null;
+    }
+  }
+
+  private void buildBoardInfoList(String game) {
+    boardInfoList = boardInfoReader.getBoards(game);
   }
 }
