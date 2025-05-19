@@ -6,20 +6,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDao;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
-import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.GameStatsDao;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.LudoStatsDaoImpl;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.SnakesAndLaddersStatsDaoImpl;
-import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
@@ -106,15 +99,17 @@ public class BoardGameApplication extends Application {
     initializeGameSession(gameSession);
 
     log.info("Registering Scenes");
-    sceneRegister.register("main-menu", () -> viewFactory.buildMainMenuView(sceneRegister, sceneManager));
-    sceneRegister.register("ladder-game", () -> viewFactory.buildLadderBoardGameView(gameSession.getBoardGame()));
-    sceneRegister.register("add-player", () -> viewFactory.buildAddPlayerView(gameSession, sceneManager, playerDao));
-    sceneRegister.register("build-game",
-        () -> viewFactory.buildGameBuilderView(gameSession, sceneManager, sceneRegister, playerDao, statsManagers));
-
-    // Needs to be filled out
-
-    sceneRegister.register("player-list", () -> viewFactory.buildPlayerListView(playerDao, statsManagers, gameSession));
+    sceneRegister.register("main-menu", ()
+        -> viewFactory.buildMainMenuView(sceneRegister, sceneManager));
+    sceneRegister.register("ladder-game", ()
+        -> viewFactory.buildLadderBoardGameView(gameSession.getBoardGame()));
+    sceneRegister.register("add-player", ()
+        -> viewFactory.buildAddPlayerView(gameSession, sceneManager, playerDao));
+    sceneRegister.register("build-game", ()
+        -> viewFactory.buildGameBuilderView(
+            gameSession, sceneManager, sceneRegister, playerDao, statsManagers));
+    sceneRegister.register("player-list", ()
+        -> viewFactory.buildPlayerListView(playerDao, statsManagers, gameSession));
 
     log.info("Building Default Window");
     //Temporary intitialization for testing purposes.
