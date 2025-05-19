@@ -73,6 +73,7 @@ public class BoardView extends Pane {
       tileViewRegister.registerTileView(tileId, view);
     }
     assembleBoard(tileViews);
+    applyExitTileStyles();
   }
 
   private void setConstraints() {
@@ -124,5 +125,37 @@ public class BoardView extends Pane {
 
   public void addGamePieceView(GamePieceView pieceView) {
     root.getChildren().add(pieceView);
+  }
+
+  private void applyExitTileStyles() {
+    for (Tile tile : board.getTilesAsList()) {
+      if (tile.getTileStrategy() != null) {
+        // ladder exit
+        if (tile.getTileStrategy() instanceof no.ntnu.idatx2003.exam2025.boardgames.model.tile.LadderTileStrategy) {
+          no.ntnu.idatx2003.exam2025.boardgames.model.tile.LadderTileStrategy lts = (no.ntnu.idatx2003.exam2025.boardgames.model.tile.LadderTileStrategy) tile
+              .getTileStrategy();
+          Tile exitTile = lts.getEndTile();
+          if (exitTile != null) {
+            // Get the TileView for the exit tile from the tileViewRegister
+            TileView exitView = tileViewRegister.getTileView(exitTile.getId());
+            if (exitView != null) {
+              exitView.getView().getStyleClass().add("ts-ladder-end");
+            }
+          }
+        }
+        // snake exit
+        else if (tile.getTileStrategy() instanceof no.ntnu.idatx2003.exam2025.boardgames.model.tile.SnakeTileStrategy) {
+          no.ntnu.idatx2003.exam2025.boardgames.model.tile.SnakeTileStrategy sts = (no.ntnu.idatx2003.exam2025.boardgames.model.tile.SnakeTileStrategy) tile
+              .getTileStrategy();
+          Tile exitTile = sts.getEndTile();
+          if (exitTile != null) {
+            TileView exitView = tileViewRegister.getTileView(exitTile.getId());
+            if (exitView != null) {
+              exitView.getView().getStyleClass().add("ts-snake-end");
+            }
+          }
+        }
+      }
+    }
   }
 }

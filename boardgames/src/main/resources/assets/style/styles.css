@@ -2,11 +2,20 @@
     -fx-background-color: #fbfbfb;
 }
 .ts-ladder {
-    -fx-background-color: #67c18d;
+    -fx-background-color: #0e833f;
+}
+
+.ts-ladder-end {
+  -fx-background-color: #73efa6;
 }
 .ts-snake {
-    -fx-background-color: #bc5655;
+    -fx-background-color: #ba4948;
 }
+
+.ts-snake-end {
+    -fx-background-color: #f4a6a6;
+}
+
 .ts-win {
     -fx-background-color: yellow;
 }
