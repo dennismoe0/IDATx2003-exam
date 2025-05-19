@@ -1,15 +1,14 @@
 package no.ntnu.idatx2003.exam2025.boardgames.controller;
 
-import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
-import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
-import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 
-import java.util.List;
-import java.util.Map;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-
+import java.util.List;
+import java.util.Map;
+import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
+import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
+import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.service.StatsManager;
 
 /**
@@ -58,10 +57,20 @@ public class PlayerListViewController {
     playerDao.delete(playerId);
   }
 
+  /**
+   * Method for Manually adding a Player to the Game Session.
+   *
+   * @param player the player object to be added.
+   */
   public void addPlayerToGameSession(Player player) {
     gameSession.addPlayer(player);
   }
 
+  /**
+   * Method for manually Removing a player from the game session.
+   *
+   * @param player the player object to be removed.
+   */
   public void removePlayerFromGameSession(Player player) {
     gameSession.removePlayer(player);
   }
