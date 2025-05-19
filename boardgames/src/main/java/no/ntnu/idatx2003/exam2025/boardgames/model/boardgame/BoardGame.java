@@ -17,6 +17,7 @@ public abstract class BoardGame {
   private String name;
   private final HashMap<Player, List<GamePiece>> playerPieces = new HashMap<>();
   private final BooleanProperty gameIsOver = new SimpleBooleanProperty(false);
+  private Player winner;
 
   /**
    * A method where each board game should initialize itself.
@@ -115,6 +116,14 @@ public abstract class BoardGame {
    */
   protected void gameIsOver() {
     gameIsOver.set(true);
+  }
+
+  public void setWinner(Player player) {
+    winner = player;
+  }
+
+  public Player getWinner() {
+    return winner;
   }
 
 }

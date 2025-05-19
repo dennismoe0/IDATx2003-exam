@@ -2,9 +2,6 @@ package no.ntnu.idatx2003.exam2025.boardgames.model.boardgame;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Dice;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Die;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
@@ -125,7 +122,9 @@ public final class LadderBoardGame extends BoardGame {
     // Check if the player has won
     // Example win condition
     if (playerPiece.getCurrentTile() == getBoard().getTile(lastTile)) {
-      super.gameIsOver();
+      setWinner(currentPlayer);
+      gameIsOver();
+
       log.info("Player {} has won the game!", currentPlayer.getPlayerName());
 
       // Increment win stats
