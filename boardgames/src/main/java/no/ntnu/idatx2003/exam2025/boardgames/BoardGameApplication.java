@@ -137,7 +137,7 @@ public class BoardGameApplication extends Application {
 
   private void initializeGameSession(GameSession gameSession) {
     log.info("Initializing GameSession");
-    // Define 20 unique colors for players
+    // colors
     Color[] colors = {
         Color.GREEN, Color.BLUE, Color.RED, Color.ORANGE, Color.PURPLE,
         Color.YELLOW, Color.BROWN, Color.PINK, Color.GRAY, Color.CYAN,
@@ -145,7 +145,8 @@ public class BoardGameApplication extends Application {
         Color.GOLD, Color.SILVER, Color.MAROON, Color.AQUA, Color.DARKGREEN
     };
 
-    for (int i = 1; i <= 100; i++) {
+    // Testing players in a game, not persisted
+    for (int i = 1; i <= 10; i++) {
       Player player = new Player(i, "Testing" + i, 20 + i);
       player.setPlayerColor(colors[(i - 1) % colors.length]);
       gameSession.addPlayer(player);
