@@ -104,7 +104,7 @@ public class PlayerListView {
         selectBox.setOnAction(e -> {
           if (selectBox.isSelected()) {
             controller.addPlayerToGameSession(player);
-          }else if (!selectBox.isSelected()) {
+          } else if (!selectBox.isSelected()) {
             controller.removePlayerFromGameSession(player);
           }
         });

@@ -40,6 +40,14 @@ public interface PlayerDao {
   void delete(int playerId) throws SQLException;
 
   /**
+   * Updates an existing player in the database.
+   *
+   * @param player The Player object containing updated information.
+   * @throws SQLException If a database access error occurs.
+   */
+  void update(Player player) throws SQLException;
+
+  /**
    * Retrieves a list of all player names from the database.
    *
    * @return A list of player names.

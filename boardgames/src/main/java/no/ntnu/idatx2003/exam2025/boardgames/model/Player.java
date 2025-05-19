@@ -30,21 +30,29 @@ public class Player {
     this.playerStats = null; // Injected later
     this.playerName = playerName;
     this.playerAge = playerAge;
-    this.color = Color.GREEN; // Injected/chosen later
+    this.color = Color.web("#00FF00"); // Injected/chosen later
   }
 
   /**
-   * Existing player from database constructor, this will be loaded in.
+   * Constructor for an existing player with all properties specified.
    *
-   * @param playerId    Unique identifier INT for each player. Used to identify
-   *                    player to load.
-   * @param playerStats Unique stats connected to player-profile.
+   * @param playerId    Unique ID to distinguish each player.
+   * @param playerStats Player statistics object.
+   * @param playerName  Non-unique String to visually represent player in-game.
+   * @param playerAge   Age of the player.
+   * @param color       Color associated with the player.
    */
-  public Player(int playerId, PlayerStats playerStats, String playerName, int playerAge) {
+  public Player(
+      int playerId,
+      PlayerStats playerStats,
+      String playerName,
+      int playerAge,
+      Color color) {
     this.playerId = playerId;
     this.playerStats = playerStats;
     this.playerName = playerName;
     this.playerAge = playerAge;
+    this.color = color;
   }
 
   public int getPlayerId() {
