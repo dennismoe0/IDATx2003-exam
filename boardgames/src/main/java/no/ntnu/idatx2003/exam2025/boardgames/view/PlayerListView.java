@@ -5,6 +5,7 @@ import javafx.scene.layout.VBox;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class PlayerListView {
   private final PlayerListViewController controller;
   private ComboBox<String> gameComboBox;
   private Button refreshButton;
+  private HashMap<Player, String> playingPieceMap = new HashMap<>();
 
   // Have some boxes next to player names that can be
   // checked to "add to game" / pool of active players
@@ -37,14 +39,9 @@ public class PlayerListView {
     scrollPane.setFitToWidth(true);
     scrollPane.setPrefViewportHeight(400);
 
-    gameComboBox = new ComboBox<>();
-    gameComboBox.getItems().addAll(controller.getSupportedGames());
-    if (!gameComboBox.getItems().isEmpty()) {
-      gameComboBox.setValue(gameComboBox.getItems().get(0));
-    }
     configureButton();
 
-    VBox container = new VBox(10, gameComboBox, playerListVBox, refreshButton);
+    VBox container = new VBox(10, playerListVBox, refreshButton);
     scrollPane.setContent(container);
 
     loadPlayers();
@@ -66,7 +63,7 @@ public class PlayerListView {
     idHeader.setMinWidth(60);
     Label actionHeader = new Label("Delete");
     actionHeader.setMinWidth(80);
-    Label selectHeader = new Label("Select");
+    Label selectHeader = new Label("Select piece to use");
     selectHeader.setMinWidth(60);
 
     header.getChildren().addAll(nameHeader, ageHeader, idHeader, actionHeader, selectHeader);
@@ -83,9 +80,6 @@ public class PlayerListView {
 
         Label ageLabel = new Label(String.valueOf(player.getPlayerAge()));
         ageLabel.setMinWidth(60);
-
-        Label idLabel = new Label(String.valueOf(player.getPlayerId()));
-        idLabel.setMinWidth(60);
 
         Button deleteButton = new Button("Delete");
         deleteButton.setMinWidth(80);
@@ -109,22 +103,8 @@ public class PlayerListView {
           }
         });
 
-        Button showStatsButton = new Button("Show statistics");
-        showStatsButton.setMinWidth(120);
-        showStatsButton.setOnAction(e -> {
-          try {
-            String selectedGame = gameComboBox.getValue();
-            LinkedHashMap<String, Integer> stats = controller.getPlayerStatsMap(
-                player, selectedGame);
-            PlayerStatisticsView statsView = new PlayerStatisticsView(player, stats, selectedGame);
-            statsView.showOverlay(playerListVBox.getScene().getWindow());
-          } catch (SQLException ex) {
-            AlertUtil.showError("Failed to load statistics", ex.getMessage());
-          }
-        });
-
         // The order here matches the header!
-        row.getChildren().addAll(nameLabel, ageLabel, idLabel, deleteButton, selectBox, showStatsButton);
+        row.getChildren().addAll(nameLabel, ageLabel, deleteButton, selectBox);
         playerListVBox.getChildren().add(row);
       }
       if (players.isEmpty()) {
@@ -133,6 +113,27 @@ public class PlayerListView {
     } catch (SQLException e) {
       AlertUtil.showError("Failed to load players: ", e.getMessage());
     }
+  }
+
+  /**
+   * Updates the playing piece asset path for the specified player.
+   *
+   * @param player    the player whose playing piece is to be updated
+   * @param assetPath the asset path of the playing piece
+   */
+  public void updatePlayingPiece(Player player, String assetPath) {
+    playingPieceMap.put(player, assetPath);
+  }
+
+  /**
+   * Retrieves the asset path for the specified player's playing piece.
+   *
+   * @param player the player whose playing piece asset path is to be retrieved
+   * @return the asset path of the player's playing piece, or a default path if
+   *         not set
+   */
+  public String getPlayingPieceAsset(Player player) {
+    return playingPieceMap.getOrDefault(player, "/assets/pieces/default_piece.png");
   }
 
   public Parent getRoot() {
