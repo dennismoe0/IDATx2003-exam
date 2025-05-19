@@ -2,6 +2,9 @@ package no.ntnu.idatx2003.exam2025.boardgames.model.boardgame;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Dice;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Die;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
@@ -21,7 +24,6 @@ public final class LadderBoardGame extends BoardGame {
   private List<Player> players;
   private Player currentPlayer;
   private int playerIndex;
-  private boolean gameIsOver;
   private final SnakesAndLaddersStats stats;
   private LadderGameMoveHistory moveHistory = new LadderGameMoveHistory();
   private static final Logger log = Log.get(LadderBoardGame.class);
@@ -51,7 +53,6 @@ public final class LadderBoardGame extends BoardGame {
 
   @Override
   public void setUp(List<Player> players) {
-    gameIsOver = false;
     dice = new Dice();
     dice.addDice(new Die(6));
     dice.addDice(new Die(6));
@@ -124,7 +125,7 @@ public final class LadderBoardGame extends BoardGame {
     // Check if the player has won
     // Example win condition
     if (playerPiece.getCurrentTile() == getBoard().getTile(lastTile)) {
-      gameIsOver = true;
+      super.gameIsOver();
       log.info("Player {} has won the game!", currentPlayer.getPlayerName());
 
       // Increment win stats
@@ -160,10 +161,6 @@ public final class LadderBoardGame extends BoardGame {
     Player player = players.get(playerIndex);
     playerIndex++;
     return player;
-  }
-
-  public boolean isGameOver() {
-    return gameIsOver;
   }
 
   // use observer pattern to track player piece positions and fire a "game over"
