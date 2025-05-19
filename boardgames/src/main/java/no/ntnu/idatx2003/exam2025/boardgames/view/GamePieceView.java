@@ -43,10 +43,8 @@ public class GamePieceView extends Pane {
       });
     }
 
-    // Wait for scene to be ready before initial placement
     sceneProperty().addListener((obs, oldScene, newScene) -> {
       if (newScene != null) {
-        // Scene is ready, do initial placement for all pieces
         pieces.forEach(piece -> updateAllPiecesOnTile(piece.getCurrentTile(), tileViewRegister));
       }
     });
@@ -88,6 +86,8 @@ public class GamePieceView extends Pane {
       double tileSize = tileView.getView().getWidth();
 
       // Use larger offsets for more separation
+      // it'x x and y position within the tile
+      // each bracket represents 1 piece
       double[][] positions;
       switch (count) {
         case 1 -> positions = new double[][] {
@@ -117,7 +117,6 @@ public class GamePieceView extends Pane {
             { 0.75, 0.65 }
         };
         default -> {
-          // Calculate grid dimensions based on piece count
           int cols = (int) Math.ceil(Math.sqrt(count));
           int rows = (int) Math.ceil((double) count / cols);
           positions = new double[count][2];
@@ -144,7 +143,6 @@ public class GamePieceView extends Pane {
         }
       }
 
-      // All pieces on the tile get the same radius
       double minRadius = Math.max(8, tileSize * 0.13);
       double maxRadius = tileSize * 0.22;
       double tokenRadius = Math.max(maxRadius - (count - 1) * 4, minRadius);
