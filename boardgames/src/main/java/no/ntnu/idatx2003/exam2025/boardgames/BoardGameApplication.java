@@ -62,7 +62,7 @@ public class BoardGameApplication extends Application {
 
     PlayerDaoImpl playerDao = new PlayerDaoImpl(connection);
 
-    // Temporary for testing
+    // Temporary for testing persistence
     if (playerDao.getAllPlayers().isEmpty()) {
       Player player1 = new Player(0, "Dennis", 24);
       Player player2 = new Player(0, "Sasha", 27);
@@ -169,7 +169,7 @@ public class BoardGameApplication extends Application {
     BoardFactory factory = new BoardFactory();
     GsonFileReader reader = new GsonFileReader();
     Board board = factory.buildBoardFromJson(reader.readJson(
-        "src/main/resources/assets/boards/laddergameboards/laddergame_special30.json"));
+        "src/main/resources/assets/boards/laddergameboards/laddergame_classic.json"));
     return board;
   }
 
