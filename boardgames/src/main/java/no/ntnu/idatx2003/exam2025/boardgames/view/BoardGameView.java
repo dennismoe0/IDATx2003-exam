@@ -29,6 +29,7 @@ public class BoardGameView {
   private Rectangle rightMenuBackground;
   private StackPane rightMenuContainer;
   private Button takeTurnButton;
+  private Label turnLabel;
 
   /**
    * Default constructor for BoardGameView.
@@ -122,13 +123,23 @@ public class BoardGameView {
     GamePieceView pieceView = new GamePieceView(pieces, boardView.getTileViewRegister());
     boardView.addGamePieceView(pieceView);
 
+    turnLabel = new Label("Waiting for game to start");
+
     moveHistoryView = new MoveHistoryView(ladderBoardGame.getMoveHistory());
     takeTurnButton = new Button("Take Turn");
-    takeTurnButton.setOnAction(event -> ladderBoardGame.takeTurn());
+    takeTurnButton.setOnAction(event -> {
+      ladderBoardGame.takeTurn();
+      updateTurnLabel(ladderBoardGame.getCurrentPlayer().getPlayerName());
+    });
     rightMenu.getChildren().add(diceView.getRoot());
     rightMenu.getChildren().add(takeTurnButton);
-    rightMenu.getChildren().add(new Label("Player name goes here"));
+    rightMenu.getChildren().add(turnLabel);
     rightMenu.getChildren().add(moveHistoryView.getRoot());
+  }
+
+  private void updateTurnLabel(String text) {
+    String turnInfo = "It is " + text + "'s turn";
+    turnLabel.setText(turnInfo);
   }
 
   /**
