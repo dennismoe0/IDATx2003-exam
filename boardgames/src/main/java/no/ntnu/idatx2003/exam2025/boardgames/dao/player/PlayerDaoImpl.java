@@ -6,10 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.slf4j.Logger;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
+import org.slf4j.Logger;
 
 /**
  * Implementation of the PlayerDao interface for managing Player entities in the
@@ -21,6 +20,11 @@ public class PlayerDaoImpl implements PlayerDao {
   private final Connection connection;
   private static final Logger log = Log.get(PlayerDaoImpl.class);
 
+  /**
+   * Default constructor for PlayerDaoImpl.
+   *
+   * @param connection a Database connection object.
+   */
   public PlayerDaoImpl(Connection connection) {
     this.connection = connection;
   }

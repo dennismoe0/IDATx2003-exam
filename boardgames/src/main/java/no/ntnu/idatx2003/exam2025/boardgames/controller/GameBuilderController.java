@@ -1,10 +1,8 @@
 package no.ntnu.idatx2003.exam2025.boardgames.controller;
 
+import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
-
-import com.google.gson.JsonObject;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
@@ -21,6 +19,8 @@ import no.ntnu.idatx2003.exam2025.boardgames.util.command.OpenOverlayCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
 import org.slf4j.Logger;
 
+/// FLAG! Needs robust exception handling! What happens when the program fails?
+
 /**
  * Controller responsible for building and managing the setup of a board game
  * session,
@@ -28,15 +28,15 @@ import org.slf4j.Logger;
  */
 public class GameBuilderController {
   private static final Logger logger = Log.get(GameBuilderController.class);
-  private GameSession gameSession;
+  private final GameSession gameSession;
   private String game;
   private BoardInfo board;
   private int numberOfDice;
-  private BoardFactory boardFactory;
-  private SceneRegister sceneRegister;
-  private SceneManager sceneManager;
-  private ChangeScreenCommand changeScreenCommand;
-  private BoardInfoReader boardInfoReader;
+  private final BoardFactory boardFactory;
+  private final SceneRegister sceneRegister;
+  private final SceneManager sceneManager;
+  private final ChangeScreenCommand changeScreenCommand;
+  private final BoardInfoReader boardInfoReader;
   private List<BoardInfo> boardInfoList;
 
   /**
