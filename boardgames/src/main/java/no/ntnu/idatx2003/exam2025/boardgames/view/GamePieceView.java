@@ -90,25 +90,56 @@ public class GamePieceView extends Pane {
       // Use larger offsets for more separation
       double[][] positions;
       switch (count) {
-        case 1 -> positions = new double[][] { { 0.5, 0.5 } };
-        case 2 -> positions = new double[][] { { 0.3, 0.5 }, { 0.7, 0.5 } };
-        case 3 -> positions = new double[][] { { 0.3, 0.3 }, { 0.7, 0.3 }, { 0.5, 0.7 } };
-        case 4 -> positions = new double[][] { { 0.3, 0.3 }, { 0.7, 0.3 }, { 0.3, 0.7 }, { 0.7, 0.7 } };
+        case 1 -> positions = new double[][] {
+            { 0.5, 0.5 } };
+        case 2 -> positions = new double[][] {
+            { 0.3, 0.5 }, { 0.7, 0.5 }
+        };
+        case 3 -> positions = new double[][] {
+            { 0.3, 0.3 }, { 0.7, 0.3 }, { 0.5, 0.65 }
+        };
+        case 4 -> positions = new double[][] {
+            { 0.3, 0.3 }, { 0.7, 0.3 }, { 0.3, 0.65 }, { 0.7, 0.65 }
+        };
         case 5 -> positions = new double[][] {
-            { 0.2, 0.2 },
-            { 0.8, 0.2 },
-            { 0.2, 0.8 },
-            { 0.8, 0.8 },
-            { 0.5, 0.5 }
+            { 0.25, 0.25 },
+            { 0.75, 0.25 },
+            { 0.25, 0.65 },
+            { 0.75, 0.65 },
+            { 0.5, 0.45 }
+        };
+        case 6 -> positions = new double[][] {
+            { 0.25, 0.25 },
+            { 0.5, 0.25 },
+            { 0.75, 0.25 },
+            { 0.25, 0.65 },
+            { 0.5, 0.65 },
+            { 0.75, 0.65 }
         };
         default -> {
-          int cols = Math.min(3, count);
+          // Calculate grid dimensions based on piece count
+          int cols = (int) Math.ceil(Math.sqrt(count));
+          int rows = (int) Math.ceil((double) count / cols);
           positions = new double[count][2];
+
+          double usableSpace = 0.6;
+          double xMargin = (1.0 - usableSpace) / 2;
+          double yMargin = (1.0 - usableSpace) / 2;
+
+          double topMargin = yMargin;
+          double bottomMargin = yMargin + 0.1;
+
+          // Calculate spacing between pieces
+          double xSpacing = usableSpace / (cols >= 2 ? cols - 1 : 1);
+          double ySpacing = (1.0 - (topMargin + bottomMargin)) / (rows >= 2 ? rows - 1 : 1);
+          double xStart = xMargin;
+          double yStart = topMargin;
+
           for (int i = 0; i < count; i++) {
             int col = i % cols;
             int row = i / cols;
-            positions[i][0] = 0.15 + 0.35 * col; // 0.15, 0.5, 0.85
-            positions[i][1] = 0.2 + 0.6 * row; // 0.2, 0.8
+            positions[i][0] = xStart + (xSpacing * col);
+            positions[i][1] = yStart + (ySpacing * row);
           }
         }
       }
