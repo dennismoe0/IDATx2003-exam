@@ -31,6 +31,13 @@
     -fx-stroke-width: 2;
 }
 
+.tile-number {
+    -fx-font-family: "Calibri";
+    -fx-font-weight: bold;
+    -fx-font-size: 11px;
+    -fx-fill: #333333;
+}
+
 .board-view {
     -fx-hgap: 2;
     -fx-vgap: 2;
