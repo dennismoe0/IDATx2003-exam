@@ -84,9 +84,9 @@ public class LadderSnakeOverlayView extends Pane {
           // Replace the number '3' with '%d' to have a variety
           // snake3 and ladder3 was produced by chatgpt
           if (tile.getTileStrategy() instanceof LadderTileStrategy) {
-            assetPath = String.format("/assets/laddergame_assets/ladder%d.png", variantIndex);
+            assetPath = String.format("/assets/laddergame_assets/ladder1.png", variantIndex);
           } else if (tile.getTileStrategy() instanceof SnakeTileStrategy) {
-            assetPath = String.format("/assets/laddergame_assets/snake%d.png", variantIndex);
+            assetPath = String.format("/assets/laddergame_assets/snake2.png", variantIndex);
           }
 
           if (assetPath != null) {
