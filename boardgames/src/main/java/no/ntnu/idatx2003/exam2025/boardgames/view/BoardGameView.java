@@ -28,6 +28,7 @@ public class BoardGameView {
   private BorderPane titleBar;
   private Rectangle rightMenuBackground;
   private StackPane rightMenuContainer;
+  private Button takeTurnButton;
 
   /**
    * Default constructor for BoardGameView.
@@ -46,6 +47,7 @@ public class BoardGameView {
     this.ladderBoardGame.getGameOverProperty().addListener(observable -> {
       AlertUtil.showInfo("Game Over!",
           ladderBoardGame.getWinner().getPlayerName() + " has won the game!");
+      takeTurnButton.setDisable(true);
     });
 
     createViews();
@@ -121,7 +123,7 @@ public class BoardGameView {
     boardView.addGamePieceView(pieceView);
 
     moveHistoryView = new MoveHistoryView(ladderBoardGame.getMoveHistory());
-    Button takeTurnButton = new Button("Take Turn");
+    takeTurnButton = new Button("Take Turn");
     takeTurnButton.setOnAction(event -> ladderBoardGame.takeTurn());
     rightMenu.getChildren().add(diceView.getRoot());
     rightMenu.getChildren().add(takeTurnButton);
