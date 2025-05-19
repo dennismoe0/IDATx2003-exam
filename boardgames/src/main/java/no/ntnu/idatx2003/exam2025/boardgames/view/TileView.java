@@ -50,8 +50,8 @@ public class TileView extends BorderPane {
     view.setPrefSize(width, width);
     tileNumber.setText(String.valueOf(tile.getId()));
 
-    StackPane.setAlignment(tileNumber, Pos.BOTTOM_LEFT);
-    StackPane.setMargin(tileNumber, new Insets(0, 0, +1, +2));
+    StackPane.setAlignment(tileNumber, Pos.BOTTOM_RIGHT);
+    StackPane.setMargin(tileNumber, new Insets(0, +2, +1, 0));
     view.getChildren().add(tileNumber);
   }
 
