@@ -78,10 +78,15 @@ public class LadderSnakeOverlayView extends Pane {
           Point2D exitLocal = this.sceneToLocal(exitSceneCenter);
 
           String assetPath = null;
+          int variantCount = 3; // Number of asset variants (e.g., snake1, snake2, snake3)
+          int variantIndex = tile.getId() % variantCount + 1; // 1-based index
+
+          // Replace the number '3' with '%d' to have a variety
+          // snake3 and ladder3 was produced by chatgpt
           if (tile.getTileStrategy() instanceof LadderTileStrategy) {
-            assetPath = "/assets/laddergame_assets/ladder2_3.png";
+            assetPath = String.format("/assets/laddergame_assets/ladder3.png", variantIndex);
           } else if (tile.getTileStrategy() instanceof SnakeTileStrategy) {
-            assetPath = "/assets/laddergame_assets/snake4.png";
+            assetPath = String.format("/assets/laddergame_assets/snake2.png", variantIndex);
           }
 
           if (assetPath != null) {
