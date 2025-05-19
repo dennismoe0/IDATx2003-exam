@@ -6,7 +6,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.Dice;
  * Controller for communicating between dice and View.
  */
 public class DiceController {
-  private Dice dice;
+  private final Dice dice;
 
   /**
    * The default Dice Controller constructor.
