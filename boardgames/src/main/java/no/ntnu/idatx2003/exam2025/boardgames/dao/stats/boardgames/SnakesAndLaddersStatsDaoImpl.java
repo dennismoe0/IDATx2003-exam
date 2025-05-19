@@ -31,8 +31,7 @@ public class SnakesAndLaddersStatsDaoImpl implements SnakesAndLaddersStatsDao {
       + "total_dice_rolls   = excluded.total_dice_rolls, "
       + "total_moves        = excluded.total_moves;";
 
-  private static final String SQL_SELECT = ""
-      + "SELECT wins, losses, games_played, ladders_used,"
+  private static final String SQL_SELECT = "SELECT wins, losses, games_played, ladders_used,"
       + "snakes_used, highest_dice_roll, total_dice_rolls, total_moves "
       + "FROM snakes_and_ladders_stats WHERE player_id = ?";
 

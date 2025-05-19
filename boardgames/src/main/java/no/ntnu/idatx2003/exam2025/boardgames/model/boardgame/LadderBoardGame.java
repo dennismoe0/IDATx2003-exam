@@ -18,14 +18,14 @@ import org.slf4j.Logger;
  */
 public final class LadderBoardGame extends BoardGame {
   private Dice dice;
-  private List<Player> players;
+  private final List<Player> players;
   private Player currentPlayer;
   private int playerIndex;
   private boolean gameIsOver;
   private final SnakesAndLaddersStats stats;
-  private LadderGameMoveHistory moveHistory = new LadderGameMoveHistory();
+  private final LadderGameMoveHistory moveHistory = new LadderGameMoveHistory();
   private static final Logger log = Log.get(LadderBoardGame.class);
-  private int lastTile;
+  private final int lastTile;
 
   /**
    * The default constructor for the Ladder Game class.
@@ -62,7 +62,7 @@ public final class LadderBoardGame extends BoardGame {
             "Wrong stats for player {}, it is currently: {}",
             player.getPlayerId(), player.getPlayerStats());
         player.setPlayerStats(new SnakesAndLaddersStats());
-        log.debug("Created new snakes and ladders stats for player {} since it was wrong.");
+        log.debug("Created new snakes and ladders stats for player since it was wrong.");
       }
       List<GamePiece> pieces = new ArrayList<>();
       Tile startingTile = getBoard().getTile(1);
@@ -129,7 +129,8 @@ public final class LadderBoardGame extends BoardGame {
 
       // Increment win stats
       playerStats.incrementWins();
-      log.info("Incremented win for player {}: {}.", currentPlayer.getPlayerId(), currentPlayer.getPlayerName());
+      log.info("Incremented win for player {}: {}.",
+          currentPlayer.getPlayerId(), currentPlayer.getPlayerName());
 
       // Increment losses for other players
       for (Player player : players) {
@@ -138,7 +139,8 @@ public final class LadderBoardGame extends BoardGame {
           otherStats.incrementLosses();
 
           playerStats.incrementLosses();
-          log.info("Incremented loss for player {}: {}.", player.getPlayerId(), player.getPlayerName());
+          log.info("Incremented loss for player {}: {}.",
+              player.getPlayerId(), player.getPlayerName());
         }
       }
     }
