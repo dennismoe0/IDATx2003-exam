@@ -3,6 +3,7 @@ package no.ntnu.idatx2003.exam2025.boardgames.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.layout.GridPane;
@@ -23,8 +24,7 @@ public class BoardView extends Pane {
   private final TileViewRegister tileViewRegister;
   private final float viewWidth = 600;
   private Rectangle backBoard;
-  // need to add a way for tracking the movement of game pieces in here, or
-  // displaying them in any case.
+  private final Pane gamePiecesLayer = new Pane();
 
   /**
    * The default constructor, requires a Board object.
@@ -38,8 +38,10 @@ public class BoardView extends Pane {
     backBoard = new Rectangle();
     root.getChildren().add(backBoard);
     tileViewRegister = new TileViewRegister();
-    buildBoardView();
+    // important that setContraints is above buildBoardView
     setConstraints();
+    buildBoardView();
+
     grid.getStyleClass().add("board-view");
     backBoard.getStyleClass().add("board-back-view");
   }
@@ -74,6 +76,9 @@ public class BoardView extends Pane {
     }
     assembleBoard(tileViews);
     applyExitTileStyles();
+
+    LadderSnakeOverlayView overlay = new LadderSnakeOverlayView(board, tileViewRegister);
+    addLadderSnakeOverlay(overlay);
   }
 
   private void setConstraints() {
@@ -89,6 +94,8 @@ public class BoardView extends Pane {
     root.setPrefSize(viewWidth, viewWidth);
     root.getChildren().add(grid);
     StackPane.setAlignment(grid, Pos.CENTER);
+
+    root.getChildren().add(gamePiecesLayer);
   }
 
   private void assembleBoard(List<TileView> tileViews) {
@@ -124,7 +131,19 @@ public class BoardView extends Pane {
   }
 
   public void addGamePieceView(GamePieceView pieceView) {
-    root.getChildren().add(pieceView);
+    gamePiecesLayer.getChildren().add(pieceView);
+    pieceView.toFront();
+  }
+
+  public void addLadderSnakeOverlay(LadderSnakeOverlayView overlay) {
+    var children = root.getChildren();
+    int index = children.indexOf(gamePiecesLayer);
+    // insert layer before gamepieces to make them come on top
+    if (index != -1) {
+      children.add(index, overlay);
+    } else {
+      children.add(overlay);
+    }
   }
 
   private void applyExitTileStyles() {
