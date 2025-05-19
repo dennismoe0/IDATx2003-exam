@@ -1,6 +1,8 @@
 package no.ntnu.idatx2003.exam2025.boardgames.view;
 
 import javafx.css.StyleClass;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -24,12 +26,15 @@ public class TileView extends BorderPane {
     view = new StackPane();
     view.getStyleClass().add("tile-view");
     view.getStyleClass().add(styleClass);
+    tileNumber.getStyleClass().add("tile-number");
     buildView();
     super.setCenter(view);
   }
+
   public Tile getTile() {
     return tile;
   }
+
   public void setTile(Tile tile) {
     this.tile = tile;
   }
@@ -44,6 +49,9 @@ public class TileView extends BorderPane {
     view.setMinSize(minSize, minSize);
     view.setPrefSize(width, width);
     tileNumber.setText(String.valueOf(tile.getId()));
+
+    StackPane.setAlignment(tileNumber, Pos.BOTTOM_RIGHT);
+    StackPane.setMargin(tileNumber, new Insets(0, +2, +1, 0));
     view.getChildren().add(tileNumber);
   }
 

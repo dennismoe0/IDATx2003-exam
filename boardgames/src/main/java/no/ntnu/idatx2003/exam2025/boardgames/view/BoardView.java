@@ -3,9 +3,11 @@ package no.ntnu.idatx2003.exam2025.boardgames.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
@@ -15,14 +17,14 @@ import no.ntnu.idatx2003.exam2025.boardgames.service.TileViewRegister;
 /**
  * View class for Boards. Uses GridPane as a base.
  */
-public class BoardView {
+public class BoardView extends Pane {
   private final StackPane root;
   private final GridPane grid;
   private final Board board;
   private final TileViewRegister tileViewRegister;
   private final float viewWidth = 600;
   private Rectangle backBoard;
-  //need to add a way for tracking the movement of game pieces in here, or displaying them in any case.
+  private final Pane gamePiecesLayer = new Pane();
 
   /**
    * The default constructor, requires a Board object.
@@ -36,8 +38,10 @@ public class BoardView {
     backBoard = new Rectangle();
     root.getChildren().add(backBoard);
     tileViewRegister = new TileViewRegister();
-    buildBoardView();
+    // important that setContraints is above buildBoardView
     setConstraints();
+    buildBoardView();
+
     grid.getStyleClass().add("board-view");
     backBoard.getStyleClass().add("board-back-view");
   }
@@ -67,8 +71,14 @@ public class BoardView {
       }
       view = new TileView(tile, ((int) tileSize), tileType);
       tileViews.add(view);
+      int tileId = tile.getId();
+      tileViewRegister.registerTileView(tileId, view);
     }
     assembleBoard(tileViews);
+    applyExitTileStyles();
+
+    LadderSnakeOverlayView overlay = new LadderSnakeOverlayView(board, tileViewRegister);
+    addLadderSnakeOverlay(overlay);
   }
 
   private void setConstraints() {
@@ -84,6 +94,8 @@ public class BoardView {
     root.setPrefSize(viewWidth, viewWidth);
     root.getChildren().add(grid);
     StackPane.setAlignment(grid, Pos.CENTER);
+
+    root.getChildren().add(gamePiecesLayer);
   }
 
   private void assembleBoard(List<TileView> tileViews) {
@@ -111,6 +123,58 @@ public class BoardView {
         i++;
       }
       index++;
+    }
+  }
+
+  public TileViewRegister getTileViewRegister() {
+    return tileViewRegister;
+  }
+
+  public void addGamePieceView(GamePieceView pieceView) {
+    gamePiecesLayer.getChildren().add(pieceView);
+    pieceView.toFront();
+  }
+
+  public void addLadderSnakeOverlay(LadderSnakeOverlayView overlay) {
+    var children = root.getChildren();
+    int index = children.indexOf(gamePiecesLayer);
+    // insert layer before gamepieces to make them come on top
+    if (index != -1) {
+      children.add(index, overlay);
+    } else {
+      children.add(overlay);
+    }
+  }
+
+  private void applyExitTileStyles() {
+    for (Tile tile : board.getTilesAsList()) {
+      if (tile.getTileStrategy() != null) {
+        // ladder exit, "importing" directly in the code here
+        if (tile.getTileStrategy() instanceof no.ntnu.idatx2003.exam2025.boardgames.model.tile.LadderTileStrategy) {
+          no.ntnu.idatx2003.exam2025.boardgames.model.tile.LadderTileStrategy lts = (no.ntnu.idatx2003.exam2025.boardgames.model.tile.LadderTileStrategy) tile
+              .getTileStrategy();
+          Tile exitTile = lts.getEndTile();
+          if (exitTile != null) {
+            // Get the TileView for the exit tile from the tileViewRegister
+            TileView exitView = tileViewRegister.getTileView(exitTile.getId());
+            if (exitView != null) {
+              exitView.getView().getStyleClass().add("ts-ladder-end");
+            }
+          }
+        }
+        // snake exit
+        else if (tile.getTileStrategy() instanceof no.ntnu.idatx2003.exam2025.boardgames.model.tile.SnakeTileStrategy) {
+          no.ntnu.idatx2003.exam2025.boardgames.model.tile.SnakeTileStrategy sts = (no.ntnu.idatx2003.exam2025.boardgames.model.tile.SnakeTileStrategy) tile
+              .getTileStrategy();
+          Tile exitTile = sts.getEndTile();
+          if (exitTile != null) {
+            TileView exitView = tileViewRegister.getTileView(exitTile.getId());
+            if (exitView != null) {
+              exitView.getView().getStyleClass().add("ts-snake-end");
+            }
+          }
+        }
+      }
     }
   }
 }

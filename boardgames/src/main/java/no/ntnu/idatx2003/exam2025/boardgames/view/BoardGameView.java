@@ -1,5 +1,7 @@
 package no.ntnu.idatx2003.exam2025.boardgames.view;
 
+
+import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -7,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
+import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 
 /**
@@ -33,6 +36,9 @@ public class BoardGameView {
    * @param boardGame A board game object representing the current game.
    */
   public BoardGameView(String title, LadderBoardGame boardGame) {
+    if (boardGame == null) {
+      throw new IllegalArgumentException("LadderBoardGame cant be null");
+    }
     createPanes();
     this.title = new Label(title);
     this.ladderBoardGame = boardGame;
@@ -103,6 +109,11 @@ public class BoardGameView {
   private void createViews() {
     diceView = new DiceView(ladderBoardGame.getDice(), 300, 200);
     boardView = new BoardView(ladderBoardGame.getBoard());
+
+    List<GamePiece> pieces = ladderBoardGame.getAllGamePieces();
+    GamePieceView pieceView = new GamePieceView(pieces, boardView.getTileViewRegister());
+    boardView.addGamePieceView(pieceView);
+
     moveHistoryView = new MoveHistoryView(ladderBoardGame.getMoveHistory());
     Button takeTurnButton = new Button("Take Turn");
     takeTurnButton.setOnAction(event -> ladderBoardGame.takeTurn());

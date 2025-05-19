@@ -56,18 +56,24 @@ public final class LadderBoardGame extends BoardGame {
     dice.addDice(new Die(6));
     dice.addDice(new Die(6));
 
-
     for (Player player : players) {
+      if (!(player.getPlayerStats() instanceof SnakesAndLaddersStats)) {
+        log.debug(
+            "Wrong stats for player {}, it is currently: {}",
+            player.getPlayerId(), player.getPlayerStats());
+        player.setPlayerStats(new SnakesAndLaddersStats());
+        log.debug("Created new snakes and ladders stats for player {} since it was wrong.");
+      }
       List<GamePiece> pieces = new ArrayList<>();
       Tile startingTile = getBoard().getTile(1);
       if (startingTile == null) {
         throw new IllegalArgumentException("Starting tile (tile 1) does not exist.");
       }
-      pieces.add(new GamePiece(startingTile)); // Null as placeholder
+      pieces.add(new GamePiece(startingTile, player));
       super.addPlayerPieces(player, pieces);
     }
     playerIndex = 0;
-    //currentPlayer = players.get(playerIndex);
+    // currentPlayer = players.get(playerIndex);
   }
 
   @Override

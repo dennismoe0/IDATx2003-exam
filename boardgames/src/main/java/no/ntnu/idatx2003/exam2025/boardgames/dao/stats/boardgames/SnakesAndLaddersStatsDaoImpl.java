@@ -98,8 +98,6 @@ public class SnakesAndLaddersStatsDaoImpl implements SnakesAndLaddersStatsDao {
       }
     }
     log.warn("No SnakesAndLaddersStats found for player {}", playerId);
-    // Could automatically make one below, but due to sketchyness Im not
-    // implementing that
     return new SnakesAndLaddersStats(); // Return null if no stats are found
   }
 }

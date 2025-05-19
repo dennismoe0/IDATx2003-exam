@@ -6,6 +6,8 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.stats.PlayerStats;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import org.slf4j.Logger;
 
+import javafx.scene.paint.Color;
+
 public class Player {
 
   private static final Logger log = Log.get(Player.class);
@@ -14,6 +16,7 @@ public class Player {
   private String playerName;
   private PlayerStats playerStats;
   private int playerAge;
+  private Color color;
 
   /**
    * Constructor for a NEW player.
@@ -27,6 +30,7 @@ public class Player {
     this.playerStats = null; // Injected later
     this.playerName = playerName;
     this.playerAge = playerAge;
+    this.color = Color.GREEN; // Injected/chosen later
   }
 
   /**
@@ -57,6 +61,14 @@ public class Player {
 
   public int getPlayerAge() {
     return playerAge;
+  }
+
+  public Color getPlayerColor() {
+    return color;
+  }
+
+  public void setPlayerColor(Color color) {
+    this.color = color;
   }
 
   public void setPlayerId(int playerId) {

@@ -12,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDao;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
@@ -61,7 +62,7 @@ public class BoardGameApplication extends Application {
 
     PlayerDaoImpl playerDao = new PlayerDaoImpl(connection);
 
-    // Temporary for testing
+    // Temporary for testing persistence
     if (playerDao.getAllPlayers().isEmpty()) {
       Player player1 = new Player(0, "Dennis", 24);
       Player player2 = new Player(0, "Sasha", 27);
@@ -69,6 +70,8 @@ public class BoardGameApplication extends Application {
       int id2 = playerDao.create(player2);
       player1.setPlayerId(id1);
       player2.setPlayerId(id2);
+      player1.setPlayerColor(javafx.scene.paint.Color.BLUE);
+      player2.setPlayerColor(javafx.scene.paint.Color.GREEN);
 
       // Add 10 more players with Latin names (Copilot generated test people)
       String[] latinNames = {
@@ -100,6 +103,8 @@ public class BoardGameApplication extends Application {
     statsManagers.put("Snakes and Ladders", snakesStatsManager);
     statsManagers.put("Ludo", ludoStatsManager);
 
+    initializeGameSession(gameSession);
+
     log.info("Registering Scenes");
     sceneRegister.register("main-menu", () -> viewFactory.buildMainMenuView(sceneRegister, sceneManager));
     sceneRegister.register("ladder-game", () -> viewFactory.buildLadderBoardGameView(gameSession.getBoardGame()));
@@ -112,12 +117,12 @@ public class BoardGameApplication extends Application {
     sceneRegister.register("player-list", () -> viewFactory.buildPlayerListView(playerDao, statsManagers, gameSession));
 
     log.info("Building Default Window");
-
     //Temporary intitialization for testing purposes.
     //initializeGameSession(gameSession);
 
     log.info("Setting up GUI");
     Parent initial = sceneRegister.get("main-menu");
+
     log.info("Initial scene: " + initial);
     sceneManager.initialize(initial);
     log.info("Launching GUI");
@@ -135,10 +140,21 @@ public class BoardGameApplication extends Application {
 
   private void initializeGameSession(GameSession gameSession) {
     log.info("Initializing GameSession");
-    Player player1 = new Player(1, "Dennis", 24);
-    Player player2 = new Player(2, "Sasha", 27);
-    gameSession.addPlayer(player1);
-    gameSession.addPlayer(player2);
+    // colors
+    Color[] colors = {
+        Color.GREEN, Color.BLUE, Color.RED, Color.ORANGE, Color.PURPLE,
+        Color.YELLOW, Color.BROWN, Color.PINK, Color.GRAY, Color.CYAN,
+        Color.LIME, Color.MAGENTA, Color.OLIVE, Color.TEAL, Color.NAVY,
+        Color.GOLD, Color.SILVER, Color.MAROON, Color.AQUA, Color.DARKGREEN
+    };
+
+    // Testing players in a game, not persisted
+    for (int i = 1; i <= 10; i++) {
+      Player player = new Player(i, "Testing" + i, 20 + i);
+      player.setPlayerColor(colors[(i - 1) % colors.length]);
+      gameSession.addPlayer(player);
+    }
+
     try {
       gameSession.setBoardGame(buildBoardGame(gameSession.getPlayers()));
     } catch (Exception e) {
@@ -157,7 +173,7 @@ public class BoardGameApplication extends Application {
     BoardFactory factory = new BoardFactory();
     GsonFileReader reader = new GsonFileReader();
     Board board = factory.buildBoardFromJson(reader.readJson(
-        "src/main/resources/assets/boards/laddergameboards/laddergame_special30.json"));
+        "src/main/resources/assets/boards/laddergameboards/laddergame_classic.json"));
     return board;
   }
 
@@ -172,6 +188,10 @@ public class BoardGameApplication extends Application {
     players.add(player1);
     Player player2 = new Player(2, "Sasha", 27);
     players.add(player2);
+    Player player3 = new Player(3, "Testing2", 28);
+    players.add(player3);
+    Player player4 = new Player(4, "Testing4", 30);
+    players.add(player4);
 
     LadderBoardGame ladderBoardGame = new LadderBoardGame(board, players);
     return new BoardGameView("Snake's n Ladders", ladderBoardGame);

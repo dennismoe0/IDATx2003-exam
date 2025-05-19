@@ -1,6 +1,6 @@
 package no.ntnu.idatx2003.exam2025.boardgames.model.boardgame;
 
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
@@ -51,7 +51,8 @@ public abstract class BoardGame {
   }
 
   /**
-   * Adds a player and list of associated pieces to a map for tracking during gameplay.
+   * Adds a player and list of associated pieces to a map for tracking during
+   * gameplay.
    *
    * @param player the player object to which the pieces are associated.
    * @param pieces the pieces associated with the player object.
@@ -82,7 +83,21 @@ public abstract class BoardGame {
   }
 
   /**
-   * An empty/default method intended to be overridden. Used for initiating a turn phase.
+   * Retrieves a list of all game pieces associated with all players.
+   *
+   * @return a list containing all GamePiece objects in the game.
+   */
+  public List<GamePiece> getAllGamePieces() {
+    List<GamePiece> allPieces = new ArrayList<>();
+    for (List<GamePiece> pieces : playerPieces.values()) {
+      allPieces.addAll(pieces);
+    }
+    return allPieces;
+  }
+
+  /**
+   * An empty/default method intended to be overridden. Used for initiating a turn
+   * phase.
    */
   public void takeTurn() {
 

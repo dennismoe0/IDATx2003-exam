@@ -12,8 +12,15 @@ public class MoveTileStrategy implements TileStrategy {
   }
 
   @Override
-  public void applyEffect(GamePiece gamePiece){
+  public void applyEffect(GamePiece gamePiece) {
     gamePiece.setCurrentTile(endTile);
   }
 
+  public Tile getEndTile() {
+    return endTile;
+  }
+
+  public Tile getStartTile() {
+    return startTile;
+  }
 }
