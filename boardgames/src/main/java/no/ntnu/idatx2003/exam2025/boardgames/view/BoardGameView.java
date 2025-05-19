@@ -88,6 +88,7 @@ public class BoardGameView {
     title.getStyleClass().add("title-bar");
     rightMenuContainer.getStyleClass().add("board-game-sidebar");
     rightMenuBackground.getStyleClass().add("board-game-sidebar");
+    moveHistoryView.getRoot().getStyleClass().add("inset-panel");
 
     StackPane.setAlignment(rightMenu, Pos.CENTER);
 
