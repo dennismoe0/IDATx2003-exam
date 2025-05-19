@@ -68,19 +68,16 @@ public class ViewFactory {
 
   /**
    * Builds the add player view.
-   *
-   * @param gameSession  the current game session
    * @param sceneManager the scene manager
    * @param playerDao    the player DAO implementation
    * @return the root node of the add player view
    */
   public Parent buildAddPlayerView(
-      GameSession gameSession,
       SceneManager sceneManager,
       PlayerDaoImpl playerDao) {
     logger.info("Building Add Player view");
-    AddPlayerViewController addPlayerViewController = new AddPlayerViewController(
-        gameSession, sceneManager, playerDao);
+    AddPlayerViewController addPlayerViewController
+        = new AddPlayerViewController(sceneManager, playerDao);
     AddPlayerView view = new AddPlayerView(addPlayerViewController);
     return view.getRoot();
   }

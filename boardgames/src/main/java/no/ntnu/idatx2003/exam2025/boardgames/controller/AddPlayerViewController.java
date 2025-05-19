@@ -1,29 +1,27 @@
 package no.ntnu.idatx2003.exam2025.boardgames.controller;
 
+import java.sql.SQLException;
 import javafx.scene.Parent;
-import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
+import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
 import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
-import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
-import java.sql.SQLException;
 
 /**
  * A Controller used for working between a player view and a Game Session.
  */
 public class AddPlayerViewController {
-  private final GameSession gameSession;
   private final SceneManager sceneManager;
   private final PlayerDaoImpl playerDao;
 
   /**
    * A Controller used for working between a player view and a Game Session.
    *
-   * @param gameSession the current Game Session.
+   * @param sceneManager used to close the overlay.
+   * @param playerDao used to add the player to the database.
    */
   public AddPlayerViewController(
-      GameSession gameSession, SceneManager sceneManager, PlayerDaoImpl playerDao) {
-    this.gameSession = gameSession;
+      SceneManager sceneManager, PlayerDaoImpl playerDao) {
     this.sceneManager = sceneManager;
     this.playerDao = playerDao;
 
@@ -67,6 +65,11 @@ public class AddPlayerViewController {
     return null;
   }
 
+  /**
+   * Method for manually closing the add player overlay window.
+   *
+   * @param overlay the overlay to close.
+   */
   public void closeWindow(Parent overlay) {
     sceneManager.closeOverlay(overlay);
   }
