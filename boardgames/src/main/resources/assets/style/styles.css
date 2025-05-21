@@ -1,32 +1,45 @@
 .ts-empty {
     -fx-background-color: #fbfbfb;
+    -fx-fill: #fbfbfb;
 }
 .ts-ladder {
     -fx-background-color: #0e833f;
+    -fx-fill: #0e833f;
 }
 
 .ts-ladder-end {
-  -fx-background-color: #73efa6;
+    -fx-background-color: #73efa6;
+    -fx-fill: #73efa6;
 }
 .ts-snake {
     -fx-background-color: #ba4948;
+    -fx-fill: #ba4948;
 }
 
 .ts-snake-end {
     -fx-background-color: #f4a6a6;
+    -fx-fill: #f4a6a6;
 }
 
 .ts-win {
     -fx-background-color: yellow;
+    -fx-fill: yellow;
 }
 .ts-start {
     -fx-background-color: blue;
+    -fx-fill: blue;
 }
 .ts-freeze {
     -fx-background-color: #a6dfe3;
+    -fx-fill: #a6dfe3;
 }
 .ts-double-movement {
-    -fx-background-color: #ffc99b;
+    -fx-background-color: #e89345;
+    -fx-fill: #e89345;
+}
+
+.piece-view {
+    -fx-effect: dropshadow(gaussian, #464646, 4, 0.2,0,0);
 }
 
 .die-view {
@@ -36,8 +49,8 @@
 }
 
 .tile-view {
-    -fx-stroke: red;
-    -fx-stroke-type: centered;
+    -fx-stroke: #464646;
+    -fx-stroke-type: outside;
     -fx-stroke-width: 2;
 }
 
@@ -45,7 +58,7 @@
     -fx-font-family: "Calibri";
     -fx-font-weight: bold;
     -fx-font-size: 11px;
-    -fx-fill: #333333;
+    -fx-fill: #464646;
 }
 
 .board-view {
@@ -73,10 +86,11 @@
 .board-game-view {
     -fx-background-color: #2890d6;
 }
-.board-game-sidebar {
+.board-game-menu-background {
     -fx-arc-height: 30;
     -fx-arc-width: 30;
     -fx-fill: #d9d9d9;
+    -fx-effect: dropshadow(gaussian, #0f55ae, 10, 0.1,5,5);
 }
 .main-menu-background {
     -fx-arc-height: 30;

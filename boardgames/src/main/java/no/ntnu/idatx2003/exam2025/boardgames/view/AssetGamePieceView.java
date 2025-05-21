@@ -36,6 +36,7 @@ public class AssetGamePieceView extends Pane {
       imageView.setFitWidth(30);
       imageView.setFitHeight(30);
       imageView.setVisible(false);
+      imageView.getStyleClass().add("piece-view");
 
       pieceNodes.put(piece, imageView);
       getChildren().add(imageView);

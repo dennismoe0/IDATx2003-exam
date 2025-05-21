@@ -1,5 +1,6 @@
 package no.ntnu.idatx2003.exam2025.boardgames.view;
 
+import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -14,7 +15,7 @@ import javafx.util.StringConverter;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.GameBuilderController;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardInfo;
 
-import java.util.List;
+
 
 /**
  * View for displaying options for populating and starting a game session.

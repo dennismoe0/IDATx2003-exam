@@ -90,7 +90,7 @@ public class BoardGameView {
     titleBar.getStyleClass().add("title-bar");
     title.getStyleClass().add("title-bar");
     rightMenuContainer.getStyleClass().add("board-game-sidebar");
-    rightMenuBackground.getStyleClass().add("board-game-sidebar");
+    rightMenuBackground.getStyleClass().add("board-game-menu-background");
 
     StackPane.setAlignment(rightMenu, Pos.CENTER);
 

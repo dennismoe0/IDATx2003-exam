@@ -13,17 +13,20 @@ import javafx.scene.shape.Rectangle;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
 import no.ntnu.idatx2003.exam2025.boardgames.service.TileViewRegister;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * View class for Boards. Uses GridPane as a base.
  */
 public class BoardView extends Pane {
+  private static final Logger log = LoggerFactory.getLogger(BoardView.class);
   private final StackPane root;
   private final GridPane grid;
   private final Board board;
   private final TileViewRegister tileViewRegister;
   private final float viewWidth = 600;
-  private Rectangle backBoard;
+  private final Rectangle backBoard;
   // private final Pane gamePiecesLayer = new Pane();
   private final Pane assetPieceLayer = new Pane();
 
@@ -44,7 +47,7 @@ public class BoardView extends Pane {
     buildBoardView();
 
     grid.getStyleClass().add("board-view");
-    backBoard.getStyleClass().add("board-back-view");
+    backBoard.getStyleClass().add("board-game-menu-background");
   }
 
   /**
@@ -67,7 +70,7 @@ public class BoardView extends Pane {
       try {
         tileType = tileViewRegister.get(tile.getTileStrategy().getClass());
       } catch (Exception e) {
-        e.printStackTrace();
+        log.error(e.getMessage());
         tileType = "ts-empty";
       }
       view = new TileView(tile, ((int) tileSize), tileType);

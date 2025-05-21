@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
 
@@ -15,17 +16,21 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
  */
 public class TileView extends BorderPane {
   private Tile tile;
-  private Text tileNumber;
-  private int width;
-  private StackPane view;
+  private final Text tileNumber;
+  private final int width;
+  private final StackPane view;
+  private Rectangle tileBackground;
 
   public TileView(Tile tile, int width, String styleClass) {
     this.tile = tile;
     this.width = width;
+    tileBackground = new Rectangle();
+    tileBackground.getStyleClass().add("tile-view");
+    tileBackground.getStyleClass().add(styleClass);
     tileNumber = new Text();
-    view = new StackPane();
-    view.getStyleClass().add("tile-view");
-    view.getStyleClass().add(styleClass);
+    view = new StackPane(tileBackground);
+    //view.getStyleClass().add("tile-view");
+    //view.getStyleClass().add(styleClass);
     tileNumber.getStyleClass().add("tile-number");
     buildView();
     super.setCenter(view);
@@ -48,6 +53,8 @@ public class TileView extends BorderPane {
     double minSize = 0.5 * width;
     view.setMinSize(minSize, minSize);
     view.setPrefSize(width, width);
+    tileBackground.widthProperty().bind(view.widthProperty());
+    tileBackground.heightProperty().bind(view.heightProperty());
     tileNumber.setText(String.valueOf(tile.getId()));
 
     StackPane.setAlignment(tileNumber, Pos.BOTTOM_RIGHT);
