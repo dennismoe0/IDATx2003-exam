@@ -24,7 +24,8 @@ public class BoardView extends Pane {
   private final TileViewRegister tileViewRegister;
   private final float viewWidth = 600;
   private Rectangle backBoard;
-  private final Pane gamePiecesLayer = new Pane();
+  // private final Pane gamePiecesLayer = new Pane();
+  private final Pane assetPieceLayer = new Pane();
 
   /**
    * The default constructor, requires a Board object.
@@ -95,7 +96,7 @@ public class BoardView extends Pane {
     root.getChildren().add(grid);
     StackPane.setAlignment(grid, Pos.CENTER);
 
-    root.getChildren().add(gamePiecesLayer);
+    root.getChildren().add(assetPieceLayer);
   }
 
   private void assembleBoard(List<TileView> tileViews) {
@@ -130,14 +131,19 @@ public class BoardView extends Pane {
     return tileViewRegister;
   }
 
-  public void addGamePieceView(GamePieceView pieceView) {
-    gamePiecesLayer.getChildren().add(pieceView);
-    pieceView.toFront();
+  // public void addGamePieceView(GamePieceView pieceView) {
+  // gamePiecesLayer.getChildren().add(pieceView);
+  // pieceView.toFront();
+  // }
+
+  public void addAssetGamePieceView(AssetGamePieceView assetGamePieceView) {
+    assetPieceLayer.getChildren().add(assetGamePieceView);
+    assetGamePieceView.toFront();
   }
 
   public void addLadderSnakeOverlay(LadderSnakeOverlayView overlay) {
     var children = root.getChildren();
-    int index = children.indexOf(gamePiecesLayer);
+    int index = children.indexOf(assetPieceLayer);
     // insert layer before gamepieces to make them come on top
     if (index != -1) {
       children.add(index, overlay);

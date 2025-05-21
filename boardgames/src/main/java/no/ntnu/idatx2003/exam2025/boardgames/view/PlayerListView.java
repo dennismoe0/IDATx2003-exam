@@ -2,20 +2,26 @@ package no.ntnu.idatx2003.exam2025.boardgames.view;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-
+import org.slf4j.Logger;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.PlayerListViewController;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
+import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
 
 public class PlayerListView {
@@ -24,6 +30,7 @@ public class PlayerListView {
   private final PlayerListViewController controller;
   private ComboBox<String> gameComboBox;
   private Button refreshButton;
+  private static final Logger log = Log.get(PlayerListView.class);
 
   // Have some boxes next to player names that can be
   // checked to "add to game" / pool of active players
@@ -35,16 +42,24 @@ public class PlayerListView {
     playerListVBox = new VBox(5);
     scrollPane = new ScrollPane(playerListVBox);
     scrollPane.setFitToWidth(true);
-    scrollPane.setPrefViewportHeight(400);
+    scrollPane.setVvalue(0);
+    scrollPane.setHvalue(0);
+    scrollPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
+      if (newScene != null) {
+        scrollPane.prefViewportWidthProperty().bind(
+            newScene.widthProperty().multiply(0.7));
+        scrollPane.prefViewportHeightProperty().bind(
+            newScene.heightProperty().multiply(0.5));
+        scrollPane.viewportBoundsProperty().addListener((o, oldBounds, newBounds) -> {
+          scrollPane.setVvalue(0);
+          scrollPane.setHvalue(0);
+        });
+      }
+    });
 
-    gameComboBox = new ComboBox<>();
-    gameComboBox.getItems().addAll(controller.getSupportedGames());
-    if (!gameComboBox.getItems().isEmpty()) {
-      gameComboBox.setValue(gameComboBox.getItems().get(0));
-    }
     configureButton();
 
-    VBox container = new VBox(10, gameComboBox, playerListVBox, refreshButton);
+    VBox container = new VBox(10, playerListVBox, refreshButton);
     scrollPane.setContent(container);
 
     loadPlayers();
@@ -62,14 +77,14 @@ public class PlayerListView {
     nameHeader.setMinWidth(120);
     Label ageHeader = new Label("Age");
     ageHeader.setMinWidth(60);
-    Label idHeader = new Label("ID");
-    idHeader.setMinWidth(60);
     Label actionHeader = new Label("Delete");
     actionHeader.setMinWidth(80);
-    Label selectHeader = new Label("Select");
+    Label selectHeader = new Label("Player selection");
     selectHeader.setMinWidth(60);
+    Label pieceHeader = new Label("Select piece use");
+    pieceHeader.setMinWidth(60);
 
-    header.getChildren().addAll(nameHeader, ageHeader, idHeader, actionHeader, selectHeader);
+    header.getChildren().addAll(nameHeader, ageHeader, actionHeader, selectHeader, pieceHeader);
     playerListVBox.getChildren().add(header);
 
     try {
@@ -84,14 +99,13 @@ public class PlayerListView {
         Label ageLabel = new Label(String.valueOf(player.getPlayerAge()));
         ageLabel.setMinWidth(60);
 
-        Label idLabel = new Label(String.valueOf(player.getPlayerId()));
-        idLabel.setMinWidth(60);
-
         Button deleteButton = new Button("Delete");
         deleteButton.setMinWidth(80);
         deleteButton.setStyle("-fx-background-color: #d32f2f; -fx-text-fill: white;");
         deleteButton.setOnAction(e -> {
           try {
+            log.debug("Attempting to delete player with ID {} and name {}", player.getPlayerId(),
+                player.getPlayerName());
             controller.deletePlayer(player.getPlayerId());
             loadPlayers();
           } catch (SQLException ex) {
@@ -103,28 +117,54 @@ public class PlayerListView {
         selectBox.setMinWidth(60);
         selectBox.setOnAction(e -> {
           if (selectBox.isSelected()) {
-            controller.addPlayerToGameSession(player);
-          } else if (!selectBox.isSelected()) {
+            // Check if 5 players are already selected
+            boolean allowed = controller.selectPlayer(player);
+            if (!allowed) {
+              AlertUtil.showError(
+                  "Too many selections",
+                  "No more than 5 players can be selected at the same time.");
+              selectBox.setSelected(false);
+            }
+          } else {
             controller.removePlayerFromGameSession(player);
           }
         });
 
-        Button showStatsButton = new Button("Show statistics");
-        showStatsButton.setMinWidth(120);
-        showStatsButton.setOnAction(e -> {
-          try {
-            String selectedGame = gameComboBox.getValue();
-            LinkedHashMap<String, Integer> stats = controller.getPlayerStatsMap(
-                player, selectedGame);
-            PlayerStatisticsView statsView = new PlayerStatisticsView(player, stats, selectedGame);
-            statsView.showOverlay(playerListVBox.getScene().getWindow());
-          } catch (SQLException ex) {
-            AlertUtil.showError("Failed to load statistics", ex.getMessage());
+        Button pickPieceButton = new Button("Pick Playing Piece");
+        pickPieceButton.setMinWidth(140);
+        pickPieceButton.setOnAction(e -> {
+
+          if (!selectBox.isSelected()) {
+            AlertUtil.showError("Player not selected", "Please checkmark the player first.");
+            return;
           }
+
+          log.debug("Attempting to open playing piece window");
+          String assetPath = controller.openPiecePicker(player);
+
+          if (controller.isDuplicatePieceSelection(player, assetPath)) {
+            AlertUtil.showError(
+                "Duplicate Piece",
+                "Please choose a piece anyone hasn't already selected.");
+            return;
+          }
+
+          player.setPlayerPieceAssetPath(assetPath);
+          controller.updatePlayingPiece(player, assetPath);
+          InputStream assetStream = getClass().getResourceAsStream(assetPath);
+          if (assetStream == null) {
+            assetStream = getClass().getResourceAsStream("/assets/pieces/default_piece.png");
+          }
+          ImageView pieceImageView = new ImageView(new Image(assetStream));
+          pieceImageView.setFitWidth(32);
+          pieceImageView.setFitHeight(32);
+          pieceImageView.setPreserveRatio(true);
+          pickPieceButton.setGraphic(pieceImageView);
+          pickPieceButton.setText("<- Piece chosen");
         });
 
         // The order here matches the header!
-        row.getChildren().addAll(nameLabel, ageLabel, idLabel, deleteButton, selectBox, showStatsButton);
+        row.getChildren().addAll(nameLabel, ageLabel, deleteButton, selectBox, pickPieceButton);
         playerListVBox.getChildren().add(row);
       }
       if (players.isEmpty()) {

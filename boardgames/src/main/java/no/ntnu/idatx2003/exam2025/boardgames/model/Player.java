@@ -17,6 +17,7 @@ public class Player {
   private PlayerStats playerStats;
   private int playerAge;
   private Color color;
+  private String playingPieceAssetPath;
 
   /**
    * Constructor for a NEW player.
@@ -53,6 +54,14 @@ public class Player {
     this.playerName = playerName;
     this.playerAge = playerAge;
     this.color = color;
+  }
+
+  public String getPlayerPieceAssetPath() {
+    return playingPieceAssetPath;
+  }
+
+  public void setPlayerPieceAssetPath(String assetPath) {
+    this.playingPieceAssetPath = assetPath;
   }
 
   public int getPlayerId() {

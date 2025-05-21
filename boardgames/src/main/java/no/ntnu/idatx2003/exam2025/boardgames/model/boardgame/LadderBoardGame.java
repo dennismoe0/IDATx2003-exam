@@ -166,6 +166,10 @@ public final class LadderBoardGame extends BoardGame {
     return gameIsOver;
   }
 
+  public List<Player> getAllPlayers() {
+    return players;
+  }
+
   // use observer pattern to track player piece positions and fire a "game over"
   // event.
 
