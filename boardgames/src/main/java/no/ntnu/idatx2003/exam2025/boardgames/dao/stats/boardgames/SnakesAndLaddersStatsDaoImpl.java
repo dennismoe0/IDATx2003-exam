@@ -22,14 +22,14 @@ public class SnakesAndLaddersStatsDaoImpl implements SnakesAndLaddersStatsDao {
       + "highest_dice_roll, total_dice_rolls, total_moves) "
       + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) "
       + "ON CONFLICT(player_id) DO UPDATE SET "
-      + "wins               = excluded.wins, "
-      + "losses             = excluded.losses, "
-      + "games_played       = excluded.games_played, "
-      + "ladders_used       = excluded.ladders_used, "
-      + "snakes_used        = excluded.snakes_used, "
-      + "highest_dice_roll  = excluded.highest_dice_roll, "
-      + "total_dice_rolls   = excluded.total_dice_rolls, "
-      + "total_moves        = excluded.total_moves;";
+      + "wins = snakes_and_ladders_stats.wins + excluded.wins, "
+      + "losses = snakes_and_ladders_stats.losses + excluded.losses, "
+      + "games_played = snakes_and_ladders_stats.games_played + excluded.games_played, "
+      + "ladders_used = snakes_and_ladders_stats.ladders_used + excluded.ladders_used, "
+      + "snakes_used = snakes_and_ladders_stats.snakes_used + excluded.snakes_used, "
+      + "highest_dice_roll = GREATEST(snakes_and_ladders_stats.highest_dice_roll, excluded.highest_dice_roll), "
+      + "total_dice_rolls = snakes_and_ladders_stats.total_dice_rolls + excluded.total_dice_rolls, "
+      + "total_moves = snakes_and_ladders_stats.total_moves + excluded.total_moves;";
 
   private static final String SQL_SELECT = ""
       + "SELECT wins, losses, games_played, ladders_used,"
