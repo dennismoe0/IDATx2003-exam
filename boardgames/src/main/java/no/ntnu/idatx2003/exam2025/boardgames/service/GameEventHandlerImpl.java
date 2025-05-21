@@ -7,12 +7,12 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.BoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.model.stats.PlayerStats;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 
-public class GameEndHandlerImpl implements GameEventHandler {
+public class GameEventHandlerImpl implements GameEventHandler {
   private static final Logger log = Log.get(GameEventHandlerImpl.class);
   private final StatsManager<PlayerStats> statsManager;
   private final AudioManager audioManager; // for playing victory sound
 
-  public GameEndHandlerImpl(StatsManager<PlayerStats> statsManager, AudioManager audioManager) {
+  public GameEventHandlerImpl(StatsManager<PlayerStats> statsManager, AudioManager audioManager) {
     this.statsManager = statsManager;
     this.audioManager = audioManager;
   }
