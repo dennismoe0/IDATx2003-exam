@@ -3,14 +3,18 @@ package no.ntnu.idatx2003.exam2025.boardgames.view;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
 import no.ntnu.idatx2003.exam2025.boardgames.service.TileViewRegister;
 
+/**
+ * GamePieceView is responsible for visually representing game pieces on the
+ * board,
+ * updating their positions according to their current tile, and ensuring that
+ * multiple pieces on the same tile are displayed without overlap.
+ */
 public class GamePieceView extends Pane {
   // After BoardView creation -> Get a list from boardgame class (i.e.
   // ladderboardgame)
@@ -27,6 +31,14 @@ public class GamePieceView extends Pane {
 
   private final Map<GamePiece, Circle> pieceNodes = new HashMap<>();
 
+  /**
+   * Constructs a GamePieceView to visually represent the given game pieces on the
+   * board.
+   *
+   * @param pieces           the list of game pieces to display
+   * @param tileViewRegister the register to retrieve tile views for positioning
+   *                         pieces
+   */
   public GamePieceView(List<GamePiece> pieces, TileViewRegister tileViewRegister) {
     for (GamePiece piece : pieces) {
       Circle circle = new Circle(15, piece.getPlayer().getPlayerColor());
@@ -122,23 +134,23 @@ public class GamePieceView extends Pane {
           positions = new double[count][2];
 
           double usableSpace = 0.6;
-          double xMargin = (1.0 - usableSpace) / 2;
-          double yMargin = (1.0 - usableSpace) / 2;
+          double xmargin = (1.0 - usableSpace) / 2;
+          double ymargin = (1.0 - usableSpace) / 2;
 
-          double topMargin = yMargin;
-          double bottomMargin = yMargin + 0.1;
+          double topMargin = ymargin;
+          double bottomMargin = ymargin + 0.1;
 
           // Calculate spacing between pieces
-          double xSpacing = usableSpace / (cols >= 2 ? cols - 1 : 1);
-          double ySpacing = (1.0 - (topMargin + bottomMargin)) / (rows >= 2 ? rows - 1 : 1);
-          double xStart = xMargin;
-          double yStart = topMargin;
+          double xspacing = usableSpace / (cols >= 2 ? cols - 1 : 1);
+          double yspacing = (1.0 - (topMargin + bottomMargin)) / (rows >= 2 ? rows - 1 : 1);
+          double xstart = xmargin;
+          double ystart = topMargin;
 
           for (int i = 0; i < count; i++) {
             int col = i % cols;
             int row = i / cols;
-            positions[i][0] = xStart + (xSpacing * col);
-            positions[i][1] = yStart + (ySpacing * row);
+            positions[i][0] = xstart + (xspacing * col);
+            positions[i][1] = ystart + (yspacing * row);
           }
         }
       }

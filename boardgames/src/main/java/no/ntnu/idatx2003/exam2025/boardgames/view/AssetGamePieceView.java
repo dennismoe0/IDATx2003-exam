@@ -6,11 +6,14 @@ import java.util.Map;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import no.ntnu.idatx2003.exam2025.boardgames.controller.PlayerListViewController;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
 import no.ntnu.idatx2003.exam2025.boardgames.service.TileViewRegister;
 
+/**
+ * A JavaFX Pane that displays game pieces as images on their respective tiles,
+ * updating their positions and visibility based on the game state.
+ */
 public class AssetGamePieceView extends Pane {
   private final Map<GamePiece, ImageView> pieceNodes = new HashMap<>();
 
