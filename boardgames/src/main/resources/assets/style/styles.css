@@ -1,6 +1,6 @@
 .ts-empty {
-    -fx-background-color: #fbfbfb;
-    -fx-fill: #fbfbfb;
+    -fx-background-color: #ededed;
+    -fx-fill: #ededed;
 }
 .ts-ladder {
     -fx-background-color: #0e833f;
@@ -43,7 +43,7 @@
 }
 
 .die-view {
-    -fx-fill: #fbfbfb;
+    -fx-fill: #ededed;
     -fx-stroke: #686868;
     -fx-effect: dropshadow(gaussian, grey, 10, 0.1,0,0);
 }
@@ -92,11 +92,38 @@
     -fx-fill: #d9d9d9;
     -fx-effect: dropshadow(gaussian, #0f55ae, 10, 0.1,5,5);
 }
+
+.move-history {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-control-inner-background: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-padding: 15;
+
+}
+.move-history .corner {
+    -fx-background-color: transparent;
+}
+
+.inset-panel {
+    -fx-fill: #ededed;
+    -fx-effect: innershadow(gaussian, grey, 3, 0.1,3,3);
+    -fx-arc-height: 23;
+    -fx-arc-width: 23;
+}
+
 .main-menu-background {
     -fx-arc-height: 30;
     -fx-arc-width: 30;
     -fx-fill: #e89345;
     -fx-effect: dropshadow(gaussian, grey, 10, 0.1,5,5);
+}
+
+.subtle-text {
+    -fx-text-fill: lightgrey;
 }
 
 .menu-background {

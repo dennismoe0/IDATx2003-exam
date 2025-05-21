@@ -99,7 +99,20 @@ public class GameBuilderView {
     rulesColumn.setAlignment(Pos.TOP_CENTER);
     playerColumn.setAlignment(Pos.TOP_CENTER);
 
-    playerColumn.getChildren().addAll(playerTitle, playerListView.getRoot(), addNewPlayerButton);
+    StackPane listViewBackgroundWrapper = new StackPane();
+    Rectangle listViewWrapperBackground = new Rectangle();
+    listViewWrapperBackground.getStyleClass().add("menu-background");
+    listViewWrapperBackground.widthProperty().bind(listViewBackgroundWrapper.widthProperty());
+    listViewWrapperBackground.heightProperty().bind(listViewBackgroundWrapper.heightProperty());
+    StackPane listViewWrapper = new StackPane();
+    listViewWrapper.setPadding(new Insets(20));
+
+    listViewBackgroundWrapper.getChildren().add(listViewWrapperBackground);
+    listViewBackgroundWrapper.getChildren().add(listViewWrapper);
+    listViewWrapper.getChildren().add(playerListView.getRoot());
+
+
+    playerColumn.getChildren().addAll(playerTitle, listViewBackgroundWrapper, addNewPlayerButton);
     boardColumn.getChildren().addAll(boardTitle, gameHeader,
         gameMenu, boardHeader, boardMenu, startGameButton);
     rulesColumn.getChildren().add(rulesTitle);

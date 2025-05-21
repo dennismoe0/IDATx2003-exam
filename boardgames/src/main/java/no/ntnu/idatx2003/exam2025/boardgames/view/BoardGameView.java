@@ -8,9 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
-import no.ntnu.idatx2003.exam2025.boardgames.controller.PlayerListViewController;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
-import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
 
@@ -31,8 +29,9 @@ public class BoardGameView {
   private StackPane rightMenuContainer;
   private Button takeTurnButton;
   private Label turnLabel;
-  private PlayerListViewController playerListViewController;
   private AssetGamePieceView assetPieceView;
+  private InsetPanel rollPanel;
+  private InsetPanel moveHistoryPanel;
 
   /**
    * Default constructor for BoardGameView.
@@ -65,6 +64,7 @@ public class BoardGameView {
     titleBar = new BorderPane();
     rightMenuBackground = new Rectangle();
     rightMenuContainer = new StackPane();
+    rollPanel = new InsetPanel(300, 100);
   }
 
   private void configurePanes() {
@@ -132,6 +132,7 @@ public class BoardGameView {
     boardView.addAssetGamePieceView(assetPieceView);
 
     turnLabel = new Label("Waiting for game to start");
+    turnLabel.getStyleClass().add("h2");
 
     moveHistoryView = new MoveHistoryView(ladderBoardGame.getMoveHistory());
     takeTurnButton = new Button("Take Turn");
@@ -139,7 +140,10 @@ public class BoardGameView {
       ladderBoardGame.takeTurn();
       updateTurnLabel(ladderBoardGame.getCurrentPlayer().getPlayerName());
     });
-    rightMenu.getChildren().add(diceView.getRoot());
+
+    rollPanel.getChildren().add(diceView.getRoot());
+
+    rightMenu.getChildren().add(rollPanel);
     rightMenu.getChildren().add(takeTurnButton);
     rightMenu.getChildren().add(turnLabel);
     rightMenu.getChildren().add(moveHistoryView.getRoot());
