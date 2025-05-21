@@ -1,5 +1,6 @@
 package no.ntnu.idatx2003.exam2025.boardgames.view;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -31,27 +32,33 @@ public class GameBuilderView {
   private static final float height = 650;
   private static final float width = 1200;
 
-  private VBox boardColumn;
-  private VBox rulesColumn;
-  private VBox playerColumn;
+  private final VBox boardColumn;
+  private final VBox rulesColumn;
+  private final VBox playerColumn;
 
-  private Label boardTitle;
-  private Label rulesTitle;
-  private Label playerTitle;
-  private Label gameHeader;
-  private Label boardHeader;
+  private final Label boardTitle;
+  private final Label rulesTitle;
+  private final Label playerTitle;
+  private final Label gameHeader;
+  private final Label boardHeader;
 
-  private HBox layout;
-  private Rectangle background;
-  private StackPane root;
-  private Button startGameButton;
-  private Button addNewPlayerButton;
+  private final HBox layout;
+  private final Rectangle background;
+  private final StackPane root;
+  private final Button startGameButton;
+  private final Button addNewPlayerButton;
 
-  private ComboBox<String> gameMenu;
-  private ComboBox<BoardInfo> boardMenu;
+  private final ComboBox<String> gameMenu;
+  private final ComboBox<BoardInfo> boardMenu;
 
-  private PlayerListView playerListView;
+  private final PlayerListView playerListView;
 
+  /**
+   * Constructor for the Game Builder View.
+   *
+   * @param controller     object that mediates between Game Builder and models
+   * @param playerListView view that controls an updated list of players from database.
+   */
   public GameBuilderView(GameBuilderController controller, PlayerListView playerListView) {
     this.controller = controller;
     this.playerListView = playerListView;
@@ -104,6 +111,8 @@ public class GameBuilderView {
   }
 
   private void configureMenus() {
+    layout.setPadding(new Insets(20));
+
     gameMenu.setPromptText("Choose Game");
     boardMenu.setPromptText("Choose a board");
 
@@ -131,6 +140,7 @@ public class GameBuilderView {
       updateBoardMenu();
     });
 
+    boardMenu.setDisable(true);
     boardMenu.setOnAction((event) -> {
       BoardInfo selected = boardMenu.getSelectionModel().getSelectedItem();
       controller.selectBoard(selected);
@@ -139,11 +149,11 @@ public class GameBuilderView {
 
   private void updateBoardMenu() {
     List<BoardInfo> boardInfoList = controller.getBoardInfoList();
+    boardMenu.setDisable(boardInfoList.isEmpty());
     if (boardInfoList.isEmpty()) {
       boardMenu.getItems().clear();
       return;
     }
-
     boardMenu.getItems().clear();
     boardMenu.getItems().addAll(boardInfoList);
 
@@ -170,6 +180,7 @@ public class GameBuilderView {
 
   private void assignStyling() {
     background.getStyleClass().add("menu-background");
+    background.getStyleClass().add("menu-red");
     boardTitle.getStyleClass().add("menu-title");
     rulesTitle.getStyleClass().add("menu-title");
     playerTitle.getStyleClass().add("menu-title");

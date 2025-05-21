@@ -32,6 +32,7 @@
 .die-view {
     -fx-fill: #fbfbfb;
     -fx-stroke: #686868;
+    -fx-effect: dropshadow(gaussian, grey, 10, 0.1,0,0);
 }
 
 .tile-view {
@@ -89,6 +90,10 @@
     -fx-arc-width: 30;
     -fx-fill: #d9d9d9;
     -fx-effect: dropshadow(gaussian, grey, 10, 0.1,5,5);
+}
+
+.menu-red {
+    -fx-fill: #ba4948;
 }
 
 .primary-window-background {
