@@ -6,10 +6,15 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
+import no.ntnu.idatx2003.exam2025.boardgames.service.AudioManager;
 import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
 
 /**

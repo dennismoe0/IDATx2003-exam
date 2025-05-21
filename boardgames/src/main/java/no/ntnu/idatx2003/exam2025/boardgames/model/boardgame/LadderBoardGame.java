@@ -9,6 +9,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.SnakesAndLaddersStats;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
+import no.ntnu.idatx2003.exam2025.boardgames.service.AudioManager;
 import no.ntnu.idatx2003.exam2025.boardgames.util.LadderGameMessage;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import org.slf4j.Logger;
@@ -18,13 +19,14 @@ import org.slf4j.Logger;
  */
 public final class LadderBoardGame extends BoardGame {
   private Dice dice;
-  private final List<Player> players;
   private Player currentPlayer;
   private int playerIndex;
   private final SnakesAndLaddersStats stats;
   private final LadderGameMoveHistory moveHistory = new LadderGameMoveHistory();
   private static final Logger log = Log.get(LadderBoardGame.class);
   private final int lastTile;
+  private final List<Player> turnOrder;
+  private final AudioManager audioManager;
 
   /**
    * The default constructor for the Ladder Game class.
@@ -33,11 +35,17 @@ public final class LadderBoardGame extends BoardGame {
    * @param players the players participating in the game, to keep track of turns.
    */
   public LadderBoardGame(Board board, List<Player> players) {
-    this.players = new ArrayList<>(players);
+    super.setPlayers(players);
+    this.turnOrder = new ArrayList<>(players);
     this.stats = new SnakesAndLaddersStats(); // Fixed stat connection
     super.setBoard(board); // Board setup is loaded
+    this.audioManager = new AudioManager();
     lastTile = board.getBoardSize();
-    setUp(this.players); // Gamepieces are made
+    setUp(players); // Gamepieces are made
+  }
+
+  public SnakesAndLaddersStats getSnakesAndLaddersStats() {
+    return stats;
   }
 
   public Dice getDice() {
@@ -98,6 +106,7 @@ public final class LadderBoardGame extends BoardGame {
     }
 
     playerPiece.move(diceRoll);
+    audioManager.playDiceRollSound();
 
     int endTile = playerPiece.getCurrentTile().getId();
     moveHistory.addMessage(new LadderGameMessage(currentPlayer, startTile, endTile, diceRoll));
@@ -131,7 +140,7 @@ public final class LadderBoardGame extends BoardGame {
           currentPlayer.getPlayerId(), currentPlayer.getPlayerName());
 
       // Increment losses for other players
-      for (Player player : players) {
+      for (Player player : turnOrder) {
         if (!player.equals(currentPlayer)
             && player.getPlayerStats() instanceof SnakesAndLaddersStats otherStats) {
           otherStats.incrementLosses();
@@ -156,15 +165,15 @@ public final class LadderBoardGame extends BoardGame {
   }
 
   private Player getNextPlayer() {
-    if (playerIndex == players.size()) {
+    if (playerIndex == turnOrder.size()) {
       playerIndex = 0;
     }
-    Player player = players.get(playerIndex);
+    Player player = turnOrder.get(playerIndex);
     playerIndex++;
     return player;
   }
 
   public List<Player> getAllPlayers() {
-    return players;
+    return turnOrder;
   }
 }

@@ -2,8 +2,6 @@ package no.ntnu.idatx2003.exam2025.boardgames.view;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.layout.GridPane;
@@ -11,22 +9,25 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
+import no.ntnu.idatx2003.exam2025.boardgames.model.tile.LadderTileStrategy;
+import no.ntnu.idatx2003.exam2025.boardgames.model.tile.SnakeTileStrategy;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
 import no.ntnu.idatx2003.exam2025.boardgames.service.TileViewRegister;
+import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * View class for Boards. Uses GridPane as a base.
  */
 public class BoardView extends Pane {
-  private static final Logger log = LoggerFactory.getLogger(BoardView.class);
   private final StackPane root;
   private final GridPane grid;
   private final Board board;
   private final TileViewRegister tileViewRegister;
   private final float viewWidth = 600;
   private final Rectangle backBoard;
+  private final Logger log = Log.get(BoardView.class);
+
   // private final Pane gamePiecesLayer = new Pane();
   private final Pane assetPieceLayer = new Pane();
 
@@ -60,7 +61,7 @@ public class BoardView extends Pane {
   }
 
   private void buildBoardView() {
-    List<TileView> tileViews = new ArrayList<TileView>();
+    List<TileView> tileViews = new ArrayList<>();
     List<Tile> tiles = board.getTilesAsList();
     TileView view;
     String tileType;
@@ -70,7 +71,7 @@ public class BoardView extends Pane {
       try {
         tileType = tileViewRegister.get(tile.getTileStrategy().getClass());
       } catch (Exception e) {
-        log.error(e.getMessage());
+        log.error("Error getting tile type for tile ID " + tile.getId() + ": " + e.getMessage());
         tileType = "ts-empty";
       }
       view = new TileView(tile, ((int) tileSize), tileType);
@@ -139,11 +140,23 @@ public class BoardView extends Pane {
   // pieceView.toFront();
   // }
 
+  /**
+   * Adds an asset game piece view to the asset piece layer and brings it to the
+   * front.
+   *
+   * @param assetGamePieceView the AssetGamePieceView to add
+   */
   public void addAssetGamePieceView(AssetGamePieceView assetGamePieceView) {
     assetPieceLayer.getChildren().add(assetGamePieceView);
     assetGamePieceView.toFront();
   }
 
+  /**
+   * Adds a LadderSnakeOverlayView to the board, placing it below the asset piece
+   * layer.
+   *
+   * @param overlay the LadderSnakeOverlayView to add
+   */
   public void addLadderSnakeOverlay(LadderSnakeOverlayView overlay) {
     var children = root.getChildren();
     int index = children.indexOf(assetPieceLayer);
@@ -158,10 +171,9 @@ public class BoardView extends Pane {
   private void applyExitTileStyles() {
     for (Tile tile : board.getTilesAsList()) {
       if (tile.getTileStrategy() != null) {
-        // ladder exit, "importing" directly in the code here
-        if (tile.getTileStrategy() instanceof no.ntnu.idatx2003.exam2025.boardgames.model.tile.LadderTileStrategy) {
-          no.ntnu.idatx2003.exam2025.boardgames.model.tile.LadderTileStrategy lts = (no.ntnu.idatx2003.exam2025.boardgames.model.tile.LadderTileStrategy) tile
-              .getTileStrategy();
+        // ladder exit
+        if (tile.getTileStrategy() instanceof LadderTileStrategy) {
+          LadderTileStrategy lts = (LadderTileStrategy) tile.getTileStrategy();
           Tile exitTile = lts.getEndTile();
           if (exitTile != null) {
             // Get the TileView for the exit tile from the tileViewRegister
@@ -172,9 +184,8 @@ public class BoardView extends Pane {
           }
         }
         // snake exit
-        else if (tile.getTileStrategy() instanceof no.ntnu.idatx2003.exam2025.boardgames.model.tile.SnakeTileStrategy) {
-          no.ntnu.idatx2003.exam2025.boardgames.model.tile.SnakeTileStrategy sts = (no.ntnu.idatx2003.exam2025.boardgames.model.tile.SnakeTileStrategy) tile
-              .getTileStrategy();
+        else if (tile.getTileStrategy() instanceof SnakeTileStrategy) {
+          SnakeTileStrategy sts = (SnakeTileStrategy) tile.getTileStrategy();
           Tile exitTile = sts.getEndTile();
           if (exitTile != null) {
             TileView exitView = tileViewRegister.getTileView(exitTile.getId());

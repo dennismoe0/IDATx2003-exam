@@ -22,13 +22,13 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardInfo;
  */
 public class GameBuilderView {
   private final GameBuilderController controller;
-  //player list
-  //game chooser (drop down menu?)
-  //player picker/color picker/icon picker?
-  //Game rules (probably board based but whatever)
-  //start button
-  //board picker
-  //backdrop
+  // player list
+  // game chooser (drop down menu?)
+  // player picker/color picker/icon picker?
+  // Game rules (probably board based but whatever)
+  // start button
+  // board picker
+  // backdrop
 
   private static final float height = 650;
   private static final float width = 1200;
@@ -86,9 +86,9 @@ public class GameBuilderView {
 
   private void configureView() {
     root.setMaxSize(width, height);
-    //float columnWidth = width / 3;
-    //Temporarily removed rules column.
-    float columnWidth = width/2;
+    // float columnWidth = width / 3;
+    // Temporarily removed rules column.
+    float columnWidth = width / 2;
     boardColumn.setMaxWidth(columnWidth);
     rulesColumn.setMaxWidth(columnWidth);
     playerColumn.setMaxWidth(columnWidth);
@@ -117,7 +117,7 @@ public class GameBuilderView {
         gameMenu, boardHeader, boardMenu, startGameButton);
     rulesColumn.getChildren().add(rulesTitle);
 
-    //layout.getChildren().addAll(playerColumn, boardColumn, rulesColumn);
+    // layout.getChildren().addAll(playerColumn, boardColumn, rulesColumn);
     // Temporarily removed rules column.
     layout.getChildren().addAll(playerColumn, boardColumn);
     root.getChildren().add(background);

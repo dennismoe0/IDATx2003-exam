@@ -17,7 +17,6 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.Die;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.Command;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.RollDiceCommand;
 
-
 /**
  * The class for making dice viewable in game.
  */
@@ -69,12 +68,11 @@ public class DiceView {
     root.getStyleClass().add("dice-view");
   }
 
-
   public Parent getRoot() {
     return root;
   }
 
-  private void buildDiceView(){
+  private void buildDiceView() {
 
   }
 

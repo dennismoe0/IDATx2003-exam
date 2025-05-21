@@ -19,22 +19,20 @@ public class LudoStatsDaoImpl implements LudoStatsDao {
   @Override
   public void save(int playerId, LudoStats stats) throws SQLException {
 
-    String sql = """
-                  INSERT INTO ludo_stats (
-                    player_id, wins, losses, games_played,
-                    pieces_completed, double_six_rolls, pieces_knocked,
-                    total_moves, total_dice_rolls
-                  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-                  ON CONFLICT(player_id) DO UPDATE SET
-                    wins = wins + excluded.wins,
-                    losses = losses + excluded.losses,
-                    games_played = games_played + excluded.games_played,
-                    pieces_completed = pieces_completed + excluded.pieces_completed,
-                    double_six_rolls = double_six_rolls + excluded.double_six_rolls,
-                    pieces_knocked = pieces_knocked + excluded.pieces_knocked,
-                    total_moves = total_moves + excluded.total_moves,
-                    total_dice_rolls = total_dice_rolls + excluded.total_dice_rolls;
-        """;
+    String sql = "INSERT INTO ludo_stats ("
+        + "player_id, wins, losses, games_played, "
+        + "pieces_completed, double_six_rolls, pieces_knocked, "
+        + "total_moves, total_dice_rolls"
+        + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) "
+        + "ON CONFLICT(player_id) DO UPDATE SET "
+        + "wins = wins + excluded.wins, "
+        + "losses = losses + excluded.losses, "
+        + "games_played = games_played + excluded.games_played, "
+        + "pieces_completed = pieces_completed + excluded.pieces_completed, "
+        + "double_six_rolls = double_six_rolls + excluded.double_six_rolls, "
+        + "pieces_knocked = pieces_knocked + excluded.pieces_knocked, "
+        + "total_moves = total_moves + excluded.total_moves, "
+        + "total_dice_rolls = total_dice_rolls + excluded.total_dice_rolls;";
 
     try (PreparedStatement stmt = connection.prepareStatement(sql)) {
       stmt.setInt(1, playerId);

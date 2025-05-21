@@ -1,9 +1,6 @@
 package no.ntnu.idatx2003.exam2025.boardgames.view;
 
 import java.util.List;
-
-import org.slf4j.Logger;
-
 import javafx.application.Platform;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
@@ -15,6 +12,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.tile.SnakeTileStrategy;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
 import no.ntnu.idatx2003.exam2025.boardgames.service.TileViewRegister;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
+import org.slf4j.Logger;
 
 /**
  * Class for rendering an overlay between the Board and the Game pieces.
