@@ -3,6 +3,8 @@ package no.ntnu.idatx2003.exam2025.boardgames.model.boardgame;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
@@ -13,7 +15,9 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 public abstract class BoardGame {
   private Board board;
   private String name;
-  private HashMap<Player, List<GamePiece>> playerPieces = new HashMap<>();
+  private final HashMap<Player, List<GamePiece>> playerPieces = new HashMap<>();
+  private final BooleanProperty gameIsOver = new SimpleBooleanProperty(false);
+  private Player winner;
 
   /**
    * A method where each board game should initialize itself.
@@ -101,6 +105,25 @@ public abstract class BoardGame {
    */
   public void takeTurn() {
 
+  }
+
+  public BooleanProperty getGameOverProperty() {
+    return gameIsOver;
+  }
+
+  /**
+   * A method for changing the observable boolean gameIsOver.
+   */
+  protected void gameIsOver() {
+    gameIsOver.set(true);
+  }
+
+  public void setWinner(Player player) {
+    winner = player;
+  }
+
+  public Player getWinner() {
+    return winner;
   }
 
 }

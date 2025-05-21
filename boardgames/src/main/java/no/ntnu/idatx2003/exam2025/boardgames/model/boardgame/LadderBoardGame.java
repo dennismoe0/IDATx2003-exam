@@ -18,14 +18,13 @@ import org.slf4j.Logger;
  */
 public final class LadderBoardGame extends BoardGame {
   private Dice dice;
-  private List<Player> players;
+  private final List<Player> players;
   private Player currentPlayer;
   private int playerIndex;
-  private boolean gameIsOver;
   private final SnakesAndLaddersStats stats;
-  private LadderGameMoveHistory moveHistory = new LadderGameMoveHistory();
+  private final LadderGameMoveHistory moveHistory = new LadderGameMoveHistory();
   private static final Logger log = Log.get(LadderBoardGame.class);
-  private int lastTile;
+  private final int lastTile;
 
   /**
    * The default constructor for the Ladder Game class.
@@ -51,7 +50,6 @@ public final class LadderBoardGame extends BoardGame {
 
   @Override
   public void setUp(List<Player> players) {
-    gameIsOver = false;
     dice = new Dice();
     dice.addDice(new Die(6));
     dice.addDice(new Die(6));
@@ -119,17 +117,18 @@ public final class LadderBoardGame extends BoardGame {
     log.info("Incremented diceRoll/steps for player {}: {}.", currentPlayer.getPlayerId(),
         currentPlayer.getPlayerName());
     playerStats.incrementMove(diceRoll);
-    log.info("Incremented movecount for player {}: {}.", currentPlayer.getPlayerId(), currentPlayer.getPlayerName());
+    log.info("Incremented movecount for player {}: {}.",
+        currentPlayer.getPlayerId(), currentPlayer.getPlayerName());
 
     // Check if the player has won
     // Example win condition
     if (playerPiece.getCurrentTile() == getBoard().getTile(lastTile)) {
-      gameIsOver = true;
       log.info("Player {} has won the game!", currentPlayer.getPlayerName());
 
       // Increment win stats
       playerStats.incrementWins();
-      log.info("Incremented win for player {}: {}.", currentPlayer.getPlayerId(), currentPlayer.getPlayerName());
+      log.info("Incremented win for player {}: {}.",
+          currentPlayer.getPlayerId(), currentPlayer.getPlayerName());
 
       // Increment losses for other players
       for (Player player : players) {
@@ -138,9 +137,12 @@ public final class LadderBoardGame extends BoardGame {
           otherStats.incrementLosses();
 
           playerStats.incrementLosses();
-          log.info("Incremented loss for player {}: {}.", player.getPlayerId(), player.getPlayerName());
+          log.info("Incremented loss for player {}: {}.",
+              player.getPlayerId(), player.getPlayerName());
         }
       }
+      setWinner(currentPlayer);
+      gameIsOver();
     }
   }
 
@@ -162,15 +164,7 @@ public final class LadderBoardGame extends BoardGame {
     return player;
   }
 
-  public boolean isGameOver() {
-    return gameIsOver;
-  }
-
   public List<Player> getAllPlayers() {
     return players;
   }
-
-  // use observer pattern to track player piece positions and fire a "game over"
-  // event.
-
 }

@@ -63,7 +63,6 @@ public class BoardGameApplication extends Application {
     PlayerDaoImpl playerDao = new PlayerDaoImpl(connection);
 
     // Temporary for testing persistence
-    // Only adds if database is empty
     if (playerDao.getAllPlayers().isEmpty()) {
       Player player1 = new Player(0, "Dennis", 24);
       Player player2 = new Player(0, "Sasha", 27);
@@ -104,7 +103,7 @@ public class BoardGameApplication extends Application {
     statsManagers.put("Snakes and Ladders", snakesStatsManager);
     statsManagers.put("Ludo", ludoStatsManager);
 
-    // initializeGameSession(gameSession);
+    //initializeGameSession(gameSession);
 
     log.info("Registering Scenes");
     sceneRegister.register("main-menu", () -> viewFactory.buildMainMenuView(sceneRegister, sceneManager));

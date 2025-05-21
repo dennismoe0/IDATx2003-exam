@@ -2,6 +2,7 @@ package no.ntnu.idatx2003.exam2025.boardgames.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.value.ObservableBooleanValue;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.BoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ public class GameSession {
   private static Logger logger = Log.get(GameSession.class);
   private final List<Player> players = new ArrayList<Player>();
   private BoardGame boardGame;
+  private ObservableBooleanValue gameOver;
 
   /**
    * Adds a player to the player list.
@@ -38,13 +40,25 @@ public class GameSession {
     return boardGame;
   }
 
+  /**
+   * Sets the board game.
+   *
+   * @param boardGame the board game to be tracked.
+   */
   public void setBoardGame(BoardGame boardGame) {
     logger.info("setting board game " + boardGame.getName());
     this.boardGame = boardGame;
+    this.boardGame.getGameOverProperty().addListener(observable -> {
+      endGame();
+    });
   }
 
   public List<Player> getPlayers() {
     return players;
+  }
+
+  private void endGame() {
+    logger.info("Game Over. Player {} is the winner!", boardGame.getWinner().getPlayerName());
   }
 
 }

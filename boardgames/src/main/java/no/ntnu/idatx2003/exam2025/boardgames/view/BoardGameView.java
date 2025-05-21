@@ -12,6 +12,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.controller.PlayerListViewController
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
+import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
 
 /**
  * Class for displaying the current board game.
@@ -28,6 +29,8 @@ public class BoardGameView {
   private BorderPane titleBar;
   private Rectangle rightMenuBackground;
   private StackPane rightMenuContainer;
+  private Button takeTurnButton;
+  private Label turnLabel;
   private PlayerListViewController playerListViewController;
   private AssetGamePieceView assetPieceView;
 
@@ -45,6 +48,12 @@ public class BoardGameView {
     createPanes();
     this.title = new Label(title);
     this.ladderBoardGame = boardGame;
+    this.ladderBoardGame.getGameOverProperty().addListener(observable -> {
+      AlertUtil.showInfo("Game Over!",
+          ladderBoardGame.getWinner().getPlayerName() + " has won the game!");
+      takeTurnButton.setDisable(true);
+    });
+
     createViews();
     configurePanes();
   }
@@ -122,13 +131,23 @@ public class BoardGameView {
     assetPieceView = new AssetGamePieceView(pieces, boardView.getTileViewRegister());
     boardView.addAssetGamePieceView(assetPieceView);
 
+    turnLabel = new Label("Waiting for game to start");
+
     moveHistoryView = new MoveHistoryView(ladderBoardGame.getMoveHistory());
-    Button takeTurnButton = new Button("Take Turn");
-    takeTurnButton.setOnAction(event -> ladderBoardGame.takeTurn());
+    takeTurnButton = new Button("Take Turn");
+    takeTurnButton.setOnAction(event -> {
+      ladderBoardGame.takeTurn();
+      updateTurnLabel(ladderBoardGame.getCurrentPlayer().getPlayerName());
+    });
     rightMenu.getChildren().add(diceView.getRoot());
     rightMenu.getChildren().add(takeTurnButton);
-    rightMenu.getChildren().add(new Label("Player name goes here"));
+    rightMenu.getChildren().add(turnLabel);
     rightMenu.getChildren().add(moveHistoryView.getRoot());
+  }
+
+  private void updateTurnLabel(String text) {
+    String turnInfo = "It is " + text + "'s turn";
+    turnLabel.setText(turnInfo);
   }
 
   /**
