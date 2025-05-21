@@ -28,7 +28,9 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.BoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.LudoStats;
 import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.SnakesAndLaddersStats;
+import no.ntnu.idatx2003.exam2025.boardgames.service.AudioManager;
 import no.ntnu.idatx2003.exam2025.boardgames.service.DatabaseManager;
+import no.ntnu.idatx2003.exam2025.boardgames.service.GameEventHandlerImpl;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneRegister;
 import no.ntnu.idatx2003.exam2025.boardgames.service.StatsManager;
@@ -85,11 +87,12 @@ public class BoardGameApplication extends Application {
         latinPlayer.setPlayerId(latinId);
       }
     }
-
     SceneManager sceneManager = new SceneManager(primaryStage);
     GameSession gameSession = new GameSession();
     SceneRegister sceneRegister = new SceneRegister();
     ViewFactory viewFactory = new ViewFactory();
+    GameEventHandlerImpl eventHandler = new GameEventHandlerImpl();
+    gameSession.setGameEventHandler(eventHandler);
 
     // stats
     StatsManager<SnakesAndLaddersStats> snakesStatsManager = new StatsManager<>(
@@ -103,7 +106,7 @@ public class BoardGameApplication extends Application {
     statsManagers.put("Snakes and Ladders", snakesStatsManager);
     statsManagers.put("Ludo", ludoStatsManager);
 
-    //initializeGameSession(gameSession);
+    // initializeGameSession(gameSession);
 
     log.info("Registering Scenes");
     sceneRegister.register("main-menu", () -> viewFactory.buildMainMenuView(sceneRegister, sceneManager));
@@ -138,144 +141,4 @@ public class BoardGameApplication extends Application {
     launch(args);
   }
 
-  private void initializeGameSession(GameSession gameSession) {
-    log.info("Initializing GameSession");
-
-    // colors
-    Color[] colors = {
-        Color.GREEN, Color.BLUE, Color.RED, Color.ORANGE, Color.PURPLE,
-        Color.YELLOW, Color.BROWN, Color.PINK, Color.GRAY, Color.CYAN,
-        Color.LIME, Color.MAGENTA, Color.OLIVE, Color.TEAL, Color.NAVY,
-        Color.GOLD, Color.SILVER, Color.MAROON, Color.AQUA, Color.DARKGREEN
-    };
-
-    // Testing players in a game, not persisted
-    for (int i = 1; i <= 10; i++) {
-      Player player = new Player(i, "Testing" + i, 20 + i);
-      player.setPlayerColor(colors[(i - 1) % colors.length]);
-      gameSession.addPlayer(player);
-    }
-
-    try {
-      gameSession.setBoardGame(buildBoardGame(gameSession.getPlayers()));
-    } catch (Exception e) {
-      log.error(e.getMessage());
-    }
-  }
-
-  private BoardGame buildBoardGame(List<Player> players) throws Exception {
-    log.info("Building BoardGame");
-    LadderBoardGame ladderBoardGame = new LadderBoardGame(getBoard(), players);
-    return ladderBoardGame;
-  }
-
-  private Board getBoard() throws Exception {
-    log.info("Building Board");
-    BoardFactory factory = new BoardFactory();
-    GsonFileReader reader = new GsonFileReader();
-    Board board = factory.buildBoardFromJson(reader.readJson(
-        "src/main/resources/assets/boards/laddergameboards/laddergame_classic.json"));
-    return board;
-  }
-
-  private BoardGameView createBoardGameView() throws Exception {
-    BoardFactory factory = new BoardFactory();
-    GsonFileReader reader = new GsonFileReader();
-    Board board = factory.buildBoardFromJson(reader.readJson(
-        "src/main/resources/assets/boards/laddergameboards/laddergame_classic.json"));
-
-    List<Player> players = new ArrayList<Player>();
-    Player player1 = new Player(1, "Dennis", 24);
-    players.add(player1);
-    Player player2 = new Player(2, "Sasha", 27);
-    players.add(player2);
-    Player player3 = new Player(3, "Testing2", 28);
-    players.add(player3);
-    Player player4 = new Player(4, "Testing4", 30);
-    players.add(player4);
-
-    LadderBoardGame ladderBoardGame = new LadderBoardGame(board, players);
-    return new BoardGameView("Snake's n Ladders", ladderBoardGame);
-  }
-
-  // private Scene databaseStuff(Log log, BoardView boardview) {
-  // Scene scene = new Scene(boardview.asParent(),0,0);
-  // // Connect to database
-  // try (Connection connection = DatabaseManager.connect()) {
-  //
-  // MenuView view = new MenuView("Main Menu", buildTestMenu());
-  //
-  // BoardFactory factory = new BoardFactory();
-  // GsonFileReader reader = new GsonFileReader();
-  // Board board = factory.buildBoardFromJson(reader.readJson(
-  // "src/main/resources/assets/boards/laddergameboards/laddergame_classic.json"));
-  //
-  // // Validate board
-  // if (board == null || board.getTile(1) == null) {
-  // log.error("Board is not properly initialized. Please check the JSON file.");
-  // return;
-  // }
-  //
-  // // Create test players
-  // List<Player> players = new ArrayList<>();
-  // players.add(new Player(0, "Player 1", 25));
-  // players.add(new Player(0, "Player 2", 27));
-  //
-  // // Create PlayerDAO
-  // PlayerDao playerDao = new PlayerDaoImpl(connection);
-  //
-  // // Assign stats
-  // for (Player player : players) {
-  // int playerId = playerDao.create(player);
-  // player.setPlayerId(playerId);
-  // //player.setPlayerStats(new SnakesAndLaddersStats());
-  // log.info("Created player with ID {}: {}", playerId, player.getPlayerName());
-  // }
-  //
-  // // Create game
-  // LadderBoardGame game = new LadderBoardGame(board, players);
-  //
-  // // Test the game logic
-  // log.info("Starting basic test of LadderBoardGame...");
-  // log.info("Initial player: {}", players.get(0).getPlayerName());
-  //
-  // // Simulate a few turns
-  // for (int i = 0; i < 5; i++) {
-  // log.info("Turn {}: Current player is {}", i + 1,
-  // game.getCurrentPlayer().getPlayerName());
-  // try {
-  // game.takeTurn();
-  // GamePiece piece = game.getFirstPlayerPiece(game.getCurrentPlayer());
-  // if (piece == null || piece.getCurrentTile() == null) {
-  // log.error(
-  // "Player {} has no valid game piece or current tile.",
-  // game.getCurrentPlayer().getPlayerName());
-  // } else {
-  // log.info(
-  // "Player {} moved. Current tile: {}",
-  // game.getCurrentPlayer().getPlayerName(),
-  // (piece.getCurrentTile() != null ? piece.getCurrentTile() : "Unknown"));
-  // }
-  // } catch (IllegalArgumentException e) {
-  // log.error("Invalid move: {}", e.getMessage(), e);
-  // } catch (Exception e) {
-  // log.error("An unexpected error occurred: {}", e.getMessage(), e);
-  // }
-  // }
-  //
-  // // Check if the game is over
-  // if (game.isGameOver()) {
-  // log.info("Game over! Winner: {}", game.getCurrentPlayer().getPlayerName());
-  // } else {
-  // log.info("Game is still ongoing.");
-  // }
-  //
-  // BoardView boardView = new BoardView(board);
-  // // Scene scene = new Scene(view.asParent(), 400, 400);
-  // } catch (SQLException e) {
-  // log.error("Failed to connect to database: {}", e.getMessage(), e);
-  // }
-  //
-  // return scene;
-  // }
 }
