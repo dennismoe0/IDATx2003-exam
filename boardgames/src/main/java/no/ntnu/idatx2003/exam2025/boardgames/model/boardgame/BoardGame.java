@@ -18,6 +18,15 @@ public abstract class BoardGame {
   private final HashMap<Player, List<GamePiece>> playerPieces = new HashMap<>();
   private final BooleanProperty gameIsOver = new SimpleBooleanProperty(false);
   private Player winner;
+  private List<Player> players = List.of();
+
+  public List<Player> getPlayers() {
+    return players;
+  }
+
+  protected void setPlayers(List<Player> players) {
+    this.players = List.copyOf(players);
+  }
 
   /**
    * A method where each board game should initialize itself.
