@@ -11,7 +11,8 @@ public class ShowAlertCommand implements Command {
 
   /**
    * Constructor for a show alert command.
-   * @param alertTitle string representing the title of the alert.
+   *
+   * @param alertTitle   string representing the title of the alert.
    * @param alertMessage the string message to be displayed.
    */
   public ShowAlertCommand(String alertTitle, String alertMessage) {
