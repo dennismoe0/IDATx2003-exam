@@ -8,24 +8,25 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.AddPlayerViewController;
-import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
-import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDao;
-import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
-import java.sql.SQLException;
 
+/**
+ * View for adding new players to the board game application.
+ * Provides input fields for player name and age, and buttons to add or close.
+ */
 public class AddPlayerView {
-  private StackPane root;
-  private Rectangle backdrop;
+
+  private final StackPane root;
+  private final Rectangle backdrop;
   private Label title;
-  private static final float width = 780;
-  private static final float height = 540;
-  private VBox layout;
+  private static final float WIDTH = 780;
+  private static final float HEIGHT = 540;
+  private final VBox layout;
   private TitledFieldView nameInput;
   private TitledFieldView ageInput;
-  private Button addButton;
-  private Button closeButton;
-  private AddPlayerViewController controller;
+  private final Button addButton;
+  private final Button closeButton;
+  private final AddPlayerViewController controller;
 
   /**
    * Primary view for Adding new Players to the game.
@@ -35,7 +36,7 @@ public class AddPlayerView {
   public AddPlayerView(AddPlayerViewController controller) {
     this.controller = controller;
     root = new StackPane();
-    backdrop = new Rectangle(width, height);
+    backdrop = new Rectangle(WIDTH, HEIGHT);
     layout = new VBox(7);
     addButton = new Button("Add Player");
     closeButton = new Button("Close Window");
@@ -51,7 +52,7 @@ public class AddPlayerView {
     ageInput = new TitledFieldView("Age", "Add the player age...", 200, 50);
     layout.getChildren().addAll(
         title, nameInput.getRoot(), ageInput.getRoot(), addButton, closeButton);
-    root.setMaxSize(width, height);
+    root.setMaxSize(WIDTH, HEIGHT);
     layout.setAlignment(Pos.CENTER);
   }
 

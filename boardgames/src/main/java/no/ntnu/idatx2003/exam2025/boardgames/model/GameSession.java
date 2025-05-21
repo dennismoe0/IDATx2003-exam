@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.value.ObservableBooleanValue;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.BoardGame;
+import no.ntnu.idatx2003.exam2025.boardgames.service.GameEventHandler;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import org.slf4j.Logger;
 
@@ -15,6 +16,11 @@ public class GameSession {
   private final List<Player> players = new ArrayList<Player>();
   private BoardGame boardGame;
   private ObservableBooleanValue gameOver;
+  private GameEventHandler eventHandler;
+
+  public void setGameEventHandler(GameEventHandler h) {
+    this.eventHandler = h;
+  }
 
   /**
    * Adds a player to the player list.
@@ -50,6 +56,9 @@ public class GameSession {
     this.boardGame = boardGame;
     this.boardGame.getGameOverProperty().addListener(observable -> {
       endGame();
+      if (eventHandler != null) {
+        eventHandler.handleGameOver(boardGame);
+      }
     });
   }
 

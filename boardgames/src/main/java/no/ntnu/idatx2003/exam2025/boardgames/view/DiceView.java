@@ -3,17 +3,14 @@ package no.ntnu.idatx2003.exam2025.boardgames.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.animation.RotateTransition;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
-import javafx.util.Duration;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.DiceController;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Dice;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Die;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.Command;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.RollDiceCommand;
-
 
 /**
  * The class for making dice viewable in game.
@@ -65,12 +62,11 @@ public class DiceView {
     root.getStyleClass().add("dice-view");
   }
 
-
   public Parent getRoot() {
     return root;
   }
 
-  private void buildDiceView(){
+  private void buildDiceView() {
 
   }
 
