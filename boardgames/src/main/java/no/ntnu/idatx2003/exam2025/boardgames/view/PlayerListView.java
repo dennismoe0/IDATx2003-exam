@@ -1,6 +1,7 @@
 package no.ntnu.idatx2003.exam2025.boardgames.view;
 
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -25,6 +26,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
 
 public class PlayerListView {
+  private final VBox layout;
   private final VBox playerListVBox;
   private final ScrollPane scrollPane;
   private final PlayerListViewController controller;
@@ -40,6 +42,7 @@ public class PlayerListView {
     this.controller = controller;
     refreshButton = new Button("Refresh List");
     playerListVBox = new VBox(5);
+    layout = new VBox(3);
     scrollPane = new ScrollPane(playerListVBox);
     scrollPane.setFitToWidth(true);
     scrollPane.setVvalue(0);
@@ -59,8 +62,17 @@ public class PlayerListView {
 
     configureButton();
 
-    VBox container = new VBox(10, playerListVBox, refreshButton);
+    VBox container = new VBox(10, playerListVBox);
     scrollPane.setContent(container);
+    scrollPane.getStyleClass().add("move-history");
+    scrollPane.viewportBoundsProperty().addListener((obs, oldVal, newVal) -> {
+      Region viewport = (Region) scrollPane.lookup(".viewport");
+      if (viewport != null) {
+        viewport.setStyle("-fx-background-color: transparent;");
+      }
+    });
+    layout.getChildren().add(scrollPane);
+    layout.getChildren().add(refreshButton);
 
     loadPlayers();
   }
@@ -130,8 +142,8 @@ public class PlayerListView {
           }
         });
 
-        Button pickPieceButton = new Button("Pick Playing Piece");
-        pickPieceButton.setMinWidth(140);
+        Button pickPieceButton = new Button("Pick Token");
+        pickPieceButton.setMinWidth(100);
         pickPieceButton.setOnAction(e -> {
 
           if (!selectBox.isSelected()) {
@@ -176,6 +188,6 @@ public class PlayerListView {
   }
 
   public Parent getRoot() {
-    return scrollPane;
+    return layout;
   }
 }

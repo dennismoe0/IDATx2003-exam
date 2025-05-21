@@ -48,7 +48,7 @@ public class BoardView extends Pane {
     buildBoardView();
 
     grid.getStyleClass().add("board-view");
-    backBoard.getStyleClass().add("board-back-view");
+    backBoard.getStyleClass().add("board-game-menu-background");
   }
 
   /**

@@ -29,13 +29,12 @@ import org.slf4j.Logger;
  */
 public class BoardGameApplication extends Application {
   private static final Logger log = Log.get(BoardGameApplication.class);
-
+  private Connection connection;
   // Dennis note: Need to add connection to creation of Board Game to instantiate
   // the database connection for stats
   @Override
   public void start(Stage primaryStage) throws Exception {
 
-    Connection connection;
     try {
       connection = DatabaseManager.connect();
       DatabaseManager.initializeDatabase(connection);
@@ -90,8 +89,6 @@ public class BoardGameApplication extends Application {
     statsManagers.put("Snakes and Ladders", snakesStatsManager);
     statsManagers.put("Ludo", ludoStatsManager);
 
-    // initializeGameSession(gameSession);
-
     log.info("Registering Scenes");
     sceneRegister.register("main-menu", () -> viewFactory.buildMainMenuView(sceneRegister, sceneManager));
     sceneRegister.register("ladder-game", () -> viewFactory.buildLadderBoardGameView(gameSession.getBoardGame()));
@@ -104,8 +101,6 @@ public class BoardGameApplication extends Application {
     sceneRegister.register("player-list", () -> viewFactory.buildPlayerListView(playerDao, statsManagers, gameSession));
 
     log.info("Building Default Window");
-    // Temporary intitialization for testing purposes.
-    // initializeGameSession(gameSession);
 
     log.info("Setting up GUI");
     Parent initial = sceneRegister.get("main-menu");
@@ -125,4 +120,16 @@ public class BoardGameApplication extends Application {
     launch(args);
   }
 
+  @Override
+  public void stop() {
+    log.info("Initiating shutdown.");
+    try {
+      if (connection != null && !connection.isClosed()) {
+        connection.close();
+        log.info("Connection closed");
+      }
+    } catch (SQLException e) {
+      log.error("Shutdown encountered an error: {}", e.getMessage());
+    }
+  }
 }

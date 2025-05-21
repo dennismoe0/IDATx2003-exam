@@ -1,42 +1,56 @@
 .ts-empty {
-    -fx-background-color: #fbfbfb;
+    -fx-background-color: #ededed;
+    -fx-fill: #ededed;
 }
 .ts-ladder {
     -fx-background-color: #0e833f;
+    -fx-fill: #0e833f;
 }
 
 .ts-ladder-end {
-  -fx-background-color: #73efa6;
+    -fx-background-color: #73efa6;
+    -fx-fill: #73efa6;
 }
 .ts-snake {
     -fx-background-color: #ba4948;
+    -fx-fill: #ba4948;
 }
 
 .ts-snake-end {
     -fx-background-color: #f4a6a6;
+    -fx-fill: #f4a6a6;
 }
 
 .ts-win {
     -fx-background-color: yellow;
+    -fx-fill: yellow;
 }
 .ts-start {
     -fx-background-color: blue;
+    -fx-fill: blue;
 }
 .ts-freeze {
     -fx-background-color: #a6dfe3;
+    -fx-fill: #a6dfe3;
 }
 .ts-double-movement {
-    -fx-background-color: #ffc99b;
+    -fx-background-color: #e89345;
+    -fx-fill: #e89345;
+}
+
+.piece-view {
+    -fx-effect: dropshadow(gaussian, #464646, 4, 0.2,0,0);
 }
 
 .die-view {
-    -fx-fill: #fbfbfb;
+    -fx-fill: #ededed;
     -fx-stroke: #686868;
+    -fx-effect: dropshadow(gaussian, grey, 10, 0.1,0,0);
 }
 
 .tile-view {
-    -fx-stroke: red;
-    -fx-stroke-type: centered;
+    -fx-stroke: #464646;
+    -fx-stroke-type: outside;
     -fx-stroke-width: 2;
 }
 
@@ -44,7 +58,7 @@
     -fx-font-family: "Calibri";
     -fx-font-weight: bold;
     -fx-font-size: 11px;
-    -fx-fill: #333333;
+    -fx-fill: #464646;
 }
 
 .board-view {
@@ -72,11 +86,35 @@
 .board-game-view {
     -fx-background-color: #2890d6;
 }
-.board-game-sidebar {
+.board-game-menu-background {
     -fx-arc-height: 30;
     -fx-arc-width: 30;
     -fx-fill: #d9d9d9;
+    -fx-effect: dropshadow(gaussian, #0f55ae, 10, 0.1,5,5);
 }
+
+.move-history {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-control-inner-background: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-padding: 15;
+
+}
+.move-history .corner {
+    -fx-background-color: transparent;
+}
+
+.inset-panel {
+    -fx-fill: #ededed;
+    -fx-effect: innershadow(gaussian, grey, 3, 0.1,3,3);
+    -fx-arc-height: 23;
+    -fx-arc-width: 23;
+}
+
 .main-menu-background {
     -fx-arc-height: 30;
     -fx-arc-width: 30;
@@ -84,11 +122,19 @@
     -fx-effect: dropshadow(gaussian, grey, 10, 0.1,5,5);
 }
 
+.subtle-text {
+    -fx-text-fill: lightgrey;
+}
+
 .menu-background {
     -fx-arc-height: 30;
     -fx-arc-width: 30;
     -fx-fill: #d9d9d9;
     -fx-effect: dropshadow(gaussian, grey, 10, 0.1,5,5);
+}
+
+.menu-red {
+    -fx-fill: #ba4948;
 }
 
 .primary-window-background {

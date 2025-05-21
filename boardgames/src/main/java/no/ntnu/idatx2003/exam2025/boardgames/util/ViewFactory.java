@@ -15,7 +15,9 @@ import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneRegister;
 import no.ntnu.idatx2003.exam2025.boardgames.service.StatsManager;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.ChangeScreenCommand;
+import no.ntnu.idatx2003.exam2025.boardgames.util.command.ExitApplicationCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.PrintLineCommand;
+import no.ntnu.idatx2003.exam2025.boardgames.util.command.ShowAlertCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.view.*;
 import org.slf4j.Logger;
 
@@ -50,13 +52,13 @@ public class ViewFactory {
     List<MenuOption> menuOptions = new ArrayList<>();
     menuOptions.add(new MenuOption("Start",
         new ChangeScreenCommand(sceneRegister, sceneManager, "build-game"), true));
-    menuOptions.add(new MenuOption(
-        "Swap to Board View", new ChangeScreenCommand(
-            sceneRegister, sceneManager, "ladder-game"),
+    menuOptions.add(new MenuOption("Settings", new ShowAlertCommand(
+        "Page Not Available", "This page isn't finished yet, please come back later!"),
         true));
-    menuOptions.add(new MenuOption("Settings", new PrintLineCommand("Settings"), true));
-    menuOptions.add(new MenuOption("Players", new PrintLineCommand("Players"), true));
-    menuOptions.add(new MenuOption("Exit", new PrintLineCommand("Exit"), true));
+    menuOptions.add(new MenuOption("Players", new ShowAlertCommand(
+        "Page Not Available", "This page isn't finished yet, please come back later!"),
+        true));
+    menuOptions.add(new MenuOption("Exit", new ExitApplicationCommand(), true));
     MenuView menu = new MenuView("Main Menu", menuOptions, 400, 600, 50);
     return menu.asParent();
   }

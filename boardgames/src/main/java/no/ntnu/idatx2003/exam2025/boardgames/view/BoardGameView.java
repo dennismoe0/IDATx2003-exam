@@ -35,6 +35,8 @@ public class BoardGameView {
   private Button takeTurnButton;
   private Label turnLabel;
   private AssetGamePieceView assetPieceView;
+  private InsetPanel rollPanel;
+  private InsetPanel moveHistoryPanel;
 
   /**
    * Default constructor for BoardGameView.
@@ -67,6 +69,7 @@ public class BoardGameView {
     titleBar = new BorderPane();
     rightMenuBackground = new Rectangle();
     rightMenuContainer = new StackPane();
+    rollPanel = new InsetPanel(300, 100);
   }
 
   private void configurePanes() {
@@ -92,7 +95,7 @@ public class BoardGameView {
     titleBar.getStyleClass().add("title-bar");
     title.getStyleClass().add("title-bar");
     rightMenuContainer.getStyleClass().add("board-game-sidebar");
-    rightMenuBackground.getStyleClass().add("board-game-sidebar");
+    rightMenuBackground.getStyleClass().add("board-game-menu-background");
 
     StackPane.setAlignment(rightMenu, Pos.CENTER);
 
@@ -134,6 +137,7 @@ public class BoardGameView {
     boardView.addAssetGamePieceView(assetPieceView);
 
     turnLabel = new Label("Waiting for game to start");
+    turnLabel.getStyleClass().add("h2");
 
     moveHistoryView = new MoveHistoryView(ladderBoardGame.getMoveHistory());
     takeTurnButton = new Button("Take Turn");
@@ -141,7 +145,10 @@ public class BoardGameView {
       ladderBoardGame.takeTurn();
       updateTurnLabel(ladderBoardGame.getCurrentPlayer().getPlayerName());
     });
-    rightMenu.getChildren().add(diceView.getRoot());
+
+    rollPanel.getChildren().add(diceView.getRoot());
+
+    rightMenu.getChildren().add(rollPanel);
     rightMenu.getChildren().add(takeTurnButton);
     rightMenu.getChildren().add(turnLabel);
     rightMenu.getChildren().add(moveHistoryView.getRoot());
