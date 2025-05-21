@@ -9,6 +9,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.SnakesAndLaddersStats;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
+import no.ntnu.idatx2003.exam2025.boardgames.service.AudioManager;
 import no.ntnu.idatx2003.exam2025.boardgames.util.LadderGameMessage;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import org.slf4j.Logger;
@@ -25,6 +26,7 @@ public final class LadderBoardGame extends BoardGame {
   private static final Logger log = Log.get(LadderBoardGame.class);
   private final int lastTile;
   private final List<Player> turnOrder;
+  private final AudioManager audioManager;
 
   /**
    * The default constructor for the Ladder Game class.
@@ -37,6 +39,7 @@ public final class LadderBoardGame extends BoardGame {
     this.turnOrder = new ArrayList<>(players);
     this.stats = new SnakesAndLaddersStats(); // Fixed stat connection
     super.setBoard(board); // Board setup is loaded
+    this.audioManager = new AudioManager();
     lastTile = board.getBoardSize();
     setUp(players); // Gamepieces are made
   }
@@ -103,6 +106,7 @@ public final class LadderBoardGame extends BoardGame {
     }
 
     playerPiece.move(diceRoll);
+    audioManager.playDiceRollSound();
 
     int endTile = playerPiece.getCurrentTile().getId();
     moveHistory.addMessage(new LadderGameMessage(currentPlayer, startTile, endTile, diceRoll));
