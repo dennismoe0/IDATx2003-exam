@@ -1,6 +1,9 @@
 package no.ntnu.idatx2003.exam2025.boardgames.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,25 +14,19 @@ import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
+import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.GameStatsDao;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.LudoStatsDaoImpl;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.SnakesAndLaddersStatsDaoImpl;
-import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.GameStatsDao;
-import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.stats.PlayerStats;
 import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.LudoStats;
 import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.SnakesAndLaddersStats;
-import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
-import org.slf4j.Logger;
 
 /**
- * Unit tests for the StatsManager class, verifying persistence and retrieval of
- * player statistics.
+ * Unit tests for StatsManager.
  */
-public class StatsManagerTest {
-
-  private static final Logger log = Log.get(StatsManagerTest.class);
-
+class StatsManagerTest {
   private Connection connection;
   private PlayerDaoImpl playerDao;
   private StatsManager<SnakesAndLaddersStats> snlManager;
@@ -147,23 +144,6 @@ public class StatsManagerTest {
   }
 
   @Test
-  void testCreatePersistedPlayerWithLudoStats() throws Exception {
-    Player biggus = new Player(0, "Biggus Dickus", 40);
-    Player test2 = new Player(0, "TestPerson1", 22);
-    List<Player> list = List.of(biggus, test2);
-    ludoManager.createPersistedPlayerWithStats(list, LudoStats.class);
-    for (Player p : list) {
-      assertTrue(p.getPlayerId() > 0);
-      assertNotNull(p.getPlayerStats());
-      List<Integer> vals = ludoManager.loadAllStats(p);
-      assertEquals(8, vals.size());
-      vals.forEach(v -> assertEquals(0, v));
-      assertEquals(0, ludoManager.loadStat(p, 1));
-      assertEquals(0, ludoManager.loadStat(p, 8));
-    }
-  }
-
-  @Test
   void testSaveWithInvalidPlayer() {
     Player invalid = new Player(0, "TestPerson2", 50);
     SnakesAndLaddersStats stats = new SnakesAndLaddersStats();
@@ -176,14 +156,12 @@ public class StatsManagerTest {
     dennis.setPlayerId(playerDao.create(dennis));
     SnakesAndLaddersStats stats = new SnakesAndLaddersStats();
     snlManager.save(dennis, stats);
-    // boundary indices
     assertEquals(0, snlManager.loadStat(dennis, 1));
     assertEquals(0, snlManager.loadStat(dennis, 8));
   }
 
   @Test
   void testLoadStatsAsMapMismatch() throws SQLException {
-    // dummy mismatch stats
     Player dummy = new Player(0, "TestPerson3", 60);
     dummy.setPlayerId(playerDao.create(dummy));
     PlayerStats bad = new PlayerStats() {

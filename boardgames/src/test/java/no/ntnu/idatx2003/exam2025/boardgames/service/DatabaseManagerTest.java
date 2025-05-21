@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -15,9 +16,17 @@ import org.junit.jupiter.api.Test;
 class DatabaseManagerTest {
 
   private Connection connection;
+  private static final String DB_DIR = "database";
+  private static final String DB_PATH = DB_DIR + "/boardgames.db";
 
   @BeforeEach
   void setUp() throws SQLException {
+    // ensure a clean slate
+    File dbFile = new File(DB_PATH);
+    if (dbFile.exists()) {
+      dbFile.delete();
+    }
+
     connection = DatabaseManager.connect();
     DatabaseManager.initializeDatabase(connection);
   }
@@ -25,12 +34,14 @@ class DatabaseManagerTest {
   @AfterEach
   void tearDown() {
     DatabaseManager.closeConnection(connection);
+    // clean up the file
+    new File(DB_PATH).delete();
   }
 
   @Test
   void testConnectReturnsValidConnection() throws SQLException {
-    assertNotNull(connection);
-    assertFalse(connection.isClosed());
+    assertNotNull(connection, "Connection should not be null");
+    assertFalse(connection.isClosed(), "Connection should be open");
   }
 
   @Test
@@ -50,6 +61,10 @@ class DatabaseManagerTest {
 
   @Test
   void testWipeDatabaseDropsTables() throws SQLException {
+    // first ensure tables exist
+    testTablesAreCreated();
+
+    // now wipe
     DatabaseManager.wipeDatabase();
 
     DatabaseMetaData metaData = connection.getMetaData();
