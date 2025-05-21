@@ -163,4 +163,8 @@ public final class LadderBoardGame extends BoardGame {
     playerIndex++;
     return player;
   }
+
+  public List<Player> getAllPlayers() {
+    return players;
+  }
 }

@@ -1,6 +1,5 @@
 package no.ntnu.idatx2003.exam2025.boardgames.view;
 
-
 import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -9,7 +8,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
+import no.ntnu.idatx2003.exam2025.boardgames.controller.PlayerListViewController;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
+import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
 
@@ -30,6 +31,8 @@ public class BoardGameView {
   private StackPane rightMenuContainer;
   private Button takeTurnButton;
   private Label turnLabel;
+  private PlayerListViewController playerListViewController;
+  private AssetGamePieceView assetPieceView;
 
   /**
    * Default constructor for BoardGameView.
@@ -120,8 +123,13 @@ public class BoardGameView {
     boardView = new BoardView(ladderBoardGame.getBoard());
 
     List<GamePiece> pieces = ladderBoardGame.getAllGamePieces();
-    GamePieceView pieceView = new GamePieceView(pieces, boardView.getTileViewRegister());
-    boardView.addGamePieceView(pieceView);
+
+    // GamePieceView pieceView = new GamePieceView(pieces,
+    // boardView.getTileViewRegister());
+    // boardView.addGamePieceView(pieceView);
+
+    assetPieceView = new AssetGamePieceView(pieces, boardView.getTileViewRegister());
+    boardView.addAssetGamePieceView(assetPieceView);
 
     turnLabel = new Label("Waiting for game to start");
 

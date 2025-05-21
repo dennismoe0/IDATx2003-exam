@@ -96,7 +96,8 @@ public class DatabaseManager {
           CREATE TABLE IF NOT EXISTS players (
             player_id INTEGER PRIMARY KEY AUTOINCREMENT,
             player_name TEXT NOT NULL,
-            player_age INTEGER NOT NULL
+            player_age INTEGER NOT NULL,
+            player_color VARCHAR(7) NOT NULL DEFAULT '#00FF00'
           );
           """;
       stmt.execute(createPlayersTable);

@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
+
+import javafx.scene.paint.Color;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 
@@ -25,16 +27,24 @@ public class PlayerDaoImpl implements PlayerDao {
     this.connection = connection;
   }
 
+  private String colorToHex(Color color) {
+    int r = (int) Math.round(color.getRed() * 255);
+    int g = (int) Math.round(color.getGreen() * 255);
+    int b = (int) Math.round(color.getBlue() * 255);
+    return String.format("#%02X%02X%02X", r, g, b);
+  }
+
   @Override
   public int create(Player player) throws SQLException {
     String sql = """
-            INSERT INTO players (player_name, player_age)
-            VALUES (?, ?);
+            INSERT INTO players (player_name, player_age, player_color)
+            VALUES (?, ?, ?);
         """;
     try (PreparedStatement stmt = connection.prepareStatement(sql,
         PreparedStatement.RETURN_GENERATED_KEYS)) {
       stmt.setString(1, player.getPlayerName());
       stmt.setInt(2, player.getPlayerAge());
+      stmt.setString(3, colorToHex(player.getPlayerColor()));
       stmt.executeUpdate();
 
       // Retrieve the generated player_id
@@ -44,7 +54,9 @@ public class PlayerDaoImpl implements PlayerDao {
         }
       }
       // Unsure if getPlayerId works here without setting it for the object
-      log.debug("Persisted player {} with the ID: {}", player.getPlayerName(), player.getPlayerId());
+      log.debug(
+          "Persisted player {} with the ID: {}, and color {}", player.getPlayerName(),
+          player.getPlayerId(), player.getPlayerColor());
     }
     throw new SQLException("Failed to create player, no ID obtained.");
   }
@@ -53,18 +65,23 @@ public class PlayerDaoImpl implements PlayerDao {
   @Override
   public Player findById(int playerId) throws SQLException {
     String sql = "SELECT * FROM players WHERE player_id = ?";
+
     try (PreparedStatement stmt = connection.prepareStatement(sql)) {
       log.debug("Attempting to retrieve player by ID {}", playerId);
 
       stmt.setInt(1, playerId);
+
       try (ResultSet rs = stmt.executeQuery()) {
         if (rs.next()) {
+          Color color = Color.web(rs.getString("player_color"));
           Player player = new Player(
               rs.getInt("player_id"),
               null, // PlayerStats can be set later
               rs.getString("player_name"),
-              rs.getInt("player_age"));
-          log.info("Successfully retrieved player with ID {}: {}", playerId, player.getPlayerName());
+              rs.getInt("player_age"),
+              color);
+          log.info("Successfully retrieved player with ID {}: {}, color: {}",
+              playerId, player.getPlayerName(), player.getPlayerColor());
           return player;
         }
       }
@@ -77,6 +94,31 @@ public class PlayerDaoImpl implements PlayerDao {
       throw new SQLException("Unexpected error retrieving player", e);
     }
     return null;
+  }
+
+  @Override
+  public void update(Player player) throws SQLException {
+    String sql = """
+          UPDATE players
+             SET player_name = ?, player_age = ?, player_color = ?
+           WHERE player_id = ?
+        """;
+
+    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+      stmt.setString(1, player.getPlayerName());
+      stmt.setInt(2, player.getPlayerAge());
+      stmt.setString(3, colorToHex(player.getPlayerColor()));
+      stmt.setInt(4, player.getPlayerId());
+      int rows = stmt.executeUpdate();
+      if (rows == 0) {
+        throw new SQLException("No player found with ID " + player.getPlayerId());
+      }
+      log.debug("Updated player {} → name='{}', age={}, color={}",
+          player.getPlayerId(),
+          player.getPlayerName(),
+          player.getPlayerAge(),
+          player.getPlayerColor());
+    }
   }
 
   @Override
@@ -150,11 +192,13 @@ public class PlayerDaoImpl implements PlayerDao {
         ResultSet rs = stmt.executeQuery()) {
       log.debug("Attempting to retrieve all players from the database.");
       while (rs.next()) {
+        Color color = Color.web(rs.getString("player_color"));
         Player player = new Player(
             rs.getInt("player_id"),
             null, // PlayerStats can be set later
             rs.getString("player_name"),
-            rs.getInt("player_age"));
+            rs.getInt("player_age"),
+            color);
         players.add(player);
       }
       log.info("Successfully retrieved {} players from the database.", players.size());

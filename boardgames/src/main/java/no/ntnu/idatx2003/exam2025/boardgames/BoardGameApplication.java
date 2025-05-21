@@ -105,7 +105,6 @@ public class BoardGameApplication extends Application {
 
     //initializeGameSession(gameSession);
 
-
     log.info("Registering Scenes");
     sceneRegister.register("main-menu", () -> viewFactory.buildMainMenuView(sceneRegister, sceneManager));
     sceneRegister.register("ladder-game", () -> viewFactory.buildLadderBoardGameView(gameSession.getBoardGame()));
@@ -118,8 +117,8 @@ public class BoardGameApplication extends Application {
     sceneRegister.register("player-list", () -> viewFactory.buildPlayerListView(playerDao, statsManagers, gameSession));
 
     log.info("Building Default Window");
-    //Temporary intitialization for testing purposes.
-    //initializeGameSession(gameSession);
+    // Temporary intitialization for testing purposes.
+    // initializeGameSession(gameSession);
 
     log.info("Setting up GUI");
     Parent initial = sceneRegister.get("main-menu");
@@ -141,6 +140,7 @@ public class BoardGameApplication extends Application {
 
   private void initializeGameSession(GameSession gameSession) {
     log.info("Initializing GameSession");
+
     // colors
     Color[] colors = {
         Color.GREEN, Color.BLUE, Color.RED, Color.ORANGE, Color.PURPLE,
