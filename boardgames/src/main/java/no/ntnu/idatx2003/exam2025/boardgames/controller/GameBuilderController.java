@@ -143,6 +143,16 @@ public class GameBuilderController {
     return boardInfoList;
   }
 
+  /**
+   * A command for leaving the current view and returning to the main menu.
+   */
+  public void returnToMainMenu() {
+    ChangeScreenCommand command =
+        new ChangeScreenCommand(sceneRegister, sceneManager, "main-menu");
+    gameSession.clearSession();
+    command.execute();
+  }
+
   private BoardGame buildGame() {
     String url = board.getUrl();
     GsonFileReader gson = new GsonFileReader();

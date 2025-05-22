@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import javafx.scene.Parent;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.AddPlayerViewController;
+import no.ntnu.idatx2003.exam2025.boardgames.controller.BoardGameViewController;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.GameBuilderController;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.PlayerListViewController;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
@@ -34,9 +35,12 @@ public class ViewFactory {
    * @param boardGame the game to be built.
    * @return returns a BoardGameView object.
    */
-  public Parent buildLadderBoardGameView(BoardGame boardGame) {
+  public Parent buildLadderBoardGameView(
+      BoardGame boardGame, SceneManager manager, SceneRegister register, GameSession session) {
     logger.info("Building ladder board game");
-    BoardGameView boardGameView = new BoardGameView("LadderBoardGame", (LadderBoardGame) boardGame);
+    BoardGameViewController controller = new BoardGameViewController(boardGame, session, register, manager);
+
+    BoardGameView boardGameView = new BoardGameView(boardGame.getName(),controller);
     return boardGameView.asParent();
   }
 

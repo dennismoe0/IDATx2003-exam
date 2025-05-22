@@ -12,16 +12,18 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import no.ntnu.idatx2003.exam2025.boardgames.controller.BoardGameViewController;
+import no.ntnu.idatx2003.exam2025.boardgames.controller.NavBarViewController;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
-import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.BoardGame;
-import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.DiceBoardGame;
-import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Class for displaying the current board game.
  */
 public class BoardGameView {
+  private static final Logger log = LoggerFactory.getLogger(BoardGameView.class);
   private final Label title;
   private BorderPane view;
   private HBox content;
@@ -29,7 +31,7 @@ public class BoardGameView {
   private DiceView diceView;
   private MoveHistoryView moveHistoryView;
   private BoardView boardView;
-  private BoardGame boardGame;
+  private BoardGameViewController controller;
   private BorderPane titleBar;
   private Rectangle rightMenuBackground;
   private StackPane rightMenuContainer;
@@ -37,27 +39,25 @@ public class BoardGameView {
   private Label turnLabel;
   private AssetGamePieceView assetPieceView;
   private InsetPanel rollPanel;
-  private InsetPanel moveHistoryPanel;
+  private NavBarView navBarView;
 
   /**
    * Default constructor for BoardGameView.
    *
    * @param title     a string representing the name of the Board Game
    *                  (Probably should be pulled from the game itself).
-   * @param boardGame A board game object representing the current game.
+   * @param controller A controller for the view.
    */
-  public BoardGameView(String title, LadderBoardGame boardGame) {
-    if (boardGame == null) {
-      throw new IllegalArgumentException("LadderBoardGame cant be null");
-    }
+  public BoardGameView(String title, BoardGameViewController controller) {
+    this.controller = controller;
     createPanes();
     this.title = new Label(title);
-    this.boardGame = boardGame;
-    this.boardGame.getGameOverProperty().addListener(observable -> {
+    this.controller.getGameOverProperty().addListener(observable -> {
       AlertUtil.showInfo("Game Over!",
-          this.boardGame.getWinner().getPlayerName() + " has won the game!");
+          this.controller.getWinnerName() + " has won the game!");
       takeTurnButton.setDisable(true);
     });
+    navBarView = new NavBarView(controller);
 
     createViews();
     configurePanes();
@@ -125,13 +125,15 @@ public class BoardGameView {
   }
 
   private void createViews() {
-    if (boardGame instanceof DiceBoardGame diceBoardGame) {
-      diceView = new DiceView(diceBoardGame.getDice(), 300, 200);
+    try {
+      diceView = new DiceView(controller.getDice(), 300, 200);
+    } catch (NullPointerException e) {
+      log.error(e.getMessage());
     }
 
-    boardView = new BoardView(boardGame.getBoard());
+    boardView = new BoardView(controller.getBoard());
 
-    List<GamePiece> pieces = boardGame.getAllGamePieces();
+    List<GamePiece> pieces = controller.getGamePieces();
 
     assetPieceView = new AssetGamePieceView(pieces, boardView.getTileViewRegister());
     boardView.addAssetGamePieceView(assetPieceView);
@@ -139,14 +141,16 @@ public class BoardGameView {
     turnLabel = new Label("Waiting for game to start");
     turnLabel.getStyleClass().add("h2");
 
-    if (boardGame instanceof LadderBoardGame ladderBoardGame) {
-      moveHistoryView = new MoveHistoryView(ladderBoardGame.getMoveHistory());
+    try {
+      moveHistoryView = new MoveHistoryView(controller.getMoveHistory());
+    } catch (NullPointerException e) {
+      log.error(e.getMessage());
     }
 
     takeTurnButton = new Button("Take Turn");
     takeTurnButton.setOnAction(event -> {
-      boardGame.takeTurn();
-      updateTurnLabel(boardGame.getCurrentPlayer().getPlayerName());
+      controller.takeTurn();
+      updateTurnLabel(controller.getCurrentPlayerName());
     });
 
     rollPanel.getChildren().add(diceView.getRoot());
@@ -155,6 +159,7 @@ public class BoardGameView {
     rightMenu.getChildren().add(takeTurnButton);
     rightMenu.getChildren().add(turnLabel);
     rightMenu.getChildren().add(moveHistoryView.getRoot());
+    rightMenu.getChildren().add(navBarView.getRoot());
   }
 
   private void updateTurnLabel(String text) {
