@@ -62,6 +62,12 @@ public class GameSession {
     });
   }
 
+  public void clearSession() {
+    logger.info("clearing session");
+    players.clear();
+    boardGame = null;
+  }
+
   public List<Player> getPlayers() {
     return players;
   }
