@@ -12,7 +12,7 @@ import org.slf4j.Logger;
  * Game session class handles players, choosing board game, etc.
  */
 public class GameSession {
-  private static Logger logger = Log.get(GameSession.class);
+  private static final Logger logger = Log.get(GameSession.class);
   private final List<Player> players = new ArrayList<Player>();
   private BoardGame boardGame;
   private ObservableBooleanValue gameOver;

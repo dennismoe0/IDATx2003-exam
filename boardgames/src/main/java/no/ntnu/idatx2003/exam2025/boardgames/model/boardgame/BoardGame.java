@@ -19,6 +19,7 @@ public abstract class BoardGame {
   private final BooleanProperty gameIsOver = new SimpleBooleanProperty(false);
   private Player winner;
   private List<Player> players = List.of();
+  protected Player currentPlayer;
 
   public List<Player> getPlayers() {
     return players;
@@ -133,6 +134,14 @@ public abstract class BoardGame {
 
   public Player getWinner() {
     return winner;
+  }
+
+  public void setCurrentPlayer(Player player) {
+    currentPlayer = player;
+  }
+
+  public Player getCurrentPlayer() {
+    return currentPlayer;
   }
 
 }

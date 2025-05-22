@@ -13,8 +13,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
+import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.BoardGame;
+import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.DiceBoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
-import no.ntnu.idatx2003.exam2025.boardgames.service.AudioManager;
 import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
 
 /**
@@ -28,7 +29,7 @@ public class BoardGameView {
   private DiceView diceView;
   private MoveHistoryView moveHistoryView;
   private BoardView boardView;
-  private LadderBoardGame ladderBoardGame;
+  private BoardGame boardGame;
   private BorderPane titleBar;
   private Rectangle rightMenuBackground;
   private StackPane rightMenuContainer;
@@ -51,10 +52,10 @@ public class BoardGameView {
     }
     createPanes();
     this.title = new Label(title);
-    this.ladderBoardGame = boardGame;
-    this.ladderBoardGame.getGameOverProperty().addListener(observable -> {
+    this.boardGame = boardGame;
+    this.boardGame.getGameOverProperty().addListener(observable -> {
       AlertUtil.showInfo("Game Over!",
-          ladderBoardGame.getWinner().getPlayerName() + " has won the game!");
+          this.boardGame.getWinner().getPlayerName() + " has won the game!");
       takeTurnButton.setDisable(true);
     });
 
@@ -124,14 +125,13 @@ public class BoardGameView {
   }
 
   private void createViews() {
-    diceView = new DiceView(ladderBoardGame.getDice(), 300, 200);
-    boardView = new BoardView(ladderBoardGame.getBoard());
+    if (boardGame instanceof DiceBoardGame diceBoardGame) {
+      diceView = new DiceView(diceBoardGame.getDice(), 300, 200);
+    }
 
-    List<GamePiece> pieces = ladderBoardGame.getAllGamePieces();
+    boardView = new BoardView(boardGame.getBoard());
 
-    // GamePieceView pieceView = new GamePieceView(pieces,
-    // boardView.getTileViewRegister());
-    // boardView.addGamePieceView(pieceView);
+    List<GamePiece> pieces = boardGame.getAllGamePieces();
 
     assetPieceView = new AssetGamePieceView(pieces, boardView.getTileViewRegister());
     boardView.addAssetGamePieceView(assetPieceView);
@@ -139,11 +139,14 @@ public class BoardGameView {
     turnLabel = new Label("Waiting for game to start");
     turnLabel.getStyleClass().add("h2");
 
-    moveHistoryView = new MoveHistoryView(ladderBoardGame.getMoveHistory());
+    if (boardGame instanceof LadderBoardGame ladderBoardGame) {
+      moveHistoryView = new MoveHistoryView(ladderBoardGame.getMoveHistory());
+    }
+
     takeTurnButton = new Button("Take Turn");
     takeTurnButton.setOnAction(event -> {
-      ladderBoardGame.takeTurn();
-      updateTurnLabel(ladderBoardGame.getCurrentPlayer().getPlayerName());
+      boardGame.takeTurn();
+      updateTurnLabel(boardGame.getCurrentPlayer().getPlayerName());
     });
 
     rollPanel.getChildren().add(diceView.getRoot());

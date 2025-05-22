@@ -172,25 +172,21 @@ public class BoardView extends Pane {
     for (Tile tile : board.getTilesAsList()) {
       if (tile.getTileStrategy() != null) {
         // ladder exit
-        if (tile.getTileStrategy() instanceof LadderTileStrategy) {
-          LadderTileStrategy lts = (LadderTileStrategy) tile.getTileStrategy();
+        if (tile.getTileStrategy() instanceof LadderTileStrategy lts) {
           Tile exitTile = lts.getEndTile();
           if (exitTile != null) {
             // Get the TileView for the exit tile from the tileViewRegister
             TileView exitView = tileViewRegister.getTileView(exitTile.getId());
             if (exitView != null) {
-              exitView.getView().getStyleClass().add("ts-ladder-end");
+              exitView.getTileBackground().getStyleClass().add("ts-ladder-end");
             }
           }
-        }
-        // snake exit
-        else if (tile.getTileStrategy() instanceof SnakeTileStrategy) {
-          SnakeTileStrategy sts = (SnakeTileStrategy) tile.getTileStrategy();
+        } else if (tile.getTileStrategy() instanceof SnakeTileStrategy sts) {
           Tile exitTile = sts.getEndTile();
           if (exitTile != null) {
             TileView exitView = tileViewRegister.getTileView(exitTile.getId());
             if (exitView != null) {
-              exitView.getView().getStyleClass().add("ts-snake-end");
+              exitView.getTileBackground().getStyleClass().add("ts-snake-end");
             }
           }
         }

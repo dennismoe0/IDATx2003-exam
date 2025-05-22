@@ -8,8 +8,8 @@
 }
 
 .ts-ladder-end {
-    -fx-background-color: #73efa6;
-    -fx-fill: #73efa6;
+    -fx-background-color: #69b880;
+    -fx-fill: #69b880;
 }
 .ts-snake {
     -fx-background-color: #ba4948;
@@ -17,25 +17,25 @@
 }
 
 .ts-snake-end {
-    -fx-background-color: #f4a6a6;
-    -fx-fill: #f4a6a6;
+    -fx-background-color: #da8e8d;
+    -fx-fill: #da8e8d;
 }
 
 .ts-win {
-    -fx-background-color: yellow;
-    -fx-fill: yellow;
+    -fx-background-color: #e89345;
+    -fx-fill: #e89345;
 }
 .ts-start {
-    -fx-background-color: blue;
-    -fx-fill: blue;
+    -fx-background-color: #d2d6c1;
+    -fx-fill: #d2d6c1;
 }
 .ts-freeze {
     -fx-background-color: #a6dfe3;
     -fx-fill: #a6dfe3;
 }
 .ts-double-movement {
-    -fx-background-color: #e89345;
-    -fx-fill: #e89345;
+    -fx-background-color: #715fbd;
+    -fx-fill: #715fbd;
 }
 
 .piece-view {
