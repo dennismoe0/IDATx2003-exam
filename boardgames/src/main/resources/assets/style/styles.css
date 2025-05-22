@@ -1,0 +1,178 @@
+.ts-empty {
+    -fx-background-color: #ededed;
+    -fx-fill: #ededed;
+}
+.ts-ladder {
+    -fx-background-color: #0e833f;
+    -fx-fill: #0e833f;
+}
+
+.ts-ladder-end {
+    -fx-background-color: #69b880;
+    -fx-fill: #69b880;
+}
+.ts-snake {
+    -fx-background-color: #ba4948;
+    -fx-fill: #ba4948;
+}
+
+.ts-snake-end {
+    -fx-background-color: #da8e8d;
+    -fx-fill: #da8e8d;
+}
+
+.ts-win {
+    -fx-background-color: #e89345;
+    -fx-fill: #e89345;
+}
+.ts-start {
+    -fx-background-color: #d2d6c1;
+    -fx-fill: #d2d6c1;
+}
+.ts-freeze {
+    -fx-background-color: #a6dfe3;
+    -fx-fill: #a6dfe3;
+}
+.ts-double-movement {
+    -fx-background-color: #715fbd;
+    -fx-fill: #715fbd;
+}
+
+.piece-view {
+    -fx-effect: dropshadow(gaussian, #464646, 4, 0.2,0,0);
+}
+
+.die-view {
+    -fx-fill: #ededed;
+    -fx-stroke: #686868;
+    -fx-effect: dropshadow(gaussian, grey, 10, 0.1,0,0);
+}
+
+.tile-view {
+    -fx-stroke: #464646;
+    -fx-stroke-type: outside;
+    -fx-stroke-width: 2;
+}
+
+.tile-number {
+    -fx-font-family: "Calibri";
+    -fx-font-weight: bold;
+    -fx-font-size: 11px;
+    -fx-fill: #464646;
+}
+
+.board-view {
+    -fx-hgap: 2;
+    -fx-vgap: 2;
+}
+
+.h2 {
+    -fx-text-fill: #464646;
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+}
+
+.button {
+    -fx-text-fill: #ededed;
+    -fx-background-color: #464646;
+    -fx-border-color: transparent;
+    -fx-background-radius: 7;
+}
+.button:hover {
+    -fx-border-color: transparent;
+    -fx-background-color: #777777;
+    -fx-cursor: hand;
+}
+.button-accent {
+    -fx-background-color: #e89345;
+}
+
+.board-back-view {
+    -fx-arc-height: 30;
+    -fx-arc-width: 30;
+    -fx-fill: #d9d9d9;
+}
+
+.title-bar Label{
+    -fx-text-fill: white;
+    -fx-font-family: "Impact";
+    -fx-font-size: 30;
+}
+.board-game-view {
+    -fx-background-color: #2890d6;
+}
+.board-game-menu-background {
+    -fx-arc-height: 30;
+    -fx-arc-width: 30;
+    -fx-fill: #d9d9d9;
+    -fx-effect: dropshadow(gaussian, #0f55ae, 10, 0.1,5,5);
+}
+
+.move-history {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-control-inner-background: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-padding: 15;
+
+}
+
+.move-history .corner {
+    -fx-background-color: transparent;
+}
+
+.inset-panel {
+    -fx-fill: #ededed;
+    -fx-effect: innershadow(gaussian, grey, 3, 0.1,3,3);
+    -fx-arc-height: 23;
+    -fx-arc-width: 23;
+}
+
+.main-menu-background {
+    -fx-arc-height: 30;
+    -fx-arc-width: 30;
+    -fx-fill: #e89345;
+    -fx-effect: dropshadow(gaussian, grey, 10, 0.1,5,5);
+}
+
+.subtle-text {
+    -fx-text-fill: lightgrey;
+}
+
+.menu-background {
+    -fx-arc-height: 30;
+    -fx-arc-width: 30;
+    -fx-fill: #d9d9d9;
+    -fx-effect: dropshadow(gaussian, grey, 10, 0.1,5,5);
+}
+
+.menu-red {
+    -fx-fill: #ba4948;
+}
+
+.primary-window-background {
+    -fx-background-color: #d9d9d9;
+}
+.menu-title {
+    -fx-text-fill: #464646;
+    -fx-font-family: "Impact";
+    -fx-font-size: 35;
+}
+.menu-spacer-bar {
+    -fx-fill: #464646
+}
+.menu-option {
+    -fx-font-size: 20;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+    -fx-text-fill: #464646;
+}
+.menu-option:hover {
+    -fx-text-fill: #f7f8fa;
+    -fx-background-color: transparent;
+}
