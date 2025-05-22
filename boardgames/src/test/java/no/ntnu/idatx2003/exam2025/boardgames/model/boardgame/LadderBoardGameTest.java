@@ -16,17 +16,17 @@ class LadderBoardGameTest {
   LadderBoardGame ladderBoardGame;
   Board board;
   List<Player> players = new ArrayList<>();
-  Player sasha = new Player(1,"Sasha",27);
-  Player dennis = new Player(2,"Dennis",24);
+  Player sasha = new Player(1, "Sasha", 27);
+  Player dennis = new Player(2, "Dennis", 24);
 
   @BeforeEach
-  void setUpTests(){
+  void setUpTests() {
     players.add(sasha);
     players.add(dennis);
     board = new BoardFactory().createDefaultLadderBoard();
-    try{
+    try {
       ladderBoardGame = new LadderBoardGame(2, board, players);
-    } catch (Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
     }
 
@@ -37,7 +37,7 @@ class LadderBoardGameTest {
     ladderBoardGame.setUp(players);
     GamePiece piece = ladderBoardGame.getPlayerPieces(sasha).getFirst();
     assertNotNull(piece);
-    assertEquals(90,board.getBoardSize());
+    assertEquals(90, board.getBoardSize());
   }
 
   @Test
