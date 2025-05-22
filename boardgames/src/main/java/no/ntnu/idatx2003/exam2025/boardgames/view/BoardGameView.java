@@ -126,7 +126,7 @@ public class BoardGameView {
 
   private void createViews() {
     try {
-      diceView = new DiceView(controller.getDice(), 300, 200);
+      diceView = new DiceView(controller.getDice(), 300, 200, controller);
     } catch (NullPointerException e) {
       log.error(e.getMessage());
     }
