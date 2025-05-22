@@ -24,7 +24,12 @@ class LadderBoardGameTest {
     players.add(sasha);
     players.add(dennis);
     board = new BoardFactory().createDefaultLadderBoard();
-    ladderBoardGame = new LadderBoardGame(2, board, players);
+    try{
+      ladderBoardGame = new LadderBoardGame(2, board, players);
+    } catch (Exception e){
+      e.printStackTrace();
+    }
+
   }
 
   @Test

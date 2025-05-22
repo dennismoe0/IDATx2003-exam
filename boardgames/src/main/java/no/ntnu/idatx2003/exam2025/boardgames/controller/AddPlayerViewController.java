@@ -1,29 +1,27 @@
 package no.ntnu.idatx2003.exam2025.boardgames.controller;
 
+import java.sql.SQLException;
 import javafx.scene.Parent;
-import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
+import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
+import no.ntnu.idatx2003.exam2025.boardgames.exception.InvalidUserDataException;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
-import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
-import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
-import java.sql.SQLException;
 
 /**
  * A Controller used for working between a player view and a Game Session.
  */
 public class AddPlayerViewController {
-  private final GameSession gameSession;
   private final SceneManager sceneManager;
   private final PlayerDaoImpl playerDao;
 
   /**
    * A Controller used for working between a player view and a Game Session.
    *
-   * @param gameSession the current Game Session.
+   * @param sceneManager the current Game Session.
+   * @param playerDao the database access object
    */
   public AddPlayerViewController(
-      GameSession gameSession, SceneManager sceneManager, PlayerDaoImpl playerDao) {
-    this.gameSession = gameSession;
+      SceneManager sceneManager, PlayerDaoImpl playerDao) {
     this.sceneManager = sceneManager;
     this.playerDao = playerDao;
 
@@ -40,7 +38,7 @@ public class AddPlayerViewController {
   public String createAndAddPlayer(String name, String ageText) {
 
     if (name == null || name.trim().isEmpty()) {
-      AlertUtil.showError("Invalid input", "Name cannot be empty");
+      throw new InvalidUserDataException("Name Cannot be Empty");
     }
 
     int age;
@@ -48,11 +46,14 @@ public class AddPlayerViewController {
     try {
       // convert to int
       age = Integer.parseInt(ageText);
-      if (age < 0 || age > 120) {
-        return "Age must be between 0 and 120";
+      if (age < 0) {
+        throw new InvalidUserDataException("Age Cannot be Negative");
+      }
+      if (age > 120) {
+        throw new InvalidUserDataException("Age Cannot be Greater than 120");
       }
     } catch (NumberFormatException e) {
-      return "Age needs to be a valid number";
+      throw new InvalidUserDataException("Age must be a number");
     }
 
     // persist player

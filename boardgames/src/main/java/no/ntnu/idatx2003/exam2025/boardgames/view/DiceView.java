@@ -50,8 +50,11 @@ public class DiceView {
     List<Die> totalDice = dice.getDice();
 
     double numberOfDice = totalDice.size();
-    double diceWidth = ((width / numberOfDice) / 2) - (numberOfDice * gapSize);
+    double diceWidth = ((width / numberOfDice) / 2);
     DieView dieView;
+    if (diceWidth > 50) {
+      diceWidth = 50;
+    }
 
     for (Die die : totalDice) {
       dieView = new DieView(die, diceWidth);

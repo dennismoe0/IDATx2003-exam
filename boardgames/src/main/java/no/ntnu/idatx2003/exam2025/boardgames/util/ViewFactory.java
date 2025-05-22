@@ -80,8 +80,7 @@ public class ViewFactory {
       SceneManager sceneManager,
       PlayerDaoImpl playerDao) {
     logger.info("Building Add Player view");
-    AddPlayerViewController addPlayerViewController = new AddPlayerViewController(
-        gameSession, sceneManager, playerDao);
+    AddPlayerViewController addPlayerViewController = new AddPlayerViewController(sceneManager, playerDao);
     AddPlayerView view = new AddPlayerView(addPlayerViewController);
     return view.getRoot();
   }

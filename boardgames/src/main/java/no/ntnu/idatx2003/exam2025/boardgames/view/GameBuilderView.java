@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -17,6 +18,7 @@ import no.ntnu.idatx2003.exam2025.boardgames.controller.GameBuilderController;
 import no.ntnu.idatx2003.exam2025.boardgames.exception.MissingGamePieceException;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardInfo;
 import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
+import org.w3c.dom.Text;
 
 
 /**
@@ -52,6 +54,8 @@ public class GameBuilderView {
   private final Button addNewPlayerButton;
   private final Button exitButton;
 
+  private final TextField diceAmount;
+
   private final ComboBox<String> gameMenu;
   private final ComboBox<BoardInfo> boardMenu;
 
@@ -82,6 +86,7 @@ public class GameBuilderView {
     playerTitle = new Label("Player");
     gameHeader = new Label("Choose Game");
     boardHeader = new Label("Choose Board");
+    diceAmount = new TextField();
     configureView();
     configureMenus();
     configureButtons();
@@ -120,7 +125,10 @@ public class GameBuilderView {
     boardColumn.getChildren().addAll(boardTitle, gameHeader,
         gameMenu, boardHeader, boardMenu, startGameButton);
     rulesColumn.getChildren().add(rulesTitle);
-    rulesColumn.getChildren().add(new Label("No rules selections available."));
+    //rulesColumn.getChildren().add(new Label("No rules selections available."));
+    Label diceAmountLabel = new Label("Dice Amount");
+    diceAmount.setText("2");
+    rulesColumn.getChildren().addAll(diceAmountLabel, diceAmount);
 
     BorderPane borderPane = new BorderPane();
     borderPane.setCenter(layout);
@@ -219,15 +227,15 @@ public class GameBuilderView {
     });
 
     startGameButton.setOnAction(event -> {
+
       try {
         if (playerListView.getController().allPlayersReady()) {
+          controller.setNumberOfDice(diceAmount.getText());
           controller.startGame();
         }
-      } catch (MissingGamePieceException e) {
-        AlertUtil.showError("Missing Game Piece", e.getMessage());
+      } catch (Exception e) {
+        AlertUtil.showError("Error Detected: ", e.getMessage());
       }
-
-
     });
 
     exitButton.setOnAction(event -> {
