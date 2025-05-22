@@ -2,14 +2,12 @@ package no.ntnu.idatx2003.exam2025.boardgames.service;
 
 import java.sql.SQLException;
 import org.slf4j.Logger;
-
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.SnakesAndLaddersStatsDaoImpl;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDao;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.BoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
-import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.LudoStats;
 import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.SnakesAndLaddersStats;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 

@@ -67,12 +67,12 @@ public class SceneManager {
     activeRoot = root;
   }
 
-  public void showOverlay (Parent overlay) {
+  public void showOverlay(Parent overlay) {
     logger.info("Showing overlay");
     rootPane.getChildren().add(overlay);
   }
 
-  public void closeOverlay (Parent overlay) {
+  public void closeOverlay(Parent overlay) {
     logger.info("Closing overlay");
     rootPane.getChildren().remove(overlay);
   }

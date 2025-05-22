@@ -48,8 +48,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <!-- 3.5.2 matches the official sample POM in the assignment -->
-                <version>3.5.2</version>
+                <!-- 3.2.5 matches the official sample POM in the assignment -->
+                <version>3.2.5</version>
             </plugin>
 
             <!-- Javadoc generation -->
