@@ -89,10 +89,15 @@ public class GameBuilderController {
           "Please ensure you've selected your players, game, and board before starting the game.");
       return;
     }
-    gameSession.setBoardGame(buildGame());
-    if (gameSession.getBoardGame() != null) {
-      changeScreenCommand.execute();
+
+    BoardGame game = buildGame();
+    if (game == null) {
+      AlertUtil.showError("Something went Wrong", "No Board Game Detected");
+      return;
     }
+    gameSession.setBoardGame(game);
+
+    changeScreenCommand.execute();
   }
 
 
@@ -115,8 +120,12 @@ public class GameBuilderController {
     gameSession.removePlayer(player);
   }
 
-  public void setNumberOfDice(int numberOfDice) {
-    this.numberOfDice = numberOfDice;
+  public void setNumberOfDice(String input) throws Exception {
+    try {
+      this.numberOfDice = Integer.parseInt(input);
+    } catch (NumberFormatException e) {
+      throw new Exception("Incorrect dice Format");
+    }
   }
 
   public int getNumberOfDice() {
@@ -163,7 +172,12 @@ public class GameBuilderController {
         try {
           readBoard = gson.readJson(url);
           Board boardObject = boardFactory.buildBoardFromJson(readBoard);
-          return new LadderBoardGame(numberOfDice, boardObject, gameSession.getPlayers());
+          try {
+            return new LadderBoardGame(numberOfDice, boardObject, gameSession.getPlayers());
+          } catch (Exception e) {
+            AlertUtil.showError("Error Encountered", e.getMessage());
+          }
+
         } catch (IOException e) {
           logger.error(e.getMessage());
           return null;
@@ -175,6 +189,10 @@ public class GameBuilderController {
       default:
         return null;
     }
+  }
+
+  private Boolean diceAreValid() {
+    return numberOfDice >= 1 & numberOfDice <= 6;
   }
 
   private void buildBoardInfoList(String game) {

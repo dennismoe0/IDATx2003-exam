@@ -2,6 +2,8 @@ package no.ntnu.idatx2003.exam2025.boardgames.model.boardgame;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import no.ntnu.idatx2003.exam2025.boardgames.exception.InvalidDiceAmountException;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Dice;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Die;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
@@ -33,13 +35,21 @@ public final class LadderBoardGame extends DiceBoardGame {
    * @param board   a collection of tiles to act as a game board.
    * @param players the players participating in the game, to keep track of turns.
    */
-  public LadderBoardGame(int dice, Board board, List<Player> players) {
+  public LadderBoardGame(int dice, Board board, List<Player> players)
+      throws InvalidDiceAmountException {
     super.setPlayers(players);
     this.turnOrder = new ArrayList<>(players);
     this.stats = new SnakesAndLaddersStats(); // Fixed stat connection
     super.setBoard(board); // Board setup is loaded
     this.audioManager = new AudioManager();
     lastTile = board.getBoardSize();
+    if (dice <= 0) {
+      throw new InvalidDiceAmountException("Must have at least 1 Die to play.");
+    }
+    if (dice >= 5) {
+      throw new InvalidDiceAmountException("Too many dice to play. Limit: 5");
+    }
+
     setUp(players, dice); // Gamepieces are made
   }
 
@@ -51,7 +61,7 @@ public final class LadderBoardGame extends DiceBoardGame {
     return moveHistory;
   }
 
-  public void setUp(List<Player> players, int diceTotal) {
+  private void setUp(List<Player> players, int diceTotal) {
     dice = new Dice();
     for (int i = 0; i < diceTotal; i++) {
       dice.addDice(new Die(6));

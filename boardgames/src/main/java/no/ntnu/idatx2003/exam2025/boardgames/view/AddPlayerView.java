@@ -8,6 +8,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.AddPlayerViewController;
+import no.ntnu.idatx2003.exam2025.boardgames.exception.InvalidUserDataException;
 import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
 
 /**
@@ -58,19 +59,23 @@ public class AddPlayerView {
 
   private void configureButton() {
     addButton.setOnAction(event -> {
+      try {
+        String name = nameInput.getFieldText();
+        String ageText = ageInput.getFieldText();
 
-      String name = nameInput.getFieldText();
-      String ageText = ageInput.getFieldText();
+        String error = controller.createAndAddPlayer(name, ageText);
 
-      String error = controller.createAndAddPlayer(name, ageText);
+        if (error == null) {
+          AlertUtil.showInfo("Player created", "Player " + name + " created successfully.");
+          nameInput.clearField();
+          ageInput.clearField();
 
-      if (error == null) {
-        AlertUtil.showInfo("Player created", "Player " + name + " created successfully.");
-        nameInput.clearField();
-        ageInput.clearField();
+        } else {
+          AlertUtil.showError("Invalid input", error);
+        }
 
-      } else {
-        AlertUtil.showError("Invalid input", error);
+      } catch (InvalidUserDataException e) {
+        AlertUtil.showError("Invalid input", e.getMessage());
       }
     });
 

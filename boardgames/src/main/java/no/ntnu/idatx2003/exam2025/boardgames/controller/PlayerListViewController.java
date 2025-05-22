@@ -1,6 +1,7 @@
 package no.ntnu.idatx2003.exam2025.boardgames.controller;
 
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
+import no.ntnu.idatx2003.exam2025.boardgames.exception.MissingGamePieceException;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 
@@ -24,8 +25,6 @@ import java.util.LinkedHashMap;
 
 import no.ntnu.idatx2003.exam2025.boardgames.service.StatsManager;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
-import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
-import no.ntnu.idatx2003.exam2025.boardgames.view.PlayerListView;
 
 /**
  * Controller class for managing the player list view.
@@ -54,6 +53,27 @@ public class PlayerListViewController {
     this.playerDao = playerDao;
     this.statsManagers = statsManagers;
     this.gameSession = gameSession;
+  }
+
+  /**
+   * Method do check that all players have game pieces.
+   *
+   * @return a true or false value.
+   * @throws MissingGamePieceException a custom exception containing the players name.
+   */
+  public boolean allPlayersReady() throws MissingGamePieceException {
+    List<Player> players = gameSession.getPlayers();
+    if (players.isEmpty()) {
+      return false;
+    }
+    for (Player player : players) {
+      String result =  playingPieceMap.get(player);
+      if (result == null || result.isEmpty()) {
+        throw new MissingGamePieceException(player.getPlayerName()
+            + " does not have a game piece assigned.");
+      }
+    }
+    return true;
   }
 
   /**

@@ -52,6 +52,7 @@ public class DieView extends StackPane {
   private void configureViews() {
     dieView.setArcHeight(sideLength / arcWidth);
     dieView.setArcWidth(sideLength / arcWidth);
+    super.setMaxSize(25, 25);
     dotLayout.setMaxSize(sideLength, sideLength);
     buildDots();
   }
