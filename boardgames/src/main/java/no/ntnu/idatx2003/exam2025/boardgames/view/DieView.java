@@ -21,7 +21,6 @@ public class DieView extends StackPane {
   private final Text resultText = new Text();
   private final Rectangle dieView;
   private final Die die;
-  private final double arcWidth = 7;
   private final GridPane dotLayout;
   private final double sideLength;
 
@@ -50,6 +49,7 @@ public class DieView extends StackPane {
   }
 
   private void configureViews() {
+    double arcWidth = 7;
     dieView.setArcHeight(sideLength / arcWidth);
     dieView.setArcWidth(sideLength / arcWidth);
     super.setMaxSize(25, 25);
@@ -64,6 +64,7 @@ public class DieView extends StackPane {
     rotateTransition.setCycleCount(5);
     rotateTransition.setOnFinished(event -> this.setRotate(0));
     rotateTransition.play();
+    die.getRoll();
   }
 
   private void buildDots() {

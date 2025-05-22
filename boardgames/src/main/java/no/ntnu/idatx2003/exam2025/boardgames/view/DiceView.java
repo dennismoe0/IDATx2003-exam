@@ -6,7 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import no.ntnu.idatx2003.exam2025.boardgames.controller.BoardGameViewController;
+import no.ntnu.idatx2003.exam2025.boardgames.controller.BoardGameController;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Dice;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Die;
 
@@ -18,7 +18,7 @@ public class DiceView {
   private final HBox diceView;
   private final Dice dice;
   private final List<DieView> dieViews = new ArrayList<>();
-  private final BoardGameViewController controller;
+  private final BoardGameController controller;
   private final double width;
   private final double height;
 
@@ -29,7 +29,7 @@ public class DiceView {
    * @param width  the initial width of the dice view pane.
    * @param height the initial height of the dice view pane.
    */
-  public DiceView(Dice dice, double width, double height, BoardGameViewController controller) {
+  public DiceView(Dice dice, double width, double height, BoardGameController controller) {
     root = new StackPane();
     diceView = new HBox(20);
     this.dice = dice;

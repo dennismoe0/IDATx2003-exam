@@ -21,8 +21,8 @@ import java.util.List;
 /**
  * Controller class for the BoardGameView
  */
-public class BoardGameViewController {
-  private static final Logger log = LoggerFactory.getLogger(BoardGameViewController.class);
+public class BoardGameController {
+  private static final Logger log = LoggerFactory.getLogger(BoardGameController.class);
   private final BoardGame boardGame;
   private final GameSession gameSession;
   private final SceneRegister sceneRegister;
@@ -39,7 +39,7 @@ public class BoardGameViewController {
    * @param sceneRegister the scene register for scene swapping.
    * @param sceneManager  the scene manager for scene swapping.
    */
-  public BoardGameViewController(
+  public BoardGameController(
       BoardGame boardGame, GameSession gameSession,
       SceneRegister sceneRegister, SceneManager sceneManager) {
     this.boardGame = boardGame;

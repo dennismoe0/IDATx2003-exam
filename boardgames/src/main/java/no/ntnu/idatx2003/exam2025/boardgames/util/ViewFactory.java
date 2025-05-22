@@ -5,19 +5,17 @@ import java.util.List;
 import java.util.Map;
 import javafx.scene.Parent;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.AddPlayerViewController;
-import no.ntnu.idatx2003.exam2025.boardgames.controller.BoardGameViewController;
+import no.ntnu.idatx2003.exam2025.boardgames.controller.BoardGameController;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.GameBuilderController;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.PlayerListViewController;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.BoardGame;
-import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneRegister;
 import no.ntnu.idatx2003.exam2025.boardgames.service.StatsManager;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.ChangeScreenCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.ExitApplicationCommand;
-import no.ntnu.idatx2003.exam2025.boardgames.util.command.PrintLineCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.ShowAlertCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.view.*;
 import org.slf4j.Logger;
@@ -38,7 +36,7 @@ public class ViewFactory {
   public Parent buildLadderBoardGameView(
       BoardGame boardGame, SceneManager manager, SceneRegister register, GameSession session) {
     logger.info("Building ladder board game");
-    BoardGameViewController controller = new BoardGameViewController(boardGame, session, register, manager);
+    BoardGameController controller = new BoardGameController(boardGame, session, register, manager);
 
     BoardGameView boardGameView = new BoardGameView(boardGame.getName(),controller);
     return boardGameView.asParent();
