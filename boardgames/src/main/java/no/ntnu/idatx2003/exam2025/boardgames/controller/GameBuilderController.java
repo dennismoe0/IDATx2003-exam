@@ -1,15 +1,14 @@
 package no.ntnu.idatx2003.exam2025.boardgames.controller;
 
+import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
-
-import com.google.gson.JsonObject;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardFactory;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardInfo;
+import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.BoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.model.boardgame.LadderBoardGame;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneRegister;
@@ -28,15 +27,15 @@ import org.slf4j.Logger;
  */
 public class GameBuilderController {
   private static final Logger logger = Log.get(GameBuilderController.class);
-  private GameSession gameSession;
+  private final GameSession gameSession;
   private String game;
   private BoardInfo board;
   private int numberOfDice;
-  private BoardFactory boardFactory;
-  private SceneRegister sceneRegister;
-  private SceneManager sceneManager;
-  private ChangeScreenCommand changeScreenCommand;
-  private BoardInfoReader boardInfoReader;
+  private final BoardFactory boardFactory;
+  private final SceneRegister sceneRegister;
+  private final SceneManager sceneManager;
+  private final ChangeScreenCommand changeScreenCommand;
+  private final BoardInfoReader boardInfoReader;
   private List<BoardInfo> boardInfoList;
 
   /**
@@ -59,6 +58,7 @@ public class GameBuilderController {
         sceneRegister, sceneManager, "ladder-game");
     boardInfoReader = new BoardInfoReader(
         "src/main/resources/assets/boards/laddergameboards/BoardList.json");
+    numberOfDice = 2;
   }
 
   /**
@@ -90,8 +90,12 @@ public class GameBuilderController {
       return;
     }
     gameSession.setBoardGame(buildGame());
-    changeScreenCommand.execute();
+    if (gameSession.getBoardGame() != null) {
+      changeScreenCommand.execute();
+    }
   }
+
+
 
   /**
    * Adds a player to the current game session.
@@ -115,6 +119,10 @@ public class GameBuilderController {
     this.numberOfDice = numberOfDice;
   }
 
+  public int getNumberOfDice() {
+    return numberOfDice;
+  }
+
   /**
    * Opens the overlay view for adding a new player.
    */
@@ -135,17 +143,27 @@ public class GameBuilderController {
     return boardInfoList;
   }
 
-  private LadderBoardGame buildGame() {
+  private BoardGame buildGame() {
     String url = board.getUrl();
     GsonFileReader gson = new GsonFileReader();
     JsonObject readBoard;
-    try {
-      readBoard = gson.readJson(url);
-      Board boardObject = boardFactory.buildBoardFromJson(readBoard);
-      return new LadderBoardGame(boardObject, gameSession.getPlayers());
-    } catch (IOException e) {
-      logger.error(e.getMessage());
-      return null;
+
+    switch (game) {
+      case "ladder":
+        try {
+          readBoard = gson.readJson(url);
+          Board boardObject = boardFactory.buildBoardFromJson(readBoard);
+          return new LadderBoardGame(numberOfDice, boardObject, gameSession.getPlayers());
+        } catch (IOException e) {
+          logger.error(e.getMessage());
+          return null;
+        }
+      case "ludo":
+        return null;
+      case "diamanten":
+        return null;
+      default:
+        return null;
     }
   }
 

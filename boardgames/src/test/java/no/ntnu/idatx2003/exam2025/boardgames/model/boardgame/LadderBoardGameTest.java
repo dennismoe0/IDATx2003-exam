@@ -24,7 +24,7 @@ class LadderBoardGameTest {
     players.add(sasha);
     players.add(dennis);
     board = new BoardFactory().createDefaultLadderBoard();
-    ladderBoardGame = new LadderBoardGame(board, players);
+    ladderBoardGame = new LadderBoardGame(2, board, players);
   }
 
   @Test

@@ -17,9 +17,8 @@ import org.slf4j.Logger;
 /**
  * A Board Game class representing Snakes n Ladders / Stigespillet.
  */
-public final class LadderBoardGame extends BoardGame {
+public final class LadderBoardGame extends DiceBoardGame {
   private Dice dice;
-  private Player currentPlayer;
   private int playerIndex;
   private final SnakesAndLaddersStats stats;
   private final LadderGameMoveHistory moveHistory = new LadderGameMoveHistory();
@@ -34,33 +33,30 @@ public final class LadderBoardGame extends BoardGame {
    * @param board   a collection of tiles to act as a game board.
    * @param players the players participating in the game, to keep track of turns.
    */
-  public LadderBoardGame(Board board, List<Player> players) {
+  public LadderBoardGame(int dice, Board board, List<Player> players) {
     super.setPlayers(players);
     this.turnOrder = new ArrayList<>(players);
     this.stats = new SnakesAndLaddersStats(); // Fixed stat connection
     super.setBoard(board); // Board setup is loaded
     this.audioManager = new AudioManager();
     lastTile = board.getBoardSize();
-    setUp(players); // Gamepieces are made
+    setUp(players, dice); // Gamepieces are made
   }
 
   public SnakesAndLaddersStats getSnakesAndLaddersStats() {
     return stats;
   }
 
-  public Dice getDice() {
-    return dice;
-  }
-
   public LadderGameMoveHistory getMoveHistory() {
     return moveHistory;
   }
 
-  @Override
-  public void setUp(List<Player> players) {
+  public void setUp(List<Player> players, int diceTotal) {
     dice = new Dice();
-    dice.addDice(new Die(6));
-    dice.addDice(new Die(6));
+    for (int i = 0; i < diceTotal; i++) {
+      dice.addDice(new Die(6));
+    }
+    super.setDice(dice);
 
     for (Player player : players) {
       if (!(player.getPlayerStats() instanceof SnakesAndLaddersStats)) {
