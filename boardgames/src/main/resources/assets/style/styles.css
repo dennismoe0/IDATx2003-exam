@@ -72,6 +72,21 @@
     -fx-font-weight: bold;
 }
 
+.button {
+    -fx-text-fill: #ededed;
+    -fx-background-color: #464646;
+    -fx-border-color: transparent;
+    -fx-background-radius: 7;
+}
+.button:hover {
+    -fx-border-color: transparent;
+    -fx-background-color: #777777;
+    -fx-cursor: hand;
+}
+.button-accent {
+    -fx-background-color: #e89345;
+}
+
 .board-back-view {
     -fx-arc-height: 30;
     -fx-arc-width: 30;
@@ -104,6 +119,7 @@
     -fx-padding: 15;
 
 }
+
 .move-history .corner {
     -fx-background-color: transparent;
 }
@@ -158,4 +174,5 @@
 }
 .menu-option:hover {
     -fx-text-fill: #f7f8fa;
+    -fx-background-color: transparent;
 }

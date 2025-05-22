@@ -13,6 +13,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.BoardGameViewController;
+import no.ntnu.idatx2003.exam2025.boardgames.controller.NavBarViewController;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
 import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
 import org.slf4j.Logger;
@@ -38,7 +39,7 @@ public class BoardGameView {
   private Label turnLabel;
   private AssetGamePieceView assetPieceView;
   private InsetPanel rollPanel;
-  private InsetPanel moveHistoryPanel;
+  private NavBarView navBarView;
 
   /**
    * Default constructor for BoardGameView.
@@ -56,6 +57,7 @@ public class BoardGameView {
           this.controller.getWinnerName() + " has won the game!");
       takeTurnButton.setDisable(true);
     });
+    navBarView = new NavBarView(controller);
 
     createViews();
     configurePanes();
@@ -157,6 +159,7 @@ public class BoardGameView {
     rightMenu.getChildren().add(takeTurnButton);
     rightMenu.getChildren().add(turnLabel);
     rightMenu.getChildren().add(moveHistoryView.getRoot());
+    rightMenu.getChildren().add(navBarView.getRoot());
   }
 
   private void updateTurnLabel(String text) {

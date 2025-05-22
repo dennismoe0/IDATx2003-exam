@@ -1,5 +1,6 @@
 package no.ntnu.idatx2003.exam2025.boardgames.view;
 
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -19,7 +20,8 @@ public class NavBarView {
   private final BoardGameViewController controller;
 
   /**
-   * Default constructor
+   * Default constructor.
+   *
    * @param controller object for facilitating user interaction.
    */
   public NavBarView(BoardGameViewController controller) {
@@ -48,9 +50,15 @@ public class NavBarView {
       controller.exitToMainMenu();
     });
 
+    root.setMaxSize(300, 100);
+  }
+
+  public Parent getRoot() {
+    return root;
   }
 
   private void assignStyling() {
     background.getStyleClass().add("board-game-menu-background");
+    mainMenuButton.getStyleClass().add("button-accent");
   }
 }
