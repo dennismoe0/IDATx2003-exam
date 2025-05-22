@@ -187,6 +187,10 @@ public class PlayerListView {
     }
   }
 
+  public PlayerListViewController getController() {
+    return controller;
+  }
+
   public Parent getRoot() {
     return layout;
   }

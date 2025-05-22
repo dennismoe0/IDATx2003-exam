@@ -14,8 +14,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.util.StringConverter;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.GameBuilderController;
+import no.ntnu.idatx2003.exam2025.boardgames.exception.MissingGamePieceException;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardInfo;
-
+import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
 
 
 /**
@@ -218,7 +219,15 @@ public class GameBuilderView {
     });
 
     startGameButton.setOnAction(event -> {
-      controller.startGame();
+      try {
+        if (playerListView.getController().allPlayersReady()) {
+          controller.startGame();
+        }
+      } catch (MissingGamePieceException e) {
+        AlertUtil.showError("Missing Game Piece", e.getMessage());
+      }
+
+
     });
 
     exitButton.setOnAction(event -> {
