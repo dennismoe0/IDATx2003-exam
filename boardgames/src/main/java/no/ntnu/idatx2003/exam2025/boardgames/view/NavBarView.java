@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
-import no.ntnu.idatx2003.exam2025.boardgames.controller.BoardGameViewController;
+import no.ntnu.idatx2003.exam2025.boardgames.controller.BoardGameController;
 
 /**
  * View for making a simple navbar to enter and exit board games.
@@ -17,14 +17,14 @@ public class NavBarView {
   private final Button settingsButton;
   private final Button infoButton;
   private final Button mainMenuButton;
-  private final BoardGameViewController controller;
+  private final BoardGameController controller;
 
   /**
    * Default constructor.
    *
    * @param controller object for facilitating user interaction.
    */
-  public NavBarView(BoardGameViewController controller) {
+  public NavBarView(BoardGameController controller) {
     root = new StackPane();
     layout = new HBox(5);
     background = new Rectangle();

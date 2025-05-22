@@ -124,6 +124,8 @@
     -fx-background-color: transparent;
 }
 
+
+
 .inset-panel {
     -fx-fill: #ededed;
     -fx-effect: innershadow(gaussian, grey, 3, 0.1,3,3);
@@ -150,7 +152,7 @@
 }
 
 .menu-red {
-    -fx-fill: #ba4948;
+    -fx-fill: #aeaeae;
 }
 
 .primary-window-background {

@@ -12,8 +12,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
-import no.ntnu.idatx2003.exam2025.boardgames.controller.BoardGameViewController;
-import no.ntnu.idatx2003.exam2025.boardgames.controller.NavBarViewController;
+import no.ntnu.idatx2003.exam2025.boardgames.controller.BoardGameController;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
 import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
 import org.slf4j.Logger;
@@ -31,15 +30,14 @@ public class BoardGameView {
   private DiceView diceView;
   private MoveHistoryView moveHistoryView;
   private BoardView boardView;
-  private BoardGameViewController controller;
+  private final BoardGameController controller;
   private BorderPane titleBar;
   private Rectangle rightMenuBackground;
   private StackPane rightMenuContainer;
   private Button takeTurnButton;
   private Label turnLabel;
-  private AssetGamePieceView assetPieceView;
   private InsetPanel rollPanel;
-  private NavBarView navBarView;
+  private final NavBarView navBarView;
 
   /**
    * Default constructor for BoardGameView.
@@ -48,7 +46,7 @@ public class BoardGameView {
    *                  (Probably should be pulled from the game itself).
    * @param controller A controller for the view.
    */
-  public BoardGameView(String title, BoardGameViewController controller) {
+  public BoardGameView(String title, BoardGameController controller) {
     this.controller = controller;
     createPanes();
     this.title = new Label(title);
@@ -126,7 +124,7 @@ public class BoardGameView {
 
   private void createViews() {
     try {
-      diceView = new DiceView(controller.getDice(), 300, 200);
+      diceView = new DiceView(controller.getDice(), 300, 200, controller);
     } catch (NullPointerException e) {
       log.error(e.getMessage());
     }
@@ -135,7 +133,7 @@ public class BoardGameView {
 
     List<GamePiece> pieces = controller.getGamePieces();
 
-    assetPieceView = new AssetGamePieceView(pieces, boardView.getTileViewRegister());
+    AssetGamePieceView assetPieceView = new AssetGamePieceView(pieces, boardView.getTileViewRegister());
     boardView.addAssetGamePieceView(assetPieceView);
 
     turnLabel = new Label("Waiting for game to start");
