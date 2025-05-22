@@ -75,7 +75,7 @@ public class GameBuilderView {
     boardColumn = new VBox(5);
     rulesColumn = new VBox(5);
     playerColumn = new VBox(5);
-    layout = new HBox(10);
+    layout = new HBox(20);
     startGameButton = new Button("Start");
     addNewPlayerButton = new Button("Add New Player");
     exitButton = new Button("Return to Main-Menu");
@@ -110,7 +110,7 @@ public class GameBuilderView {
 
     StackPane listViewBackgroundWrapper = new StackPane();
     Rectangle listViewWrapperBackground = new Rectangle();
-    listViewWrapperBackground.getStyleClass().add("menu-background");
+    listViewWrapperBackground.getStyleClass().add("inset-panel");
     listViewWrapperBackground.widthProperty().bind(listViewBackgroundWrapper.widthProperty());
     listViewWrapperBackground.heightProperty().bind(listViewBackgroundWrapper.heightProperty());
     StackPane listViewWrapper = new StackPane();
