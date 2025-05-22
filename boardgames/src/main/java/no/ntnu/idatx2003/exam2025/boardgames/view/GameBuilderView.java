@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -48,6 +49,7 @@ public class GameBuilderView {
   private final StackPane root;
   private final Button startGameButton;
   private final Button addNewPlayerButton;
+  private final Button exitButton;
 
   private final ComboBox<String> gameMenu;
   private final ComboBox<BoardInfo> boardMenu;
@@ -71,6 +73,7 @@ public class GameBuilderView {
     layout = new HBox(10);
     startGameButton = new Button("Start");
     addNewPlayerButton = new Button("Add New Player");
+    exitButton = new Button("Return to Main-Menu");
     gameMenu = new ComboBox<>();
     boardMenu = new ComboBox<>();
     boardTitle = new Label("Board");
@@ -112,16 +115,25 @@ public class GameBuilderView {
     listViewWrapper.getChildren().add(playerListView.getRoot());
 
 
-    playerColumn.getChildren().addAll(playerTitle, listViewBackgroundWrapper, addNewPlayerButton);
+    playerColumn.getChildren().addAll(playerTitle, listViewBackgroundWrapper);
     boardColumn.getChildren().addAll(boardTitle, gameHeader,
         gameMenu, boardHeader, boardMenu, startGameButton);
     rulesColumn.getChildren().add(rulesTitle);
+    rulesColumn.getChildren().add(new Label("No rules selections available."));
+
+    BorderPane borderPane = new BorderPane();
+    borderPane.setCenter(layout);
+    HBox navbuttons = new HBox(10);
+    navbuttons.getChildren().addAll(addNewPlayerButton, exitButton);
+    navbuttons.setPadding(new Insets(20));
+    navbuttons.setAlignment(Pos.CENTER);
+    borderPane.setBottom(navbuttons);
 
     // layout.getChildren().addAll(playerColumn, boardColumn, rulesColumn);
     // Temporarily removed rules column.
-    layout.getChildren().addAll(playerColumn, boardColumn);
+    layout.getChildren().addAll(playerColumn, boardColumn, rulesColumn);
     root.getChildren().add(background);
-    root.getChildren().add(layout);
+    root.getChildren().add(borderPane);
   }
 
   private void configureMenus() {
@@ -207,6 +219,10 @@ public class GameBuilderView {
 
     startGameButton.setOnAction(event -> {
       controller.startGame();
+    });
+
+    exitButton.setOnAction(event -> {
+      controller.returnToMainMenu();
     });
   }
 
