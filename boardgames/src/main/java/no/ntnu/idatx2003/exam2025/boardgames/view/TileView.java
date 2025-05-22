@@ -48,6 +48,10 @@ public class TileView extends BorderPane {
     return view;
   }
 
+  public Rectangle getTileBackground() {
+    return tileBackground;
+  }
+
   private void buildView() {
     view.setMaxSize(width, width);
     double minSize = 0.5 * width;
