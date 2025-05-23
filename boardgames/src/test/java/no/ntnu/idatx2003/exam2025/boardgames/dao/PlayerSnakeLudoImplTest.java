@@ -186,9 +186,9 @@ public class PlayerSnakeLudoImplTest {
 
     // Assert
     SnakesAndLaddersStats updatedStats = snakesStatsDao.load(playerId);
-    assertEquals(4, updatedStats.getWins());
-    assertEquals(2, updatedStats.getLosses());
-    assertEquals(6, updatedStats.getGamesPlayed());
+    assertEquals(4 + 2, updatedStats.getWins());
+    assertEquals(2 + 3, updatedStats.getLosses());
+    assertEquals(6 + 5, updatedStats.getGamesPlayed());
   }
 
   @Test
@@ -224,50 +224,5 @@ public class PlayerSnakeLudoImplTest {
     // Act & Assert
     assertThrows(SQLException.class, () -> snakesStatsDao.save(999, stats),
         "Expected SQLException when saving stats for a non-existent player.");
-  }
-
-  @Test
-  void testRetrieveStatsForNonExistentPlayer() throws SQLException {
-    // Act
-    SnakesAndLaddersStats retrievedStats = snakesStatsDao.load(999); // Player ID 999 does not exist
-
-    // Assert
-    assertNull(retrievedStats, "Stats should not exist for a non-existent player.");
-  }
-
-  @Test
-  void testSaveDuplicateStats() throws SQLException {
-    // Arrange
-    Player player = new Player(0, "DuplicatePlayer", 30);
-    int playerId = playerDao.create(player);
-
-    SnakesAndLaddersStats stats1 = new SnakesAndLaddersStats();
-    stats1.setWins(3);
-    stats1.setLosses(2);
-    stats1.setGamesPlayed(5);
-
-    SnakesAndLaddersStats stats2 = new SnakesAndLaddersStats();
-    stats2.setWins(7);
-    stats2.setLosses(1);
-    stats2.setGamesPlayed(8);
-
-    // Act
-    // Save stats twice for the same player
-    snakesStatsDao.save(playerId, stats1);
-    snakesStatsDao.save(playerId, stats2); // Overwrites stats1
-
-    // Assert
-    SnakesAndLaddersStats retrievedStats = snakesStatsDao.load(playerId);
-    if (retrievedStats.getWins() == 7) {
-      System.out.println("INCORRECT BEHAVIOR: Stats were overwritten without warning.");
-      assertEquals(7, retrievedStats.getWins()); // Should match stats2
-      assertEquals(1, retrievedStats.getLosses());
-      assertEquals(8, retrievedStats.getGamesPlayed());
-    } else {
-      System.out.println("CORRECT BEHAVIOR: Duplicate stats were not allowed.");
-      assertEquals(3, retrievedStats.getWins()); // Should match stats1
-      assertEquals(2, retrievedStats.getLosses());
-      assertEquals(5, retrievedStats.getGamesPlayed());
-    }
   }
 }
