@@ -1,47 +1,35 @@
 package no.ntnu.idatx2003.exam2025.boardgames.controller;
 
-import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
-import no.ntnu.idatx2003.exam2025.boardgames.exception.MissingGamePieceException;
-import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
-import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
-
+import java.io.InputStream;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.slf4j.Logger;
-
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.io.InputStream;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-
+import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDaoImpl;
+import no.ntnu.idatx2003.exam2025.boardgames.exception.MissingGamePieceException;
+import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
+import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.service.StatsManager;
-import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
+
+
 
 /**
  * Controller class for managing the player list view.
  * Handles retrieval and deletion of players using the PlayerDaoImpl.
  */
 public class PlayerListViewController {
-
   private final PlayerDaoImpl playerDao;
   private final Map<String, StatsManager<?>> statsManagers;
   private final GameSession gameSession;
-  private HashMap<Player, String> playingPieceMap = new HashMap<>();
-  private static final Logger log = Log.get(PlayerListViewController.class);
-
-  // needs reference to the DAO for loading saved players.
-  // needs methods for populating the list view I guess?
-  // private final PlayerDaoImpl playerDAO;
-  // private final List<Player> playerList;
+  private final HashMap<Player, String> playingPieceMap = new HashMap<>();
 
   /**
    * Constructs a PlayerListViewController with the specified PlayerDaoImpl.
@@ -49,7 +37,8 @@ public class PlayerListViewController {
    * @param playerDao the PlayerDaoImpl used to access player data
    */
   public PlayerListViewController(
-      PlayerDaoImpl playerDao, Map<String, StatsManager<?>> statsManagers, GameSession gameSession) {
+      PlayerDaoImpl playerDao, Map<String, StatsManager<?>> statsManagers,
+      GameSession gameSession) {
     this.playerDao = playerDao;
     this.statsManagers = statsManagers;
     this.gameSession = gameSession;
@@ -96,10 +85,20 @@ public class PlayerListViewController {
     playerDao.delete(playerId);
   }
 
+  /**
+   * Method for adding player to current game session.
+   *
+   * @param player player object.
+   */
   public void addPlayerToGameSession(Player player) {
     gameSession.addPlayer(player);
   }
 
+  /**
+   * Method for removing a player from the game session.
+   *
+   * @param player player object to remove.
+   */
   public void removePlayerFromGameSession(Player player) {
     gameSession.removePlayer(player);
   }

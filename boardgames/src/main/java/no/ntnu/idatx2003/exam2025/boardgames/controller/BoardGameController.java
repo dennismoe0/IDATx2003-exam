@@ -1,5 +1,6 @@
 package no.ntnu.idatx2003.exam2025.boardgames.controller;
 
+import java.util.List;
 import javafx.beans.property.BooleanProperty;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Dice;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
@@ -16,23 +17,19 @@ import no.ntnu.idatx2003.exam2025.boardgames.util.command.ShowAlertCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-
 /**
- * Controller class for the BoardGameView
+ * Controller class for the BoardGameView.
  */
 public class BoardGameController {
   private static final Logger log = LoggerFactory.getLogger(BoardGameController.class);
   private final BoardGame boardGame;
   private final GameSession gameSession;
-  private final SceneRegister sceneRegister;
-  private final SceneManager sceneManager;
   private final ChangeScreenCommand changeScreenCommand;
   private final ShowAlertCommand showAlertCommand;
   private LadderGameMoveHistory moveHistory;
 
   /**
-   * Default Constructor for the BoardGameView controller
+   * Default Constructor for the BoardGameView controller.
    *
    * @param boardGame     a boardgame object representing the game.
    * @param gameSession   the game session the players are a part of.
@@ -44,8 +41,6 @@ public class BoardGameController {
       SceneRegister sceneRegister, SceneManager sceneManager) {
     this.boardGame = boardGame;
     this.gameSession = gameSession;
-    this.sceneRegister = sceneRegister;
-    this.sceneManager = sceneManager;
     changeScreenCommand = new ChangeScreenCommand(sceneRegister, sceneManager, "main-menu");
     showAlertCommand = new ShowAlertCommand("Unfinished View", "Current view is unfinished");
     if (boardGame instanceof LadderBoardGame laddergame) {
@@ -63,6 +58,9 @@ public class BoardGameController {
     return moveHistory;
   }
 
+  /**
+   * Calls a take turn method on the board game.
+   */
   public void takeTurn() {
     boardGame.takeTurn();
   }
@@ -118,7 +116,7 @@ public class BoardGameController {
     return null;
   }
 
-  public List<GamePiece> getGamePieces(){
+  public List<GamePiece> getGamePieces() {
     return boardGame.getAllGamePieces();
   }
 

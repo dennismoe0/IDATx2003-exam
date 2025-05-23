@@ -1,14 +1,13 @@
 package no.ntnu.idatx2003.exam2025.boardgames.model;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.paint.Color;
 import no.ntnu.idatx2003.exam2025.boardgames.model.gamepiece.BasicMovementStrategy;
 import no.ntnu.idatx2003.exam2025.boardgames.model.gamepiece.MovementStrategy;
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import org.slf4j.Logger;
-
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.paint.Color;
 
 /**
  * Basic piece that can move around the game board.

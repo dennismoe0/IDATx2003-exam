@@ -15,5 +15,5 @@ public interface TileFactory {
    * @param json the JSOn code to be used.
    * @return Returns a Tile object.
    */
-  public Tile tileFromJson(JsonObject json, Board board);
+  Tile tileFromJson(JsonObject json, Board board);
 }

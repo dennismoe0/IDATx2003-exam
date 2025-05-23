@@ -133,7 +133,8 @@ public class BoardGameView {
 
     List<GamePiece> pieces = controller.getGamePieces();
 
-    AssetGamePieceView assetPieceView = new AssetGamePieceView(pieces, boardView.getTileViewRegister());
+    AssetGamePieceView assetPieceView =
+        new AssetGamePieceView(pieces, boardView.getTileViewRegister());
     boardView.addAssetGamePieceView(assetPieceView);
 
     turnLabel = new Label("Waiting for game to start");

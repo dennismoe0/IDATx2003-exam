@@ -62,6 +62,9 @@ public class GameSession {
     });
   }
 
+  /**
+   * Method used to empty a game session upon exiting a game.
+   */
   public void clearSession() {
     logger.info("clearing session");
     players.clear();

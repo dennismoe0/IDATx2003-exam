@@ -141,6 +141,9 @@ public class DieView extends StackPane {
           dotLayout.getChildren().get(5).setVisible(true);
           dotLayout.getChildren().get(6).setVisible(true);
           dotLayout.getChildren().get(8).setVisible(true);
+          break;
+        default:
+          break;
       }
     }
   }
