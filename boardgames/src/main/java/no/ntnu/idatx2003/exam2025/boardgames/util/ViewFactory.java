@@ -38,7 +38,7 @@ public class ViewFactory {
     logger.info("Building ladder board game");
     BoardGameController controller = new BoardGameController(boardGame, session, register, manager);
 
-    BoardGameView boardGameView = new BoardGameView(boardGame.getName(),controller);
+    BoardGameView boardGameView = new BoardGameView(boardGame.getName(), controller);
     return boardGameView.asParent();
   }
 
@@ -60,6 +60,8 @@ public class ViewFactory {
     menuOptions.add(new MenuOption("Players", new ShowAlertCommand(
         "Page Not Available", "This page isn't finished yet, please come back later!"),
         true));
+    menuOptions.add(new MenuOption("Player Statistics",
+        new ChangeScreenCommand(sceneRegister, sceneManager, "player-statistics"), true));
     menuOptions.add(new MenuOption("Exit", new ExitApplicationCommand(), true));
     MenuView menu = new MenuView("Main Menu", menuOptions, 400, 600, 50);
     return menu.asParent();
@@ -105,7 +107,7 @@ public class ViewFactory {
             gameSession,
             sceneRegister,
             sceneManager),
-            playerListView);
+        playerListView);
     return gbView.getRoot();
   }
 
@@ -119,8 +121,29 @@ public class ViewFactory {
   public Parent buildPlayerListView(
       PlayerDaoImpl playerDao,
       Map<String, StatsManager<?>> statsManagers, GameSession gameSession) {
-    PlayerListViewController controller = new PlayerListViewController(playerDao, statsManagers, gameSession);
+    PlayerListViewController controller = new PlayerListViewController(
+        playerDao, statsManagers, gameSession);
     PlayerListView view = new PlayerListView(controller);
+    return view.getRoot();
+  }
+
+  /**
+   * Builds the player statistics list view.
+   *
+   * @param playerDao     the player DAO implementation
+   * @param statsManagers the map of stats managers
+   * @param gameSession   the current game session
+   * @return the root node of the player statistics list view
+   */
+  public Parent buildPlayerStatsListView(
+      PlayerDaoImpl playerDao,
+      Map<String, StatsManager<?>> statsManagers,
+      GameSession gameSession,
+      SceneRegister sceneRegister,
+      SceneManager sceneManager) {
+    PlayerListViewController controller = new PlayerListViewController(
+        playerDao, statsManagers, gameSession);
+    PlayerStatsListView view = new PlayerStatsListView(controller, sceneRegister, sceneManager);
     return view.getRoot();
   }
 }

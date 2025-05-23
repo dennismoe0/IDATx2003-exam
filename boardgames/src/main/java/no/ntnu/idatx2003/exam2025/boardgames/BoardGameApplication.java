@@ -3,6 +3,7 @@ package no.ntnu.idatx2003.exam2025.boardgames;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javafx.application.Application;
@@ -30,6 +31,7 @@ import org.slf4j.Logger;
 public class BoardGameApplication extends Application {
   private static final Logger log = Log.get(BoardGameApplication.class);
   private Connection connection;
+
   // Dennis note: Need to add connection to creation of Board Game to instantiate
   // the database connection for stats
   @Override
@@ -85,18 +87,19 @@ public class BoardGameApplication extends Application {
         playerDao, new LudoStatsDaoImpl(connection));
 
     // Create the map
-    Map<String, StatsManager<?>> statsManagers = new HashMap<>();
+    Map<String, StatsManager<?>> statsManagers = new LinkedHashMap<>();
     statsManagers.put("Snakes and Ladders", snakesStatsManager);
     statsManagers.put("Ludo", ludoStatsManager);
 
     log.info("Registering Scenes");
     sceneRegister.register("main-menu", () -> viewFactory.buildMainMenuView(sceneRegister, sceneManager));
-    sceneRegister.register("ladder-game", () -> viewFactory.buildLadderBoardGameView(gameSession.getBoardGame(), sceneManager, sceneRegister, gameSession));
+    sceneRegister.register("ladder-game", () -> viewFactory.buildLadderBoardGameView(gameSession.getBoardGame(),
+        sceneManager, sceneRegister, gameSession));
     sceneRegister.register("add-player", () -> viewFactory.buildAddPlayerView(gameSession, sceneManager, playerDao));
     sceneRegister.register("build-game",
         () -> viewFactory.buildGameBuilderView(gameSession, sceneManager, sceneRegister, playerDao, statsManagers));
-
-    // Needs to be filled out
+    sceneRegister.register("player-statistics",
+        () -> viewFactory.buildPlayerStatsListView(playerDao, statsManagers, gameSession, sceneRegister, sceneManager));
 
     sceneRegister.register("player-list", () -> viewFactory.buildPlayerListView(playerDao, statsManagers, gameSession));
 
