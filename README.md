@@ -29,6 +29,7 @@ VCS / CI - Git & GitHub
 
 # Project Structure
 
+'''txt
 boardgames/ ← Maven module root
 ├─ src/
 │ ├─ main/
@@ -48,6 +49,7 @@ boardgames/ ← Maven module root
 │ │ └─ css/ ← styling
 │ └─ test/ ← JUnit tests (AAA pattern)
 └─ pom.xml
+'''
 
 # Deployment
 
