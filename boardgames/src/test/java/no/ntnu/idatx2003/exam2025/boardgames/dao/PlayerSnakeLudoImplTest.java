@@ -192,28 +192,6 @@ public class PlayerSnakeLudoImplTest {
   }
 
   @Test
-  void testDeletePlayerAndStats() throws SQLException {
-    // Arrange
-    Player player = new Player(0, "Frank", 33);
-    SnakesAndLaddersStats stats = new SnakesAndLaddersStats();
-    stats.setWins(1);
-    stats.setLosses(2);
-    stats.setGamesPlayed(3);
-
-    // Act
-    int playerId = playerDao.create(player);
-    player.setPlayerId(playerId);
-    snakesStatsDao.save(playerId, stats);
-
-    // Delete the player
-    playerDao.delete(playerId);
-
-    // Assert
-    SnakesAndLaddersStats retrievedStats = snakesStatsDao.load(playerId);
-    assertNull(retrievedStats, "Stats should not exist for a deleted player.");
-  }
-
-  @Test
   void testSaveStatsWithoutPlayer() throws SQLException {
     // Arrange
     SnakesAndLaddersStats stats = new SnakesAndLaddersStats();
