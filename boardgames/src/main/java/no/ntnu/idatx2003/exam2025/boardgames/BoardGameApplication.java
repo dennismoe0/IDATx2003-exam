@@ -2,10 +2,8 @@ package no.ntnu.idatx2003.exam2025.boardgames;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
@@ -92,16 +90,22 @@ public class BoardGameApplication extends Application {
     statsManagers.put("Ludo", ludoStatsManager);
 
     log.info("Registering Scenes");
-    sceneRegister.register("main-menu", () -> viewFactory.buildMainMenuView(sceneRegister, sceneManager));
-    sceneRegister.register("ladder-game", () -> viewFactory.buildLadderBoardGameView(gameSession.getBoardGame(),
+    sceneRegister.register("main-menu", () -> viewFactory.buildMainMenuView(
+        sceneRegister, sceneManager));
+    sceneRegister.register("ladder-game", () -> viewFactory.buildLadderBoardGameView(
+        gameSession.getBoardGame(),
         sceneManager, sceneRegister, gameSession));
-    sceneRegister.register("add-player", () -> viewFactory.buildAddPlayerView(gameSession, sceneManager, playerDao));
+    sceneRegister.register("add-player", () -> viewFactory.buildAddPlayerView(
+        gameSession, sceneManager, playerDao));
     sceneRegister.register("build-game",
-        () -> viewFactory.buildGameBuilderView(gameSession, sceneManager, sceneRegister, playerDao, statsManagers));
+        () -> viewFactory.buildGameBuilderView(
+            gameSession, sceneManager, sceneRegister, playerDao, statsManagers));
     sceneRegister.register("player-statistics",
-        () -> viewFactory.buildPlayerStatsListView(playerDao, statsManagers, gameSession, sceneRegister, sceneManager));
+        () -> viewFactory.buildPlayerStatsListView(
+            playerDao, statsManagers, gameSession, sceneRegister, sceneManager));
 
-    sceneRegister.register("player-list", () -> viewFactory.buildPlayerListView(playerDao, statsManagers, gameSession));
+    sceneRegister.register("player-list", () -> viewFactory.buildPlayerListView(
+        playerDao, statsManagers, gameSession));
 
     log.info("Building Default Window");
 

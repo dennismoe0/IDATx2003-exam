@@ -31,7 +31,7 @@ public class PlayerListView {
   private final ScrollPane scrollPane;
   private final PlayerListViewController controller;
   private ComboBox<String> gameComboBox;
-  private Button refreshButton;
+  private final Button refreshButton;
   private static final Logger log = Log.get(PlayerListView.class);
 
   // Have some boxes next to player names that can be
