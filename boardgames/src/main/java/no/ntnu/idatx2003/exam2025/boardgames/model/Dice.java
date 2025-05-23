@@ -70,6 +70,7 @@ public class Dice {
 
   /**
    * Adds a dice to the list of dice.
+   *
    * @param die A die object which is used to roll integers.
    */
   public void addDice(Die die) {

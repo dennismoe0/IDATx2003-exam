@@ -1,7 +1,6 @@
 package no.ntnu.idatx2003.exam2025.boardgames.util;
 
 import com.google.gson.JsonObject;
-
 import java.io.IOException;
 
 /**
@@ -11,8 +10,8 @@ public interface JsonFileReader {
   /**
    * Reads the info from a JSON file and reports it.
    *
-   * @param path
-   * @return
+   * @param path takes in a URL from the project folder to build json.
+   * @return returns a JSON object.
    */
-  public JsonObject readJson(String path) throws IOException;
+  JsonObject readJson(String path) throws IOException;
 }

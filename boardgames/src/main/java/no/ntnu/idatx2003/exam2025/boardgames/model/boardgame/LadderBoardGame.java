@@ -2,7 +2,6 @@ package no.ntnu.idatx2003.exam2025.boardgames.model.boardgame;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import no.ntnu.idatx2003.exam2025.boardgames.exception.InvalidDiceAmountException;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Dice;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Die;
@@ -74,7 +73,7 @@ public final class LadderBoardGame extends DiceBoardGame {
             "Wrong stats for player {}, it is currently: {}",
             player.getPlayerId(), player.getPlayerStats());
         player.setPlayerStats(new SnakesAndLaddersStats());
-        log.debug("Created new snakes and ladders stats for player {} since it was wrong.");
+        log.debug("Created new snakes and ladders stats for player {} since it was wrong.", player);
       }
       List<GamePiece> pieces = new ArrayList<>();
       Tile startingTile = getBoard().getTile(1);

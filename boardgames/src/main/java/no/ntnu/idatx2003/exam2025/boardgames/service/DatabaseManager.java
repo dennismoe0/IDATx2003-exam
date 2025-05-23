@@ -65,6 +65,9 @@ public class DatabaseManager {
     return connection;
   }
 
+  /**
+   * Method used to wipe a database.
+   */
   public static void wipeDatabase() {
     new File("database").mkdirs();
 

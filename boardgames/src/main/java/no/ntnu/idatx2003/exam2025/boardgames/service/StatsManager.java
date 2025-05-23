@@ -3,13 +3,12 @@ package no.ntnu.idatx2003.exam2025.boardgames.service;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.List;
-
-import org.slf4j.Logger;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.player.PlayerDao;
 import no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames.GameStatsDao;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.stats.PlayerStats;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
+import org.slf4j.Logger;
 
 /**
  * Manages statistics for players in board games.

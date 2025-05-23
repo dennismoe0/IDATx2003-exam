@@ -17,7 +17,13 @@ import no.ntnu.idatx2003.exam2025.boardgames.service.StatsManager;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.ChangeScreenCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.ExitApplicationCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.ShowAlertCommand;
-import no.ntnu.idatx2003.exam2025.boardgames.view.*;
+import no.ntnu.idatx2003.exam2025.boardgames.view.AddPlayerView;
+import no.ntnu.idatx2003.exam2025.boardgames.view.BoardGameView;
+import no.ntnu.idatx2003.exam2025.boardgames.view.GameBuilderView;
+import no.ntnu.idatx2003.exam2025.boardgames.view.MenuOption;
+import no.ntnu.idatx2003.exam2025.boardgames.view.MenuView;
+import no.ntnu.idatx2003.exam2025.boardgames.view.PlayerListView;
+import no.ntnu.idatx2003.exam2025.boardgames.view.PlayerStatsListView;
 import org.slf4j.Logger;
 
 /**
@@ -80,7 +86,8 @@ public class ViewFactory {
       SceneManager sceneManager,
       PlayerDaoImpl playerDao) {
     logger.info("Building Add Player view");
-    AddPlayerViewController addPlayerViewController = new AddPlayerViewController(sceneManager, playerDao);
+    AddPlayerViewController addPlayerViewController =
+        new AddPlayerViewController(sceneManager, playerDao);
     AddPlayerView view = new AddPlayerView(addPlayerViewController);
     return view.getRoot();
   }

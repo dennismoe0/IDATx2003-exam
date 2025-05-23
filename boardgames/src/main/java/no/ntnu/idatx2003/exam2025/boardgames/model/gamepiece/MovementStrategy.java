@@ -16,7 +16,7 @@ public interface MovementStrategy {
   int computeMovement(int roll);
 
   /**
-   * Utility method for movement strategies (in case they're turn based!)
+   * Utility method for movement strategies (in case they're turn based!).
    *
    * @param gamePiece the game piece to be affected, if necessary.
    */

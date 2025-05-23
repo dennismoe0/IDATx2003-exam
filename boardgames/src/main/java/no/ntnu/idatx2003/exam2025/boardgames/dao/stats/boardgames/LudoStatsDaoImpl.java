@@ -1,17 +1,25 @@
 package no.ntnu.idatx2003.exam2025.boardgames.dao.stats.boardgames;
 
-import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.LudoStats;
-import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
-import org.slf4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import no.ntnu.idatx2003.exam2025.boardgames.model.stats.boardgames.LudoStats;
+import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
+import org.slf4j.Logger;
 
+/**
+ * Represents an implementation of the LudoStatsDAO
+ */
 public class LudoStatsDaoImpl implements LudoStatsDao {
   private static final Logger log = Log.get(LudoStatsDaoImpl.class);
   private final Connection connection;
 
+  /**
+   * Default Constructor.
+   *
+   * @param connection represents a Database Connection object.
+   */
   public LudoStatsDaoImpl(Connection connection) {
     this.connection = connection;
   }

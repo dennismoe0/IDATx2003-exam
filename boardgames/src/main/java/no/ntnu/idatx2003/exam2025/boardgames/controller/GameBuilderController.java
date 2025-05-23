@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.util.List;
 import no.ntnu.idatx2003.exam2025.boardgames.model.GameSession;
-import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.Board;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardFactory;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardInfo;
@@ -100,26 +99,12 @@ public class GameBuilderController {
     changeScreenCommand.execute();
   }
 
-
-
   /**
-   * Adds a player to the current game session.
+   * Method for manually setting number of dice to use in game.
    *
-   * @param player the player to add
+   * @param input a string representing an integer.
+   * @throws Exception throws an exception when an int cannot be parsed.
    */
-  public void addPlayer(Player player) {
-    gameSession.addPlayer(player);
-  }
-
-  /**
-   * Removes a player from the current game session.
-   *
-   * @param player the player to remove
-   */
-  public void removePlayer(Player player) {
-    gameSession.removePlayer(player);
-  }
-
   public void setNumberOfDice(String input) throws Exception {
     try {
       this.numberOfDice = Integer.parseInt(input);
@@ -176,8 +161,8 @@ public class GameBuilderController {
             return new LadderBoardGame(numberOfDice, boardObject, gameSession.getPlayers());
           } catch (Exception e) {
             AlertUtil.showError("Error Encountered", e.getMessage());
+            return null;
           }
-
         } catch (IOException e) {
           logger.error(e.getMessage());
           return null;
@@ -189,10 +174,6 @@ public class GameBuilderController {
       default:
         return null;
     }
-  }
-
-  private Boolean diceAreValid() {
-    return numberOfDice >= 1 & numberOfDice <= 6;
   }
 
   private void buildBoardInfoList(String game) {
