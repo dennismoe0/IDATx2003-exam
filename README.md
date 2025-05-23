@@ -19,13 +19,13 @@ The design emphasises extensibility: new games, tiles, or movement rules can be 
 
 # Tech Stack
 
-Language Java JDK 21
-UI JavaFX – org.openjfx:javafx-controls:23.0.1
-Build Maven 3.9+ with maven-compiler-plugin:3.13.0 and maven-surefire-plugin:3.2.5
-Testing JUnit 5 – org.junit.jupiter:junit-jupiter-engine:5.11.4
-Code Quality - CheckStyle Google rules
-Persistence JSON files + SQLite
-VCS / CI - Git & GitHub
+- Language Java -> JDK 21
+- UI JavaFX –> org.openjfx:javafx-controls:23.0.1
+- Build Maven 3.9+ -> maven-compiler-plugin:3.13.0 and maven-surefire-plugin:3.2.5
+- Testing JUnit 5 -> org.junit.jupiter:junit-jupiter-engine:5.11.4
+- Code Quality -> CheckStyle Google rules
+- Persistence -> JSON files + SQLite
+- VCS / CI -> Git & GitHub
 
 # Project Structure
 
@@ -61,9 +61,9 @@ https://www.oracle.com/cis/java/technologies/downloads/#jdk21-windows
 Apache Maven 3.9 + – download, install, and add mvn to PATH
 https://maven.apache.org/download.cgi
 
-### Run the app
+### To run the app:
 
-### open a terminal in the project
+#### open a terminal in the project
 
 cd path/to/IDATx2003-exam/boardgames
 mvn javafx:run
