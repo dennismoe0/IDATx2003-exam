@@ -68,6 +68,11 @@ public class AddPlayerViewController {
     return null;
   }
 
+  /**
+   * Method for closing an overaly window.
+   *
+   * @param overlay the window to be closed.
+   */
   public void closeWindow(Parent overlay) {
     sceneManager.closeOverlay(overlay);
   }

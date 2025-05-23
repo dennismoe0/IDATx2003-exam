@@ -79,9 +79,7 @@ public class AddPlayerView {
       }
     });
 
-    closeButton.setOnAction(event -> {
-      controller.closeWindow(this.getRoot());
-    });
+    closeButton.setOnAction(event -> controller.closeWindow(this.getRoot()));
   }
 
   private void assignStyling() {

@@ -14,20 +14,35 @@ import org.slf4j.Logger;
 public class SceneManager {
   private static final Logger logger = Log.get(SceneManager.class);
   private Scene scene;
-  private Stage primaryStage;
+  private final Stage primaryStage;
   private Parent activeRoot;
   private StackPane rootPane;
   private boolean initialized;
 
+  /**
+   * Default Constructor for Scene Manager.
+   *
+   * @param primaryStage the JavaFX stage for the program.
+   */
   public SceneManager(Stage primaryStage) {
     this.primaryStage = primaryStage;
   }
 
+  /**
+   * Method for setting the active scene.
+   *
+   * @param scene a JavaFX scene object.
+   */
   public void setScene(Scene scene) {
     logger.info("Setting scene to " + scene);
     this.scene = scene;
   }
 
+  /**
+   * Initialization method for use when first starting the program.
+   *
+   * @param root a JavaFX node representing the root object of a scene.
+   */
   public void initialize(Parent root) {
     if (!initialized) {
       logger.info("Initializing scene");
@@ -37,11 +52,14 @@ public class SceneManager {
       rootPane.setAlignment(Pos.CENTER);
 
       scene = new Scene(rootPane, 1400, 750);
-      scene.getStylesheets().add(
-          getClass().getResource("/assets/style/styles.css").toExternalForm());
+      try {
+        scene.getStylesheets().add(
+            getClass().getResource("/assets/style/styles.css").toExternalForm());
+      } catch (NullPointerException e) {
+        logger.error(e.getMessage());
+      }
+
       primaryStage.setScene(scene);
-    } else {
-      return;
     }
   }
 
@@ -67,11 +85,21 @@ public class SceneManager {
     activeRoot = root;
   }
 
+  /**
+   * Method for displaying an overlay over top of the active scene.
+   *
+   * @param overlay the scene to overlay on top of the active scene.
+   */
   public void showOverlay(Parent overlay) {
     logger.info("Showing overlay");
     rootPane.getChildren().add(overlay);
   }
 
+  /**
+   * A method for closing a currently active overlay.
+   *
+   * @param overlay the overlay object to close.
+   */
   public void closeOverlay(Parent overlay) {
     logger.info("Closing overlay");
     rootPane.getChildren().remove(overlay);

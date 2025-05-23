@@ -1,9 +1,7 @@
 package no.ntnu.idatx2003.exam2025.boardgames.model.tile;
 
-import no.ntnu.idatx2003.exam2025.boardgames.model.GamePiece;
-import org.slf4j.Logger;
-
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
+import org.slf4j.Logger;
 
 /**
  * Serves as the basic object for building and navigating
@@ -16,6 +14,7 @@ public class Tile {
   private Tile nextTile;
 
   /**
+   * Default constructor.
    *
    * @param id           Unique identifier used for identification and navigation.
    * @param tileStrategy Used to define different types of tiles.
@@ -27,6 +26,11 @@ public class Tile {
     nextTile = null;
   }
 
+  /**
+   * Tile constructor for building a tile without a tile strategy.
+   *
+   * @param id an integer representing the tiles ID and position on the board.
+   */
   public Tile(int id) {
     this.id = id;
     this.tileStrategy = null;
@@ -68,10 +72,11 @@ public class Tile {
 
   @Override
   public String toString() {
-    return "Tile{" +
-        "id=" + id +
-        ", tileStrategy=" + (tileStrategy != null ? tileStrategy.getClass().getSimpleName() : "null") +
-        ", nextTileId=" + (nextTile != null ? nextTile.getId() : "null") +
-        '}';
+    return "Tile{"
+        + "id=" + id
+        + ", tileStrategy="
+        + (tileStrategy != null ? tileStrategy.getClass().getSimpleName() : "null")
+        + ", nextTileId=" + (nextTile != null ? nextTile.getId() : "null")
+        + '}';
   }
 }

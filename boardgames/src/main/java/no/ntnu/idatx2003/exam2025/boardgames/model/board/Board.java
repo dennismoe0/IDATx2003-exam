@@ -4,9 +4,7 @@ package no.ntnu.idatx2003.exam2025.boardgames.model.board;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import no.ntnu.idatx2003.exam2025.boardgames.model.tile.Tile;
-import no.ntnu.idatx2003.exam2025.boardgames.util.IntPair;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import org.slf4j.Logger;
 
@@ -15,7 +13,7 @@ import org.slf4j.Logger;
  * Holds a hashmap of tile objects by ID.
  */
 public class Board {
-  private HashMap<Integer, Tile> tiles;
+  private final HashMap<Integer, Tile> tiles;
   private static final Logger log = Log.get(Board.class);
   private int rows;
   private int columns;

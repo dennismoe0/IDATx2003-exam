@@ -121,8 +121,7 @@ public class AssetGamePieceView extends Pane {
           positions = new double[count][2];
           double usableSpace = 0.6;
           double xmargin = (1.0 - usableSpace) / 2;
-          double ymargin = (1.0 - usableSpace) / 2;
-          double topMargin = ymargin;
+          double topMargin = (1.0 - usableSpace) / 2;
           double xspacing = usableSpace / (cols >= 2 ? cols - 1 : 1);
           double yspacing = (1.0 - (topMargin * 2)) / (rows >= 2 ? rows - 1 : 1);
           for (int i = 0; i < count; i++) {

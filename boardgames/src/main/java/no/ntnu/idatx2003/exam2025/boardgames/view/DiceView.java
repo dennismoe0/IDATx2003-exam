@@ -38,14 +38,16 @@ public class DiceView {
     this.width = width;
     this.height = height;
     buildDiceView();
-
-    root.prefHeight(height);
-    root.prefWidth(width);
-
+    configureView();
     root.getChildren().add(diceView);
     StackPane.setAlignment(diceView, Pos.CENTER);
 
     root.getStyleClass().add("dice-view");
+  }
+
+  private void configureView() {
+    root.prefHeight(height);
+    root.prefWidth(width);
   }
 
   public Parent getRoot() {
@@ -67,9 +69,7 @@ public class DiceView {
       dieViews.add(dieView);
       diceView.getChildren().add(dieView);
     }
-    diceView.setOnMouseClicked(event -> {
-      controller.takeTurn();
-    });
+    diceView.setOnMouseClicked(event -> controller.takeTurn());
     diceView.setAlignment(Pos.CENTER);
   }
 

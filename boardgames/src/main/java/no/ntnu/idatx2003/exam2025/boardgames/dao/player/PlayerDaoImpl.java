@@ -21,6 +21,11 @@ public class PlayerDaoImpl implements PlayerDao {
   private final Connection connection;
   private static final Logger log = Log.get(PlayerDaoImpl.class);
 
+  /**
+   * Default constructo takes a connection object.
+   *
+   * @param connection represents a database Connection.
+   */
   public PlayerDaoImpl(Connection connection) {
     this.connection = connection;
   }
