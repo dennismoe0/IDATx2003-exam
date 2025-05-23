@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import no.ntnu.idatx2003.exam2025.boardgames.exception.InvalidDiceAmountException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -95,11 +96,20 @@ class TestGameEventHandlerImpl {
     stats2.incrementDiceRoll();
     p2.setPlayerStats(stats2);
 
+    LadderBoardGame game;
     // make game
-    LadderBoardGame game = new LadderBoardGame(makeSimpleBoard(), List.of(p1, p2));
+    try {
+      game = new LadderBoardGame(1, makeSimpleBoard(), List.of(p1, p2));
+    } catch (InvalidDiceAmountException e){
+      e.printStackTrace();
+      game = null;
+    }
+    if (game != null){
+      handler.handleGameOver(game);
+    }
 
     // trigger
-    handler.handleGameOver(game);
+
 
     // reload from DAO and assert
     SnakesAndLaddersStatsDaoImpl dao = new SnakesAndLaddersStatsDaoImpl(conn);
