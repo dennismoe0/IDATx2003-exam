@@ -70,7 +70,7 @@ cd path/to/IDATx2003-exam/boardgames
 mvn clean install
 mvn javafx:run
 ```
-
+- Where the path/to/… is the path to your clone of the project.
 - (If your file browser supports it, right-click inside the boardgames/ folder and choose “Open in terminal” to skip the cd step.)
 
 # Development Workflow
