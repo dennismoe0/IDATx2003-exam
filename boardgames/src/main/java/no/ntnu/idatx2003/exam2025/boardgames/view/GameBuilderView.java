@@ -15,11 +15,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.util.StringConverter;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.GameBuilderController;
-import no.ntnu.idatx2003.exam2025.boardgames.exception.MissingGamePieceException;
 import no.ntnu.idatx2003.exam2025.boardgames.model.board.BoardInfo;
 import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
-import org.w3c.dom.Text;
-
 
 /**
  * View for displaying options for populating and starting a game session.
@@ -34,8 +31,8 @@ public class GameBuilderView {
   // board picker
   // backdrop
 
-  private static final float height = 650;
-  private static final float width = 1200;
+  private static final float HEIGHT = 650;
+  private static final float WIDTH = 1200;
 
   private final VBox boardColumn;
   private final VBox rulesColumn;
@@ -65,13 +62,14 @@ public class GameBuilderView {
    * Constructor for the Game Builder View.
    *
    * @param controller     object that mediates between Game Builder and models
-   * @param playerListView view that controls an updated list of players from database.
+   * @param playerListView view that controls an updated list of players from
+   *                       database.
    */
   public GameBuilderView(GameBuilderController controller, PlayerListView playerListView) {
     this.controller = controller;
     this.playerListView = playerListView;
     root = new StackPane();
-    background = new Rectangle(width, height);
+    background = new Rectangle(WIDTH, HEIGHT);
     boardColumn = new VBox(5);
     rulesColumn = new VBox(5);
     playerColumn = new VBox(5);
@@ -94,15 +92,15 @@ public class GameBuilderView {
   }
 
   private void configureView() {
-    root.setMaxSize(width, height);
+    root.setMaxSize(WIDTH, HEIGHT);
     // float columnWidth = width / 3;
     // Temporarily removed rules column.
-    float columnWidth = width / 2;
+    float columnWidth = WIDTH / 2;
     boardColumn.setMaxWidth(columnWidth);
     rulesColumn.setMaxWidth(columnWidth);
     playerColumn.setMaxWidth(columnWidth);
     layout.setAlignment(Pos.TOP_CENTER);
-    layout.setPrefSize(width, height);
+    layout.setPrefSize(WIDTH, HEIGHT);
 
     boardColumn.setAlignment(Pos.TOP_CENTER);
     rulesColumn.setAlignment(Pos.TOP_CENTER);
@@ -120,12 +118,11 @@ public class GameBuilderView {
     listViewBackgroundWrapper.getChildren().add(listViewWrapper);
     listViewWrapper.getChildren().add(playerListView.getRoot());
 
-
     playerColumn.getChildren().addAll(playerTitle, listViewBackgroundWrapper);
     boardColumn.getChildren().addAll(boardTitle, gameHeader,
         gameMenu, boardHeader, boardMenu, startGameButton);
     rulesColumn.getChildren().add(rulesTitle);
-    //rulesColumn.getChildren().add(new Label("No rules selections available."));
+    // rulesColumn.getChildren().add(new Label("No rules selections available."));
     Label diceAmountLabel = new Label("Dice Amount");
     diceAmount.setText("2");
     rulesColumn.getChildren().addAll(diceAmountLabel, diceAmount);

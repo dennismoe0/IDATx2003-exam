@@ -1,17 +1,8 @@
 package no.ntnu.idatx2003.exam2025.boardgames.view;
 
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import java.io.InputStream;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import org.slf4j.Logger;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -20,11 +11,20 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.PlayerListViewController;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.util.Log;
 import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
+import org.slf4j.Logger;
 
+/**
+ * A view for displaying and managing the list of players in the board games
+ * application.
+ * Provides functionality to select, delete, and assign pieces to players.
+ */
 public class PlayerListView {
   private final VBox layout;
   private final VBox playerListVBox;
@@ -38,6 +38,11 @@ public class PlayerListView {
   // checked to "add to game" / pool of active players
   // Should be retrieved from database and added as Player Objects
   // if unchecked = delete that Player object instance
+  /**
+   * Constructs a PlayerListView with the specified controller.
+   *
+   * @param controller the controller responsible for handling player list actions
+   */
   public PlayerListView(PlayerListViewController controller) {
     this.controller = controller;
     refreshButton = new Button("Refresh List");

@@ -1,24 +1,24 @@
 package no.ntnu.idatx2003.exam2025.boardgames.view;
 
+import java.sql.SQLException;
+import java.util.LinkedHashMap;
+import java.util.List;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Window;
-import org.slf4j.Logger;
 import no.ntnu.idatx2003.exam2025.boardgames.controller.PlayerListViewController;
 import no.ntnu.idatx2003.exam2025.boardgames.model.Player;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneManager;
 import no.ntnu.idatx2003.exam2025.boardgames.service.SceneRegister;
 import no.ntnu.idatx2003.exam2025.boardgames.util.command.ChangeScreenCommand;
 import no.ntnu.idatx2003.exam2025.boardgames.util.view.AlertUtil;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.LinkedHashMap;
+import org.slf4j.Logger;
 
 /**
  * A view that lists all players with a "Show Statistics" button for each.
@@ -36,6 +36,14 @@ public class PlayerStatsListView {
   private final SceneRegister sceneRegister;
   private final SceneManager sceneManager;
 
+  /**
+   * Constructs a PlayerStatsListView with the given controller, scene register,
+   * and scene manager.
+   *
+   * @param controller    the controller for player list operations
+   * @param sceneRegister the scene register for managing scenes
+   * @param sceneManager  the scene manager for switching scenes
+   */
   public PlayerStatsListView(PlayerListViewController controller, SceneRegister sceneRegister,
       SceneManager sceneManager) {
     this.controller = controller;

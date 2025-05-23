@@ -1,11 +1,8 @@
 package no.ntnu.idatx2003.exam2025.boardgames.view;
 
-import javafx.css.StyleClass;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -19,8 +16,15 @@ public class TileView extends BorderPane {
   private final Text tileNumber;
   private final int width;
   private final StackPane view;
-  private Rectangle tileBackground;
+  private final Rectangle tileBackground;
 
+  /**
+   * Constructs a TileView for the given tile, width, and style class.
+   *
+   * @param tile       the Tile model to represent
+   * @param width      the width of the tile view
+   * @param styleClass the CSS style class to apply
+   */
   public TileView(Tile tile, int width, String styleClass) {
     this.tile = tile;
     this.width = width;
@@ -29,8 +33,8 @@ public class TileView extends BorderPane {
     tileBackground.getStyleClass().add(styleClass);
     tileNumber = new Text();
     view = new StackPane(tileBackground);
-    //view.getStyleClass().add("tile-view");
-    //view.getStyleClass().add(styleClass);
+    // view.getStyleClass().add("tile-view");
+    // view.getStyleClass().add(styleClass);
     tileNumber.getStyleClass().add("tile-number");
     buildView();
     super.setCenter(view);
