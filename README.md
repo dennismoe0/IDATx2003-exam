@@ -5,7 +5,7 @@ Group / Candidates: Group 0042 – 10006 & 10106
 
 # Project Description
 
-A desktop application that lets users play classic board-games—currently two variants of Snakes & Ladders—with up to five players. It delivers:
+A desktop application that lets users play classic board-games, currently with two variants of Snakes & Ladders—with up to five players. It delivers:
 
 Interactive JavaFX GUI (hand-coded)
 
