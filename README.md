@@ -65,9 +65,13 @@ https://maven.apache.org/download.cgi
 
 #### open a terminal in the project
 
+```cmd
 cd path/to/IDATx2003-exam/boardgames
+mvn clean install
 mvn javafx:run
-(If your file browser supports it, right-click inside the boardgames/ folder and choose “Open in terminal” to skip the cd step.)
+```
+
+- (If your file browser supports it, right-click inside the boardgames/ folder and choose “Open in terminal” to skip the cd step.)
 
 # Development Workflow
 
